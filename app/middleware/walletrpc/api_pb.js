@@ -27,6 +27,9 @@ goog.exportSymbol('walletrpc.AccountUnlockedResponse', null, proto);
 goog.exportSymbol('walletrpc.AccountsRequest', null, proto);
 goog.exportSymbol('walletrpc.AccountsResponse', null, proto);
 goog.exportSymbol('walletrpc.AccountsResponse.Account', null, proto);
+goog.exportSymbol('walletrpc.AddressRequest', null, proto);
+goog.exportSymbol('walletrpc.AddressRequest.Kind', null, proto);
+goog.exportSymbol('walletrpc.AddressResponse', null, proto);
 goog.exportSymbol('walletrpc.AgendasRequest', null, proto);
 goog.exportSymbol('walletrpc.AgendasResponse', null, proto);
 goog.exportSymbol('walletrpc.AgendasResponse.Agenda', null, proto);
@@ -35,6 +38,8 @@ goog.exportSymbol('walletrpc.BalanceRequest', null, proto);
 goog.exportSymbol('walletrpc.BalanceResponse', null, proto);
 goog.exportSymbol('walletrpc.BestBlockRequest', null, proto);
 goog.exportSymbol('walletrpc.BestBlockResponse', null, proto);
+goog.exportSymbol('walletrpc.BirthBlockRequest', null, proto);
+goog.exportSymbol('walletrpc.BirthBlockResponse', null, proto);
 goog.exportSymbol('walletrpc.BlockDetails', null, proto);
 goog.exportSymbol('walletrpc.BlockInfoRequest', null, proto);
 goog.exportSymbol('walletrpc.BlockInfoResponse', null, proto);
@@ -77,6 +82,8 @@ goog.exportSymbol('walletrpc.DiscoverAddressesRequest', null, proto);
 goog.exportSymbol('walletrpc.DiscoverAddressesResponse', null, proto);
 goog.exportSymbol('walletrpc.DiscoverUsageRequest', null, proto);
 goog.exportSymbol('walletrpc.DiscoverUsageResponse', null, proto);
+goog.exportSymbol('walletrpc.DumpPrivateKeyRequest', null, proto);
+goog.exportSymbol('walletrpc.DumpPrivateKeyResponse', null, proto);
 goog.exportSymbol('walletrpc.FetchHeadersNotification', null, proto);
 goog.exportSymbol('walletrpc.FetchHeadersRequest', null, proto);
 goog.exportSymbol('walletrpc.FetchHeadersResponse', null, proto);
@@ -174,22 +181,6 @@ goog.exportSymbol('walletrpc.RunTicketBuyerRequest', null, proto);
 goog.exportSymbol('walletrpc.RunTicketBuyerResponse', null, proto);
 goog.exportSymbol('walletrpc.SetAccountPassphraseRequest', null, proto);
 goog.exportSymbol('walletrpc.SetAccountPassphraseResponse', null, proto);
-goog.exportSymbol('walletrpc.SetAccountRequest', null, proto);
-goog.exportSymbol('walletrpc.SetAccountResponse', null, proto);
-goog.exportSymbol('walletrpc.SetBalanceToMaintainRequest', null, proto);
-goog.exportSymbol('walletrpc.SetBalanceToMaintainResponse', null, proto);
-goog.exportSymbol('walletrpc.SetMaxFeeRequest', null, proto);
-goog.exportSymbol('walletrpc.SetMaxFeeResponse', null, proto);
-goog.exportSymbol('walletrpc.SetMaxPerBlockRequest', null, proto);
-goog.exportSymbol('walletrpc.SetMaxPerBlockResponse', null, proto);
-goog.exportSymbol('walletrpc.SetMaxPriceAbsoluteRequest', null, proto);
-goog.exportSymbol('walletrpc.SetMaxPriceAbsoluteResponse', null, proto);
-goog.exportSymbol('walletrpc.SetMaxPriceRelativeRequest', null, proto);
-goog.exportSymbol('walletrpc.SetMaxPriceRelativeResponse', null, proto);
-goog.exportSymbol('walletrpc.SetPoolAddressRequest', null, proto);
-goog.exportSymbol('walletrpc.SetPoolAddressResponse', null, proto);
-goog.exportSymbol('walletrpc.SetPoolFeesRequest', null, proto);
-goog.exportSymbol('walletrpc.SetPoolFeesResponse', null, proto);
 goog.exportSymbol('walletrpc.SetTSpendPolicyRequest', null, proto);
 goog.exportSymbol('walletrpc.SetTSpendPolicyResponse', null, proto);
 goog.exportSymbol('walletrpc.SetTreasuryPolicyRequest', null, proto);
@@ -197,8 +188,6 @@ goog.exportSymbol('walletrpc.SetTreasuryPolicyResponse', null, proto);
 goog.exportSymbol('walletrpc.SetVoteChoicesRequest', null, proto);
 goog.exportSymbol('walletrpc.SetVoteChoicesRequest.Choice', null, proto);
 goog.exportSymbol('walletrpc.SetVoteChoicesResponse', null, proto);
-goog.exportSymbol('walletrpc.SetVotingAddressRequest', null, proto);
-goog.exportSymbol('walletrpc.SetVotingAddressResponse', null, proto);
 goog.exportSymbol('walletrpc.SetVspdVoteChoicesRequest', null, proto);
 goog.exportSymbol('walletrpc.SetVspdVoteChoicesResponse', null, proto);
 goog.exportSymbol('walletrpc.SignHashesRequest', null, proto);
@@ -223,12 +212,8 @@ goog.exportSymbol('walletrpc.SpvSyncRequest', null, proto);
 goog.exportSymbol('walletrpc.SpvSyncResponse', null, proto);
 goog.exportSymbol('walletrpc.StakeInfoRequest', null, proto);
 goog.exportSymbol('walletrpc.StakeInfoResponse', null, proto);
-goog.exportSymbol('walletrpc.StartAutoBuyerRequest', null, proto);
-goog.exportSymbol('walletrpc.StartAutoBuyerResponse', null, proto);
 goog.exportSymbol('walletrpc.StartConsensusRpcRequest', null, proto);
 goog.exportSymbol('walletrpc.StartConsensusRpcResponse', null, proto);
-goog.exportSymbol('walletrpc.StopAutoBuyerRequest', null, proto);
-goog.exportSymbol('walletrpc.StopAutoBuyerResponse', null, proto);
 goog.exportSymbol('walletrpc.SubscribeToBlockNotificationsRequest', null, proto);
 goog.exportSymbol('walletrpc.SubscribeToBlockNotificationsResponse', null, proto);
 goog.exportSymbol('walletrpc.SweepAccountRequest', null, proto);
@@ -239,8 +224,6 @@ goog.exportSymbol('walletrpc.SyncVSPTicketsResponse', null, proto);
 goog.exportSymbol('walletrpc.TSpendPoliciesRequest', null, proto);
 goog.exportSymbol('walletrpc.TSpendPoliciesResponse', null, proto);
 goog.exportSymbol('walletrpc.TSpendPoliciesResponse.Policy', null, proto);
-goog.exportSymbol('walletrpc.TicketBuyerConfigRequest', null, proto);
-goog.exportSymbol('walletrpc.TicketBuyerConfigResponse', null, proto);
 goog.exportSymbol('walletrpc.TicketPriceRequest', null, proto);
 goog.exportSymbol('walletrpc.TicketPriceResponse', null, proto);
 goog.exportSymbol('walletrpc.TransactionDetails', null, proto);
@@ -680,6 +663,48 @@ if (goog.DEBUG && !COMPILED) {
  * @extends {jspb.Message}
  * @constructor
  */
+proto.walletrpc.AddressRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.AddressRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.walletrpc.AddressRequest.displayName = 'proto.walletrpc.AddressRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.AddressResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.AddressResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.walletrpc.AddressResponse.displayName = 'proto.walletrpc.AddressResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
 proto.walletrpc.RenameAccountRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
@@ -921,6 +946,90 @@ if (goog.DEBUG && !COMPILED) {
    * @override
    */
   proto.walletrpc.ImportExtendedPublicKeyResponse.displayName = 'proto.walletrpc.ImportExtendedPublicKeyResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.DumpPrivateKeyRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.DumpPrivateKeyRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.walletrpc.DumpPrivateKeyRequest.displayName = 'proto.walletrpc.DumpPrivateKeyRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.DumpPrivateKeyResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.DumpPrivateKeyResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.walletrpc.DumpPrivateKeyResponse.displayName = 'proto.walletrpc.DumpPrivateKeyResponse';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.BirthBlockRequest = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.BirthBlockRequest, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.walletrpc.BirthBlockRequest.displayName = 'proto.walletrpc.BirthBlockRequest';
+}
+/**
+ * Generated by JsPbCodeGenerator.
+ * @param {Array=} opt_data Optional initial data array, typically from a
+ * server response, or constructed directly in Javascript. The array is used
+ * in place and becomes part of the constructed object. It is not cloned.
+ * If no data is provided, the constructed object will be empty, but still
+ * valid.
+ * @extends {jspb.Message}
+ * @constructor
+ */
+proto.walletrpc.BirthBlockResponse = function(opt_data) {
+  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+};
+goog.inherits(proto.walletrpc.BirthBlockResponse, jspb.Message);
+if (goog.DEBUG && !COMPILED) {
+  /**
+   * @public
+   * @override
+   */
+  proto.walletrpc.BirthBlockResponse.displayName = 'proto.walletrpc.BirthBlockResponse';
 }
 /**
  * Generated by JsPbCodeGenerator.
@@ -3126,510 +3235,6 @@ if (goog.DEBUG && !COMPILED) {
    * @override
    */
   proto.walletrpc.RunAccountMixerResponse.displayName = 'proto.walletrpc.RunAccountMixerResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.StartAutoBuyerRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.StartAutoBuyerRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.StartAutoBuyerRequest.displayName = 'proto.walletrpc.StartAutoBuyerRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.StartAutoBuyerResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.StartAutoBuyerResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.StartAutoBuyerResponse.displayName = 'proto.walletrpc.StartAutoBuyerResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.StopAutoBuyerRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.StopAutoBuyerRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.StopAutoBuyerRequest.displayName = 'proto.walletrpc.StopAutoBuyerRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.StopAutoBuyerResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.StopAutoBuyerResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.StopAutoBuyerResponse.displayName = 'proto.walletrpc.StopAutoBuyerResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.TicketBuyerConfigRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.TicketBuyerConfigRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.TicketBuyerConfigRequest.displayName = 'proto.walletrpc.TicketBuyerConfigRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.TicketBuyerConfigResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.TicketBuyerConfigResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.TicketBuyerConfigResponse.displayName = 'proto.walletrpc.TicketBuyerConfigResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetAccountRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetAccountRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetAccountRequest.displayName = 'proto.walletrpc.SetAccountRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetAccountResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetAccountResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetAccountResponse.displayName = 'proto.walletrpc.SetAccountResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetBalanceToMaintainRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetBalanceToMaintainRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetBalanceToMaintainRequest.displayName = 'proto.walletrpc.SetBalanceToMaintainRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetBalanceToMaintainResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetBalanceToMaintainResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetBalanceToMaintainResponse.displayName = 'proto.walletrpc.SetBalanceToMaintainResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetMaxFeeRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetMaxFeeRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetMaxFeeRequest.displayName = 'proto.walletrpc.SetMaxFeeRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetMaxFeeResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetMaxFeeResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetMaxFeeResponse.displayName = 'proto.walletrpc.SetMaxFeeResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetMaxPriceRelativeRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetMaxPriceRelativeRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetMaxPriceRelativeRequest.displayName = 'proto.walletrpc.SetMaxPriceRelativeRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetMaxPriceRelativeResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetMaxPriceRelativeResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetMaxPriceRelativeResponse.displayName = 'proto.walletrpc.SetMaxPriceRelativeResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetMaxPriceAbsoluteRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetMaxPriceAbsoluteRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetMaxPriceAbsoluteRequest.displayName = 'proto.walletrpc.SetMaxPriceAbsoluteRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetMaxPriceAbsoluteResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetMaxPriceAbsoluteResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetMaxPriceAbsoluteResponse.displayName = 'proto.walletrpc.SetMaxPriceAbsoluteResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetVotingAddressRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetVotingAddressRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetVotingAddressRequest.displayName = 'proto.walletrpc.SetVotingAddressRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetVotingAddressResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetVotingAddressResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetVotingAddressResponse.displayName = 'proto.walletrpc.SetVotingAddressResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetPoolAddressRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetPoolAddressRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetPoolAddressRequest.displayName = 'proto.walletrpc.SetPoolAddressRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetPoolAddressResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetPoolAddressResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetPoolAddressResponse.displayName = 'proto.walletrpc.SetPoolAddressResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetPoolFeesRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetPoolFeesRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetPoolFeesRequest.displayName = 'proto.walletrpc.SetPoolFeesRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetPoolFeesResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetPoolFeesResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetPoolFeesResponse.displayName = 'proto.walletrpc.SetPoolFeesResponse';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetMaxPerBlockRequest = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetMaxPerBlockRequest, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetMaxPerBlockRequest.displayName = 'proto.walletrpc.SetMaxPerBlockRequest';
-}
-/**
- * Generated by JsPbCodeGenerator.
- * @param {Array=} opt_data Optional initial data array, typically from a
- * server response, or constructed directly in Javascript. The array is used
- * in place and becomes part of the constructed object. It is not cloned.
- * If no data is provided, the constructed object will be empty, but still
- * valid.
- * @extends {jspb.Message}
- * @constructor
- */
-proto.walletrpc.SetMaxPerBlockResponse = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
-};
-goog.inherits(proto.walletrpc.SetMaxPerBlockResponse, jspb.Message);
-if (goog.DEBUG && !COMPILED) {
-  /**
-   * @public
-   * @override
-   */
-  proto.walletrpc.SetMaxPerBlockResponse.displayName = 'proto.walletrpc.SetMaxPerBlockResponse';
 }
 /**
  * Generated by JsPbCodeGenerator.
@@ -9103,6 +8708,364 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     http://goto/soy-param-migration
  * @return {!Object}
  */
+proto.walletrpc.AddressRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AddressRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.AddressRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AddressRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    account: jspb.Message.getFieldWithDefault(msg, 1, 0),
+    kind: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    index: jspb.Message.getFieldWithDefault(msg, 3, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.AddressRequest}
+ */
+proto.walletrpc.AddressRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.AddressRequest;
+  return proto.walletrpc.AddressRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.AddressRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.AddressRequest}
+ */
+proto.walletrpc.AddressRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setAccount(value);
+      break;
+    case 2:
+      var value = /** @type {!proto.walletrpc.AddressRequest.Kind} */ (reader.readEnum());
+      msg.setKind(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setIndex(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.AddressRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.AddressRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.AddressRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AddressRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getAccount();
+  if (f !== 0) {
+    writer.writeUint32(
+      1,
+      f
+    );
+  }
+  f = message.getKind();
+  if (f !== 0.0) {
+    writer.writeEnum(
+      2,
+      f
+    );
+  }
+  f = message.getIndex();
+  if (f !== 0) {
+    writer.writeUint32(
+      3,
+      f
+    );
+  }
+};
+
+
+/**
+ * @enum {number}
+ */
+proto.walletrpc.AddressRequest.Kind = {
+  BIP0044_EXTERNAL: 0,
+  BIP0044_INTERNAL: 1
+};
+
+/**
+ * optional uint32 account = 1;
+ * @return {number}
+ */
+proto.walletrpc.AddressRequest.prototype.getAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.walletrpc.AddressRequest} returns this
+ */
+proto.walletrpc.AddressRequest.prototype.setAccount = function(value) {
+  return jspb.Message.setProto3IntField(this, 1, value);
+};
+
+
+/**
+ * optional Kind kind = 2;
+ * @return {!proto.walletrpc.AddressRequest.Kind}
+ */
+proto.walletrpc.AddressRequest.prototype.getKind = function() {
+  return /** @type {!proto.walletrpc.AddressRequest.Kind} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {!proto.walletrpc.AddressRequest.Kind} value
+ * @return {!proto.walletrpc.AddressRequest} returns this
+ */
+proto.walletrpc.AddressRequest.prototype.setKind = function(value) {
+  return jspb.Message.setProto3EnumField(this, 2, value);
+};
+
+
+/**
+ * optional uint32 index = 3;
+ * @return {number}
+ */
+proto.walletrpc.AddressRequest.prototype.getIndex = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.walletrpc.AddressRequest} returns this
+ */
+proto.walletrpc.AddressRequest.prototype.setIndex = function(value) {
+  return jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.AddressResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.AddressResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.AddressResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AddressResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    address: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    publicKey: jspb.Message.getFieldWithDefault(msg, 2, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.AddressResponse}
+ */
+proto.walletrpc.AddressResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.AddressResponse;
+  return proto.walletrpc.AddressResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.AddressResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.AddressResponse}
+ */
+proto.walletrpc.AddressResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAddress(value);
+      break;
+    case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPublicKey(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.AddressResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.AddressResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.AddressResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.AddressResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getAddress();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+  f = message.getPublicKey();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string address = 1;
+ * @return {string}
+ */
+proto.walletrpc.AddressResponse.prototype.getAddress = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.walletrpc.AddressResponse} returns this
+ */
+proto.walletrpc.AddressResponse.prototype.setAddress = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional string public_key = 2;
+ * @return {string}
+ */
+proto.walletrpc.AddressResponse.prototype.getPublicKey = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.walletrpc.AddressResponse} returns this
+ */
+proto.walletrpc.AddressResponse.prototype.setPublicKey = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
 proto.walletrpc.RenameAccountRequest.prototype.toObject = function(opt_includeInstance) {
   return proto.walletrpc.RenameAccountRequest.toObject(opt_includeInstance, this);
 };
@@ -11037,6 +11000,551 @@ proto.walletrpc.ImportExtendedPublicKeyResponse.prototype.serializeBinary = func
  */
 proto.walletrpc.ImportExtendedPublicKeyResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.DumpPrivateKeyRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.DumpPrivateKeyRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.DumpPrivateKeyRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.DumpPrivateKeyRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    address: jspb.Message.getFieldWithDefault(msg, 1, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.DumpPrivateKeyRequest}
+ */
+proto.walletrpc.DumpPrivateKeyRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.DumpPrivateKeyRequest;
+  return proto.walletrpc.DumpPrivateKeyRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.DumpPrivateKeyRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.DumpPrivateKeyRequest}
+ */
+proto.walletrpc.DumpPrivateKeyRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setAddress(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.DumpPrivateKeyRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.DumpPrivateKeyRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.DumpPrivateKeyRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.DumpPrivateKeyRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getAddress();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string address = 1;
+ * @return {string}
+ */
+proto.walletrpc.DumpPrivateKeyRequest.prototype.getAddress = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.walletrpc.DumpPrivateKeyRequest} returns this
+ */
+proto.walletrpc.DumpPrivateKeyRequest.prototype.setAddress = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.DumpPrivateKeyResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.DumpPrivateKeyResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.DumpPrivateKeyResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.DumpPrivateKeyResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    privateKeyWif: jspb.Message.getFieldWithDefault(msg, 1, "")
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.DumpPrivateKeyResponse}
+ */
+proto.walletrpc.DumpPrivateKeyResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.DumpPrivateKeyResponse;
+  return proto.walletrpc.DumpPrivateKeyResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.DumpPrivateKeyResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.DumpPrivateKeyResponse}
+ */
+proto.walletrpc.DumpPrivateKeyResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setPrivateKeyWif(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.DumpPrivateKeyResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.DumpPrivateKeyResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.DumpPrivateKeyResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.DumpPrivateKeyResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getPrivateKeyWif();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional string private_key_wif = 1;
+ * @return {string}
+ */
+proto.walletrpc.DumpPrivateKeyResponse.prototype.getPrivateKeyWif = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.walletrpc.DumpPrivateKeyResponse} returns this
+ */
+proto.walletrpc.DumpPrivateKeyResponse.prototype.setPrivateKeyWif = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.BirthBlockRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.BirthBlockRequest.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.BirthBlockRequest} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.BirthBlockRequest.toObject = function(includeInstance, msg) {
+  var f, obj = {
+
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.BirthBlockRequest}
+ */
+proto.walletrpc.BirthBlockRequest.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.BirthBlockRequest;
+  return proto.walletrpc.BirthBlockRequest.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.BirthBlockRequest} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.BirthBlockRequest}
+ */
+proto.walletrpc.BirthBlockRequest.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.BirthBlockRequest.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.BirthBlockRequest.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.BirthBlockRequest} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.BirthBlockRequest.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+};
+
+
+
+
+
+if (jspb.Message.GENERATE_TO_OBJECT) {
+/**
+ * Creates an object representation of this proto.
+ * Field names that are reserved in JavaScript and will be renamed to pb_name.
+ * Optional fields that are not set will be set to undefined.
+ * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
+ * For the list of reserved names please see:
+ *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
+ * @param {boolean=} opt_includeInstance Deprecated. whether to include the
+ *     JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @return {!Object}
+ */
+proto.walletrpc.BirthBlockResponse.prototype.toObject = function(opt_includeInstance) {
+  return proto.walletrpc.BirthBlockResponse.toObject(opt_includeInstance, this);
+};
+
+
+/**
+ * Static version of the {@see toObject} method.
+ * @param {boolean|undefined} includeInstance Deprecated. Whether to include
+ *     the JSPB instance for transitional soy proto support:
+ *     http://goto/soy-param-migration
+ * @param {!proto.walletrpc.BirthBlockResponse} msg The msg instance to transform.
+ * @return {!Object}
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.BirthBlockResponse.toObject = function(includeInstance, msg) {
+  var f, obj = {
+    hash: msg.getHash_asB64(),
+    height: jspb.Message.getFieldWithDefault(msg, 2, 0)
+  };
+
+  if (includeInstance) {
+    obj.$jspbMessageInstance = msg;
+  }
+  return obj;
+};
+}
+
+
+/**
+ * Deserializes binary data (in protobuf wire format).
+ * @param {jspb.ByteSource} bytes The bytes to deserialize.
+ * @return {!proto.walletrpc.BirthBlockResponse}
+ */
+proto.walletrpc.BirthBlockResponse.deserializeBinary = function(bytes) {
+  var reader = new jspb.BinaryReader(bytes);
+  var msg = new proto.walletrpc.BirthBlockResponse;
+  return proto.walletrpc.BirthBlockResponse.deserializeBinaryFromReader(msg, reader);
+};
+
+
+/**
+ * Deserializes binary data (in protobuf wire format) from the
+ * given reader into the given message object.
+ * @param {!proto.walletrpc.BirthBlockResponse} msg The message object to deserialize into.
+ * @param {!jspb.BinaryReader} reader The BinaryReader to use.
+ * @return {!proto.walletrpc.BirthBlockResponse}
+ */
+proto.walletrpc.BirthBlockResponse.deserializeBinaryFromReader = function(msg, reader) {
+  while (reader.nextField()) {
+    if (reader.isEndGroup()) {
+      break;
+    }
+    var field = reader.getFieldNumber();
+    switch (field) {
+    case 1:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setHash(value);
+      break;
+    case 2:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setHeight(value);
+      break;
+    default:
+      reader.skipField();
+      break;
+    }
+  }
+  return msg;
+};
+
+
+/**
+ * Serializes the message to binary data (in protobuf wire format).
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.BirthBlockResponse.prototype.serializeBinary = function() {
+  var writer = new jspb.BinaryWriter();
+  proto.walletrpc.BirthBlockResponse.serializeBinaryToWriter(this, writer);
+  return writer.getResultBuffer();
+};
+
+
+/**
+ * Serializes the given message to binary data (in protobuf wire
+ * format), writing to the given BinaryWriter.
+ * @param {!proto.walletrpc.BirthBlockResponse} message
+ * @param {!jspb.BinaryWriter} writer
+ * @suppress {unusedLocalVariables} f is only used for nested messages
+ */
+proto.walletrpc.BirthBlockResponse.serializeBinaryToWriter = function(message, writer) {
+  var f = undefined;
+  f = message.getHash_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      1,
+      f
+    );
+  }
+  f = message.getHeight();
+  if (f !== 0) {
+    writer.writeUint32(
+      2,
+      f
+    );
+  }
+};
+
+
+/**
+ * optional bytes hash = 1;
+ * @return {!(string|Uint8Array)}
+ */
+proto.walletrpc.BirthBlockResponse.prototype.getHash = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * optional bytes hash = 1;
+ * This is a type-conversion wrapper around `getHash()`
+ * @return {string}
+ */
+proto.walletrpc.BirthBlockResponse.prototype.getHash_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getHash()));
+};
+
+
+/**
+ * optional bytes hash = 1;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getHash()`
+ * @return {!Uint8Array}
+ */
+proto.walletrpc.BirthBlockResponse.prototype.getHash_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getHash()));
+};
+
+
+/**
+ * @param {!(string|Uint8Array)} value
+ * @return {!proto.walletrpc.BirthBlockResponse} returns this
+ */
+proto.walletrpc.BirthBlockResponse.prototype.setHash = function(value) {
+  return jspb.Message.setProto3BytesField(this, 1, value);
+};
+
+
+/**
+ * optional uint32 height = 2;
+ * @return {number}
+ */
+proto.walletrpc.BirthBlockResponse.prototype.getHeight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.walletrpc.BirthBlockResponse} returns this
+ */
+proto.walletrpc.BirthBlockResponse.prototype.setHeight = function(value) {
+  return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
@@ -21636,19 +22144,19 @@ proto.walletrpc.PurchaseTicketsRequest.toObject = function(includeInstance, msg)
     requiredConfirmations: jspb.Message.getFieldWithDefault(msg, 4, 0),
     ticketAddress: jspb.Message.getFieldWithDefault(msg, 5, ""),
     numTickets: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    poolAddress: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    poolFees: jspb.Message.getFloatingPointFieldWithDefault(msg, 8, 0.0),
-    expiry: jspb.Message.getFieldWithDefault(msg, 9, 0),
-    txFee: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    ticketFee: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    dontSignTx: jspb.Message.getBooleanFieldWithDefault(msg, 12, false),
-    csppServer: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    mixedAccount: jspb.Message.getFieldWithDefault(msg, 14, 0),
-    mixedAccountBranch: jspb.Message.getFieldWithDefault(msg, 15, 0),
-    mixedSplitAccount: jspb.Message.getFieldWithDefault(msg, 16, 0),
-    changeAccount: jspb.Message.getFieldWithDefault(msg, 17, 0),
-    vspHost: jspb.Message.getFieldWithDefault(msg, 18, ""),
-    vspPubkey: jspb.Message.getFieldWithDefault(msg, 19, "")
+    expiry: jspb.Message.getFieldWithDefault(msg, 7, 0),
+    txFee: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    ticketFee: jspb.Message.getFieldWithDefault(msg, 9, 0),
+    dontSignTx: jspb.Message.getBooleanFieldWithDefault(msg, 10, false),
+    csppServer: jspb.Message.getFieldWithDefault(msg, 11, ""),
+    mixedAccount: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    mixedAccountBranch: jspb.Message.getFieldWithDefault(msg, 13, 0),
+    mixedSplitAccount: jspb.Message.getFieldWithDefault(msg, 14, 0),
+    changeAccount: jspb.Message.getFieldWithDefault(msg, 15, 0),
+    vspHost: jspb.Message.getFieldWithDefault(msg, 16, ""),
+    vspPubkey: jspb.Message.getFieldWithDefault(msg, 17, ""),
+    useVotingAccount: jspb.Message.getBooleanFieldWithDefault(msg, 18, false),
+    votingAccount: jspb.Message.getFieldWithDefault(msg, 19, 0)
   };
 
   if (includeInstance) {
@@ -21710,56 +22218,56 @@ proto.walletrpc.PurchaseTicketsRequest.deserializeBinaryFromReader = function(ms
       msg.setNumTickets(value);
       break;
     case 7:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setPoolAddress(value);
-      break;
-    case 8:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setPoolFees(value);
-      break;
-    case 9:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setExpiry(value);
       break;
-    case 10:
+    case 8:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setTxFee(value);
       break;
-    case 11:
+    case 9:
       var value = /** @type {number} */ (reader.readInt64());
       msg.setTicketFee(value);
       break;
-    case 12:
+    case 10:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setDontSignTx(value);
       break;
-    case 13:
+    case 11:
       var value = /** @type {string} */ (reader.readString());
       msg.setCsppServer(value);
       break;
-    case 14:
+    case 12:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMixedAccount(value);
       break;
-    case 15:
+    case 13:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMixedAccountBranch(value);
       break;
-    case 16:
+    case 14:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMixedSplitAccount(value);
       break;
-    case 17:
+    case 15:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setChangeAccount(value);
       break;
-    case 18:
+    case 16:
       var value = /** @type {string} */ (reader.readString());
       msg.setVspHost(value);
       break;
-    case 19:
+    case 17:
       var value = /** @type {string} */ (reader.readString());
       msg.setVspPubkey(value);
+      break;
+    case 18:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setUseVotingAccount(value);
+      break;
+    case 19:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setVotingAccount(value);
       break;
     default:
       reader.skipField();
@@ -21832,93 +22340,93 @@ proto.walletrpc.PurchaseTicketsRequest.serializeBinaryToWriter = function(messag
       f
     );
   }
-  f = message.getPoolAddress();
-  if (f.length > 0) {
-    writer.writeString(
-      7,
-      f
-    );
-  }
-  f = message.getPoolFees();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      8,
-      f
-    );
-  }
   f = message.getExpiry();
   if (f !== 0) {
     writer.writeUint32(
-      9,
+      7,
       f
     );
   }
   f = message.getTxFee();
   if (f !== 0) {
     writer.writeInt64(
-      10,
+      8,
       f
     );
   }
   f = message.getTicketFee();
   if (f !== 0) {
     writer.writeInt64(
-      11,
+      9,
       f
     );
   }
   f = message.getDontSignTx();
   if (f) {
     writer.writeBool(
-      12,
+      10,
       f
     );
   }
   f = message.getCsppServer();
   if (f.length > 0) {
     writer.writeString(
-      13,
+      11,
       f
     );
   }
   f = message.getMixedAccount();
   if (f !== 0) {
     writer.writeUint32(
-      14,
+      12,
       f
     );
   }
   f = message.getMixedAccountBranch();
   if (f !== 0) {
     writer.writeUint32(
-      15,
+      13,
       f
     );
   }
   f = message.getMixedSplitAccount();
   if (f !== 0) {
     writer.writeUint32(
-      16,
+      14,
       f
     );
   }
   f = message.getChangeAccount();
   if (f !== 0) {
     writer.writeUint32(
-      17,
+      15,
       f
     );
   }
   f = message.getVspHost();
   if (f.length > 0) {
     writer.writeString(
-      18,
+      16,
       f
     );
   }
   f = message.getVspPubkey();
   if (f.length > 0) {
     writer.writeString(
+      17,
+      f
+    );
+  }
+  f = message.getUseVotingAccount();
+  if (f) {
+    writer.writeBool(
+      18,
+      f
+    );
+  }
+  f = message.getVotingAccount();
+  if (f !== 0) {
+    writer.writeUint32(
       19,
       f
     );
@@ -22059,47 +22567,11 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.setNumTickets = function(value)
 
 
 /**
- * optional string pool_address = 7;
- * @return {string}
- */
-proto.walletrpc.PurchaseTicketsRequest.prototype.getPoolAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
- */
-proto.walletrpc.PurchaseTicketsRequest.prototype.setPoolAddress = function(value) {
-  return jspb.Message.setProto3StringField(this, 7, value);
-};
-
-
-/**
- * optional double pool_fees = 8;
- * @return {number}
- */
-proto.walletrpc.PurchaseTicketsRequest.prototype.getPoolFees = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 8, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
- */
-proto.walletrpc.PurchaseTicketsRequest.prototype.setPoolFees = function(value) {
-  return jspb.Message.setProto3FloatField(this, 8, value);
-};
-
-
-/**
- * optional uint32 expiry = 9;
+ * optional uint32 expiry = 7;
  * @return {number}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getExpiry = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
 };
 
 
@@ -22108,16 +22580,16 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getExpiry = function() {
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setExpiry = function(value) {
-  return jspb.Message.setProto3IntField(this, 9, value);
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
 /**
- * optional int64 tx_fee = 10;
+ * optional int64 tx_fee = 8;
  * @return {number}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getTxFee = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
 };
 
 
@@ -22126,16 +22598,16 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getTxFee = function() {
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setTxFee = function(value) {
-  return jspb.Message.setProto3IntField(this, 10, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
 /**
- * optional int64 ticket_fee = 11;
+ * optional int64 ticket_fee = 9;
  * @return {number}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getTicketFee = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 9, 0));
 };
 
 
@@ -22144,16 +22616,16 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getTicketFee = function() {
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setTicketFee = function(value) {
-  return jspb.Message.setProto3IntField(this, 11, value);
+  return jspb.Message.setProto3IntField(this, 9, value);
 };
 
 
 /**
- * optional bool dont_sign_tx = 12;
+ * optional bool dont_sign_tx = 10;
  * @return {boolean}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getDontSignTx = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 12, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 10, false));
 };
 
 
@@ -22162,16 +22634,16 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getDontSignTx = function() {
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setDontSignTx = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 12, value);
+  return jspb.Message.setProto3BooleanField(this, 10, value);
 };
 
 
 /**
- * optional string cspp_server = 13;
+ * optional string cspp_server = 11;
  * @return {string}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getCsppServer = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
 };
 
 
@@ -22180,16 +22652,16 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getCsppServer = function() {
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setCsppServer = function(value) {
-  return jspb.Message.setProto3StringField(this, 13, value);
+  return jspb.Message.setProto3StringField(this, 11, value);
 };
 
 
 /**
- * optional uint32 mixed_account = 14;
+ * optional uint32 mixed_account = 12;
  * @return {number}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getMixedAccount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
 };
 
 
@@ -22198,16 +22670,16 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getMixedAccount = function() {
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setMixedAccount = function(value) {
-  return jspb.Message.setProto3IntField(this, 14, value);
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
 /**
- * optional uint32 mixed_account_branch = 15;
+ * optional uint32 mixed_account_branch = 13;
  * @return {number}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getMixedAccountBranch = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
 };
 
 
@@ -22216,16 +22688,16 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getMixedAccountBranch = functio
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setMixedAccountBranch = function(value) {
-  return jspb.Message.setProto3IntField(this, 15, value);
+  return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
 /**
- * optional uint32 mixed_split_account = 16;
+ * optional uint32 mixed_split_account = 14;
  * @return {number}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getMixedSplitAccount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 16, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
 };
 
 
@@ -22234,16 +22706,16 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getMixedSplitAccount = function
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setMixedSplitAccount = function(value) {
-  return jspb.Message.setProto3IntField(this, 16, value);
+  return jspb.Message.setProto3IntField(this, 14, value);
 };
 
 
 /**
- * optional uint32 change_account = 17;
+ * optional uint32 change_account = 15;
  * @return {number}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getChangeAccount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 17, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
 };
 
 
@@ -22252,16 +22724,16 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getChangeAccount = function() {
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setChangeAccount = function(value) {
-  return jspb.Message.setProto3IntField(this, 17, value);
+  return jspb.Message.setProto3IntField(this, 15, value);
 };
 
 
 /**
- * optional string vsp_host = 18;
+ * optional string vsp_host = 16;
  * @return {string}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getVspHost = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 16, ""));
 };
 
 
@@ -22270,16 +22742,16 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getVspHost = function() {
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setVspHost = function(value) {
-  return jspb.Message.setProto3StringField(this, 18, value);
+  return jspb.Message.setProto3StringField(this, 16, value);
 };
 
 
 /**
- * optional string vsp_pubkey = 19;
+ * optional string vsp_pubkey = 17;
  * @return {string}
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.getVspPubkey = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 19, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 17, ""));
 };
 
 
@@ -22288,7 +22760,43 @@ proto.walletrpc.PurchaseTicketsRequest.prototype.getVspPubkey = function() {
  * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
  */
 proto.walletrpc.PurchaseTicketsRequest.prototype.setVspPubkey = function(value) {
-  return jspb.Message.setProto3StringField(this, 19, value);
+  return jspb.Message.setProto3StringField(this, 17, value);
+};
+
+
+/**
+ * optional bool use_voting_account = 18;
+ * @return {boolean}
+ */
+proto.walletrpc.PurchaseTicketsRequest.prototype.getUseVotingAccount = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 18, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
+ */
+proto.walletrpc.PurchaseTicketsRequest.prototype.setUseVotingAccount = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 18, value);
+};
+
+
+/**
+ * optional uint32 voting_account = 19;
+ * @return {number}
+ */
+proto.walletrpc.PurchaseTicketsRequest.prototype.getVotingAccount = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 19, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.walletrpc.PurchaseTicketsRequest} returns this
+ */
+proto.walletrpc.PurchaseTicketsRequest.prototype.setVotingAccount = function(value) {
+  return jspb.Message.setProto3IntField(this, 19, value);
 };
 
 
@@ -25933,7 +26441,11 @@ proto.walletrpc.CreateWalletRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     publicPassphrase: msg.getPublicPassphrase_asB64(),
     privatePassphrase: msg.getPrivatePassphrase_asB64(),
-    seed: msg.getSeed_asB64()
+    seed: msg.getSeed_asB64(),
+    setBirthTime: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
+    birthTime: jspb.Message.getFieldWithDefault(msg, 5, 0),
+    setBirthHeight: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
+    birthHeight: jspb.Message.getFieldWithDefault(msg, 7, 0)
   };
 
   if (includeInstance) {
@@ -25982,6 +26494,22 @@ proto.walletrpc.CreateWalletRequest.deserializeBinaryFromReader = function(msg, 
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setSeed(value);
       break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSetBirthTime(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt64());
+      msg.setBirthTime(value);
+      break;
+    case 6:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSetBirthHeight(value);
+      break;
+    case 7:
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setBirthHeight(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -26029,6 +26557,34 @@ proto.walletrpc.CreateWalletRequest.serializeBinaryToWriter = function(message, 
   if (f.length > 0) {
     writer.writeBytes(
       3,
+      f
+    );
+  }
+  f = message.getSetBirthTime();
+  if (f) {
+    writer.writeBool(
+      4,
+      f
+    );
+  }
+  f = message.getBirthTime();
+  if (f !== 0) {
+    writer.writeInt64(
+      5,
+      f
+    );
+  }
+  f = message.getSetBirthHeight();
+  if (f) {
+    writer.writeBool(
+      6,
+      f
+    );
+  }
+  f = message.getBirthHeight();
+  if (f !== 0) {
+    writer.writeUint32(
+      7,
       f
     );
   }
@@ -26158,6 +26714,78 @@ proto.walletrpc.CreateWalletRequest.prototype.getSeed_asU8 = function() {
  */
 proto.walletrpc.CreateWalletRequest.prototype.setSeed = function(value) {
   return jspb.Message.setProto3BytesField(this, 3, value);
+};
+
+
+/**
+ * optional bool set_birth_time = 4;
+ * @return {boolean}
+ */
+proto.walletrpc.CreateWalletRequest.prototype.getSetBirthTime = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.walletrpc.CreateWalletRequest} returns this
+ */
+proto.walletrpc.CreateWalletRequest.prototype.setSetBirthTime = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 4, value);
+};
+
+
+/**
+ * optional int64 birth_time = 5;
+ * @return {number}
+ */
+proto.walletrpc.CreateWalletRequest.prototype.getBirthTime = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.walletrpc.CreateWalletRequest} returns this
+ */
+proto.walletrpc.CreateWalletRequest.prototype.setBirthTime = function(value) {
+  return jspb.Message.setProto3IntField(this, 5, value);
+};
+
+
+/**
+ * optional bool set_birth_height = 6;
+ * @return {boolean}
+ */
+proto.walletrpc.CreateWalletRequest.prototype.getSetBirthHeight = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.walletrpc.CreateWalletRequest} returns this
+ */
+proto.walletrpc.CreateWalletRequest.prototype.setSetBirthHeight = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 6, value);
+};
+
+
+/**
+ * optional uint32 birth_height = 7;
+ * @return {number}
+ */
+proto.walletrpc.CreateWalletRequest.prototype.getBirthHeight = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.walletrpc.CreateWalletRequest} returns this
+ */
+proto.walletrpc.CreateWalletRequest.prototype.setBirthHeight = function(value) {
+  return jspb.Message.setProto3IntField(this, 7, value);
 };
 
 
@@ -31625,16 +32253,14 @@ proto.walletrpc.RunTicketBuyerRequest.toObject = function(includeInstance, msg) 
     votingAccount: jspb.Message.getFieldWithDefault(msg, 3, 0),
     balanceToMaintain: jspb.Message.getFieldWithDefault(msg, 4, 0),
     votingAddress: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    poolAddress: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    poolFees: jspb.Message.getFloatingPointFieldWithDefault(msg, 7, 0.0),
-    vspHost: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    vspPubkey: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    limit: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    csppServer: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    mixedAccount: jspb.Message.getFieldWithDefault(msg, 12, 0),
-    mixedAccountBranch: jspb.Message.getFieldWithDefault(msg, 13, 0),
-    mixedSplitAccount: jspb.Message.getFieldWithDefault(msg, 14, 0),
-    changeAccount: jspb.Message.getFieldWithDefault(msg, 15, 0)
+    vspHost: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    vspPubkey: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    limit: jspb.Message.getFieldWithDefault(msg, 8, 0),
+    csppServer: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    mixedAccount: jspb.Message.getFieldWithDefault(msg, 10, 0),
+    mixedAccountBranch: jspb.Message.getFieldWithDefault(msg, 11, 0),
+    mixedSplitAccount: jspb.Message.getFieldWithDefault(msg, 12, 0),
+    changeAccount: jspb.Message.getFieldWithDefault(msg, 13, 0)
   };
 
   if (includeInstance) {
@@ -31693,41 +32319,33 @@ proto.walletrpc.RunTicketBuyerRequest.deserializeBinaryFromReader = function(msg
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.setPoolAddress(value);
-      break;
-    case 7:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setPoolFees(value);
-      break;
-    case 8:
-      var value = /** @type {string} */ (reader.readString());
       msg.setVspHost(value);
       break;
-    case 9:
+    case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setVspPubkey(value);
       break;
-    case 10:
+    case 8:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setLimit(value);
       break;
-    case 11:
+    case 9:
       var value = /** @type {string} */ (reader.readString());
       msg.setCsppServer(value);
       break;
-    case 12:
+    case 10:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMixedAccount(value);
       break;
-    case 13:
+    case 11:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMixedAccountBranch(value);
       break;
-    case 14:
+    case 12:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setMixedSplitAccount(value);
       break;
-    case 15:
+    case 13:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setChangeAccount(value);
       break;
@@ -31795,73 +32413,59 @@ proto.walletrpc.RunTicketBuyerRequest.serializeBinaryToWriter = function(message
       f
     );
   }
-  f = message.getPoolAddress();
+  f = message.getVspHost();
   if (f.length > 0) {
     writer.writeString(
       6,
       f
     );
   }
-  f = message.getPoolFees();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      7,
-      f
-    );
-  }
-  f = message.getVspHost();
-  if (f.length > 0) {
-    writer.writeString(
-      8,
-      f
-    );
-  }
   f = message.getVspPubkey();
   if (f.length > 0) {
     writer.writeString(
-      9,
+      7,
       f
     );
   }
   f = message.getLimit();
   if (f !== 0) {
     writer.writeInt32(
-      10,
+      8,
       f
     );
   }
   f = message.getCsppServer();
   if (f.length > 0) {
     writer.writeString(
-      11,
+      9,
       f
     );
   }
   f = message.getMixedAccount();
   if (f !== 0) {
     writer.writeUint32(
-      12,
+      10,
       f
     );
   }
   f = message.getMixedAccountBranch();
   if (f !== 0) {
     writer.writeUint32(
-      13,
+      11,
       f
     );
   }
   f = message.getMixedSplitAccount();
   if (f !== 0) {
     writer.writeUint32(
-      14,
+      12,
       f
     );
   }
   f = message.getChangeAccount();
   if (f !== 0) {
     writer.writeUint32(
-      15,
+      13,
       f
     );
   }
@@ -31983,10 +32587,10 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.setVotingAddress = function(valu
 
 
 /**
- * optional string pool_address = 6;
+ * optional string vsp_host = 6;
  * @return {string}
  */
-proto.walletrpc.RunTicketBuyerRequest.prototype.getPoolAddress = function() {
+proto.walletrpc.RunTicketBuyerRequest.prototype.getVspHost = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -31995,53 +32599,17 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getPoolAddress = function() {
  * @param {string} value
  * @return {!proto.walletrpc.RunTicketBuyerRequest} returns this
  */
-proto.walletrpc.RunTicketBuyerRequest.prototype.setPoolAddress = function(value) {
+proto.walletrpc.RunTicketBuyerRequest.prototype.setVspHost = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
 /**
- * optional double pool_fees = 7;
- * @return {number}
- */
-proto.walletrpc.RunTicketBuyerRequest.prototype.getPoolFees = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 7, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.RunTicketBuyerRequest} returns this
- */
-proto.walletrpc.RunTicketBuyerRequest.prototype.setPoolFees = function(value) {
-  return jspb.Message.setProto3FloatField(this, 7, value);
-};
-
-
-/**
- * optional string vsp_host = 8;
- * @return {string}
- */
-proto.walletrpc.RunTicketBuyerRequest.prototype.getVspHost = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.walletrpc.RunTicketBuyerRequest} returns this
- */
-proto.walletrpc.RunTicketBuyerRequest.prototype.setVspHost = function(value) {
-  return jspb.Message.setProto3StringField(this, 8, value);
-};
-
-
-/**
- * optional string vsp_pubkey = 9;
+ * optional string vsp_pubkey = 7;
  * @return {string}
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.getVspPubkey = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
 
@@ -32050,16 +32618,16 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getVspPubkey = function() {
  * @return {!proto.walletrpc.RunTicketBuyerRequest} returns this
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setVspPubkey = function(value) {
-  return jspb.Message.setProto3StringField(this, 9, value);
+  return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
 /**
- * optional int32 limit = 10;
+ * optional int32 limit = 8;
  * @return {number}
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.getLimit = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 8, 0));
 };
 
 
@@ -32068,16 +32636,16 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getLimit = function() {
  * @return {!proto.walletrpc.RunTicketBuyerRequest} returns this
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setLimit = function(value) {
-  return jspb.Message.setProto3IntField(this, 10, value);
+  return jspb.Message.setProto3IntField(this, 8, value);
 };
 
 
 /**
- * optional string cspp_server = 11;
+ * optional string cspp_server = 9;
  * @return {string}
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.getCsppServer = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
 };
 
 
@@ -32086,16 +32654,16 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getCsppServer = function() {
  * @return {!proto.walletrpc.RunTicketBuyerRequest} returns this
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setCsppServer = function(value) {
-  return jspb.Message.setProto3StringField(this, 11, value);
+  return jspb.Message.setProto3StringField(this, 9, value);
 };
 
 
 /**
- * optional uint32 mixed_account = 12;
+ * optional uint32 mixed_account = 10;
  * @return {number}
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.getMixedAccount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
 };
 
 
@@ -32104,16 +32672,16 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getMixedAccount = function() {
  * @return {!proto.walletrpc.RunTicketBuyerRequest} returns this
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setMixedAccount = function(value) {
-  return jspb.Message.setProto3IntField(this, 12, value);
+  return jspb.Message.setProto3IntField(this, 10, value);
 };
 
 
 /**
- * optional uint32 mixed_account_branch = 13;
+ * optional uint32 mixed_account_branch = 11;
  * @return {number}
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.getMixedAccountBranch = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 11, 0));
 };
 
 
@@ -32122,16 +32690,16 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getMixedAccountBranch = function
  * @return {!proto.walletrpc.RunTicketBuyerRequest} returns this
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setMixedAccountBranch = function(value) {
-  return jspb.Message.setProto3IntField(this, 13, value);
+  return jspb.Message.setProto3IntField(this, 11, value);
 };
 
 
 /**
- * optional uint32 mixed_split_account = 14;
+ * optional uint32 mixed_split_account = 12;
  * @return {number}
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.getMixedSplitAccount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
 };
 
 
@@ -32140,16 +32708,16 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getMixedSplitAccount = function(
  * @return {!proto.walletrpc.RunTicketBuyerRequest} returns this
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setMixedSplitAccount = function(value) {
-  return jspb.Message.setProto3IntField(this, 14, value);
+  return jspb.Message.setProto3IntField(this, 12, value);
 };
 
 
 /**
- * optional uint32 change_account = 15;
+ * optional uint32 change_account = 13;
  * @return {number}
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.getChangeAccount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 15, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
 };
 
 
@@ -32158,7 +32726,7 @@ proto.walletrpc.RunTicketBuyerRequest.prototype.getChangeAccount = function() {
  * @return {!proto.walletrpc.RunTicketBuyerRequest} returns this
  */
 proto.walletrpc.RunTicketBuyerRequest.prototype.setChangeAccount = function(value) {
-  return jspb.Message.setProto3IntField(this, 15, value);
+  return jspb.Message.setProto3IntField(this, 13, value);
 };
 
 
@@ -32634,3613 +33202,6 @@ proto.walletrpc.RunAccountMixerResponse.prototype.serializeBinary = function() {
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
 proto.walletrpc.RunAccountMixerResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.StartAutoBuyerRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.StartAutoBuyerRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.StartAutoBuyerRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    passphrase: msg.getPassphrase_asB64(),
-    account: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    balanceToMaintain: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    maxFeePerKb: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    maxPriceRelative: jspb.Message.getFloatingPointFieldWithDefault(msg, 5, 0.0),
-    maxPriceAbsolute: jspb.Message.getFieldWithDefault(msg, 6, 0),
-    votingAddress: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    poolAddress: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    poolFees: jspb.Message.getFloatingPointFieldWithDefault(msg, 9, 0.0),
-    maxPerBlock: jspb.Message.getFieldWithDefault(msg, 10, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.StartAutoBuyerRequest}
- */
-proto.walletrpc.StartAutoBuyerRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.StartAutoBuyerRequest;
-  return proto.walletrpc.StartAutoBuyerRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.StartAutoBuyerRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.StartAutoBuyerRequest}
- */
-proto.walletrpc.StartAutoBuyerRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.setPassphrase(value);
-      break;
-    case 2:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setAccount(value);
-      break;
-    case 3:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setBalanceToMaintain(value);
-      break;
-    case 4:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMaxFeePerKb(value);
-      break;
-    case 5:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setMaxPriceRelative(value);
-      break;
-    case 6:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMaxPriceAbsolute(value);
-      break;
-    case 7:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setVotingAddress(value);
-      break;
-    case 8:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setPoolAddress(value);
-      break;
-    case 9:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setPoolFees(value);
-      break;
-    case 10:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMaxPerBlock(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.StartAutoBuyerRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.StartAutoBuyerRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.StartAutoBuyerRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getPassphrase_asU8();
-  if (f.length > 0) {
-    writer.writeBytes(
-      1,
-      f
-    );
-  }
-  f = message.getAccount();
-  if (f !== 0) {
-    writer.writeUint32(
-      2,
-      f
-    );
-  }
-  f = message.getBalanceToMaintain();
-  if (f !== 0) {
-    writer.writeInt64(
-      3,
-      f
-    );
-  }
-  f = message.getMaxFeePerKb();
-  if (f !== 0) {
-    writer.writeInt64(
-      4,
-      f
-    );
-  }
-  f = message.getMaxPriceRelative();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      5,
-      f
-    );
-  }
-  f = message.getMaxPriceAbsolute();
-  if (f !== 0) {
-    writer.writeInt64(
-      6,
-      f
-    );
-  }
-  f = message.getVotingAddress();
-  if (f.length > 0) {
-    writer.writeString(
-      7,
-      f
-    );
-  }
-  f = message.getPoolAddress();
-  if (f.length > 0) {
-    writer.writeString(
-      8,
-      f
-    );
-  }
-  f = message.getPoolFees();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      9,
-      f
-    );
-  }
-  f = message.getMaxPerBlock();
-  if (f !== 0) {
-    writer.writeInt64(
-      10,
-      f
-    );
-  }
-};
-
-
-/**
- * optional bytes passphrase = 1;
- * @return {!(string|Uint8Array)}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getPassphrase = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/**
- * optional bytes passphrase = 1;
- * This is a type-conversion wrapper around `getPassphrase()`
- * @return {string}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getPassphrase_asB64 = function() {
-  return /** @type {string} */ (jspb.Message.bytesAsB64(
-      this.getPassphrase()));
-};
-
-
-/**
- * optional bytes passphrase = 1;
- * Note that Uint8Array is not supported on all browsers.
- * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getPassphrase()`
- * @return {!Uint8Array}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getPassphrase_asU8 = function() {
-  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
-      this.getPassphrase()));
-};
-
-
-/**
- * @param {!(string|Uint8Array)} value
- * @return {!proto.walletrpc.StartAutoBuyerRequest} returns this
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.setPassphrase = function(value) {
-  return jspb.Message.setProto3BytesField(this, 1, value);
-};
-
-
-/**
- * optional uint32 account = 2;
- * @return {number}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getAccount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.StartAutoBuyerRequest} returns this
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.setAccount = function(value) {
-  return jspb.Message.setProto3IntField(this, 2, value);
-};
-
-
-/**
- * optional int64 balance_to_maintain = 3;
- * @return {number}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getBalanceToMaintain = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.StartAutoBuyerRequest} returns this
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.setBalanceToMaintain = function(value) {
-  return jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-/**
- * optional int64 max_fee_per_kb = 4;
- * @return {number}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getMaxFeePerKb = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.StartAutoBuyerRequest} returns this
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.setMaxFeePerKb = function(value) {
-  return jspb.Message.setProto3IntField(this, 4, value);
-};
-
-
-/**
- * optional double max_price_relative = 5;
- * @return {number}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getMaxPriceRelative = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 5, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.StartAutoBuyerRequest} returns this
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.setMaxPriceRelative = function(value) {
-  return jspb.Message.setProto3FloatField(this, 5, value);
-};
-
-
-/**
- * optional int64 max_price_absolute = 6;
- * @return {number}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getMaxPriceAbsolute = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 6, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.StartAutoBuyerRequest} returns this
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.setMaxPriceAbsolute = function(value) {
-  return jspb.Message.setProto3IntField(this, 6, value);
-};
-
-
-/**
- * optional string voting_address = 7;
- * @return {string}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getVotingAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.walletrpc.StartAutoBuyerRequest} returns this
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.setVotingAddress = function(value) {
-  return jspb.Message.setProto3StringField(this, 7, value);
-};
-
-
-/**
- * optional string pool_address = 8;
- * @return {string}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getPoolAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.walletrpc.StartAutoBuyerRequest} returns this
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.setPoolAddress = function(value) {
-  return jspb.Message.setProto3StringField(this, 8, value);
-};
-
-
-/**
- * optional double pool_fees = 9;
- * @return {number}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getPoolFees = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 9, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.StartAutoBuyerRequest} returns this
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.setPoolFees = function(value) {
-  return jspb.Message.setProto3FloatField(this, 9, value);
-};
-
-
-/**
- * optional int64 max_per_block = 10;
- * @return {number}
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.getMaxPerBlock = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.StartAutoBuyerRequest} returns this
- */
-proto.walletrpc.StartAutoBuyerRequest.prototype.setMaxPerBlock = function(value) {
-  return jspb.Message.setProto3IntField(this, 10, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.StartAutoBuyerResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.StartAutoBuyerResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.StartAutoBuyerResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.StartAutoBuyerResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.StartAutoBuyerResponse}
- */
-proto.walletrpc.StartAutoBuyerResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.StartAutoBuyerResponse;
-  return proto.walletrpc.StartAutoBuyerResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.StartAutoBuyerResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.StartAutoBuyerResponse}
- */
-proto.walletrpc.StartAutoBuyerResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.StartAutoBuyerResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.StartAutoBuyerResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.StartAutoBuyerResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.StartAutoBuyerResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.StopAutoBuyerRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.StopAutoBuyerRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.StopAutoBuyerRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.StopAutoBuyerRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.StopAutoBuyerRequest}
- */
-proto.walletrpc.StopAutoBuyerRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.StopAutoBuyerRequest;
-  return proto.walletrpc.StopAutoBuyerRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.StopAutoBuyerRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.StopAutoBuyerRequest}
- */
-proto.walletrpc.StopAutoBuyerRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.StopAutoBuyerRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.StopAutoBuyerRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.StopAutoBuyerRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.StopAutoBuyerRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.StopAutoBuyerResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.StopAutoBuyerResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.StopAutoBuyerResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.StopAutoBuyerResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.StopAutoBuyerResponse}
- */
-proto.walletrpc.StopAutoBuyerResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.StopAutoBuyerResponse;
-  return proto.walletrpc.StopAutoBuyerResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.StopAutoBuyerResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.StopAutoBuyerResponse}
- */
-proto.walletrpc.StopAutoBuyerResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.StopAutoBuyerResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.StopAutoBuyerResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.StopAutoBuyerResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.StopAutoBuyerResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.TicketBuyerConfigRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.TicketBuyerConfigRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.TicketBuyerConfigRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.TicketBuyerConfigRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.TicketBuyerConfigRequest}
- */
-proto.walletrpc.TicketBuyerConfigRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.TicketBuyerConfigRequest;
-  return proto.walletrpc.TicketBuyerConfigRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.TicketBuyerConfigRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.TicketBuyerConfigRequest}
- */
-proto.walletrpc.TicketBuyerConfigRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.TicketBuyerConfigRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.TicketBuyerConfigRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.TicketBuyerConfigRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.TicketBuyerConfigRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.TicketBuyerConfigResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.TicketBuyerConfigResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.TicketBuyerConfigResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    account: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    avgPriceMode: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    avgPricevwapDelta: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    balanceToMaintain: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    blocksToAvg: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    dontWaitForTickets: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
-    expiryDelta: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    feeSource: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    feeTargetScaling: jspb.Message.getFloatingPointFieldWithDefault(msg, 9, 0.0),
-    minFee: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    maxFee: jspb.Message.getFieldWithDefault(msg, 12, 0),
-    maxPerBlock: jspb.Message.getFieldWithDefault(msg, 13, 0),
-    maxPriceAbsolute: jspb.Message.getFieldWithDefault(msg, 14, 0),
-    maxPriceRelative: jspb.Message.getFloatingPointFieldWithDefault(msg, 15, 0.0),
-    maxInMempool: jspb.Message.getFieldWithDefault(msg, 17, 0),
-    poolAddress: jspb.Message.getFieldWithDefault(msg, 18, ""),
-    poolFees: jspb.Message.getFloatingPointFieldWithDefault(msg, 19, 0.0),
-    spreadTicketPurchases: jspb.Message.getBooleanFieldWithDefault(msg, 20, false),
-    votingAddress: jspb.Message.getFieldWithDefault(msg, 21, ""),
-    txFee: jspb.Message.getFieldWithDefault(msg, 22, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.TicketBuyerConfigResponse}
- */
-proto.walletrpc.TicketBuyerConfigResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.TicketBuyerConfigResponse;
-  return proto.walletrpc.TicketBuyerConfigResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.TicketBuyerConfigResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.TicketBuyerConfigResponse}
- */
-proto.walletrpc.TicketBuyerConfigResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setAccount(value);
-      break;
-    case 2:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setAvgPriceMode(value);
-      break;
-    case 3:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setAvgPricevwapDelta(value);
-      break;
-    case 4:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setBalanceToMaintain(value);
-      break;
-    case 5:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setBlocksToAvg(value);
-      break;
-    case 6:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setDontWaitForTickets(value);
-      break;
-    case 7:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setExpiryDelta(value);
-      break;
-    case 8:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setFeeSource(value);
-      break;
-    case 9:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setFeeTargetScaling(value);
-      break;
-    case 10:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMinFee(value);
-      break;
-    case 12:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMaxFee(value);
-      break;
-    case 13:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMaxPerBlock(value);
-      break;
-    case 14:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMaxPriceAbsolute(value);
-      break;
-    case 15:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setMaxPriceRelative(value);
-      break;
-    case 17:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMaxInMempool(value);
-      break;
-    case 18:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setPoolAddress(value);
-      break;
-    case 19:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setPoolFees(value);
-      break;
-    case 20:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setSpreadTicketPurchases(value);
-      break;
-    case 21:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setVotingAddress(value);
-      break;
-    case 22:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setTxFee(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.TicketBuyerConfigResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.TicketBuyerConfigResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.TicketBuyerConfigResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getAccount();
-  if (f !== 0) {
-    writer.writeUint32(
-      1,
-      f
-    );
-  }
-  f = message.getAvgPriceMode();
-  if (f.length > 0) {
-    writer.writeString(
-      2,
-      f
-    );
-  }
-  f = message.getAvgPricevwapDelta();
-  if (f !== 0) {
-    writer.writeInt64(
-      3,
-      f
-    );
-  }
-  f = message.getBalanceToMaintain();
-  if (f !== 0) {
-    writer.writeInt64(
-      4,
-      f
-    );
-  }
-  f = message.getBlocksToAvg();
-  if (f !== 0) {
-    writer.writeInt64(
-      5,
-      f
-    );
-  }
-  f = message.getDontWaitForTickets();
-  if (f) {
-    writer.writeBool(
-      6,
-      f
-    );
-  }
-  f = message.getExpiryDelta();
-  if (f !== 0) {
-    writer.writeInt64(
-      7,
-      f
-    );
-  }
-  f = message.getFeeSource();
-  if (f.length > 0) {
-    writer.writeString(
-      8,
-      f
-    );
-  }
-  f = message.getFeeTargetScaling();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      9,
-      f
-    );
-  }
-  f = message.getMinFee();
-  if (f !== 0) {
-    writer.writeInt64(
-      10,
-      f
-    );
-  }
-  f = message.getMaxFee();
-  if (f !== 0) {
-    writer.writeInt64(
-      12,
-      f
-    );
-  }
-  f = message.getMaxPerBlock();
-  if (f !== 0) {
-    writer.writeInt64(
-      13,
-      f
-    );
-  }
-  f = message.getMaxPriceAbsolute();
-  if (f !== 0) {
-    writer.writeInt64(
-      14,
-      f
-    );
-  }
-  f = message.getMaxPriceRelative();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      15,
-      f
-    );
-  }
-  f = message.getMaxInMempool();
-  if (f !== 0) {
-    writer.writeInt64(
-      17,
-      f
-    );
-  }
-  f = message.getPoolAddress();
-  if (f.length > 0) {
-    writer.writeString(
-      18,
-      f
-    );
-  }
-  f = message.getPoolFees();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      19,
-      f
-    );
-  }
-  f = message.getSpreadTicketPurchases();
-  if (f) {
-    writer.writeBool(
-      20,
-      f
-    );
-  }
-  f = message.getVotingAddress();
-  if (f.length > 0) {
-    writer.writeString(
-      21,
-      f
-    );
-  }
-  f = message.getTxFee();
-  if (f !== 0) {
-    writer.writeInt64(
-      22,
-      f
-    );
-  }
-};
-
-
-/**
- * optional uint32 account = 1;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getAccount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setAccount = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
-};
-
-
-/**
- * optional string avg_price_mode = 2;
- * @return {string}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getAvgPriceMode = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setAvgPriceMode = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
-};
-
-
-/**
- * optional int64 avg_priceVWAP_delta = 3;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getAvgPricevwapDelta = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setAvgPricevwapDelta = function(value) {
-  return jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-/**
- * optional int64 balance_to_maintain = 4;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getBalanceToMaintain = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setBalanceToMaintain = function(value) {
-  return jspb.Message.setProto3IntField(this, 4, value);
-};
-
-
-/**
- * optional int64 blocks_to_avg = 5;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getBlocksToAvg = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setBlocksToAvg = function(value) {
-  return jspb.Message.setProto3IntField(this, 5, value);
-};
-
-
-/**
- * optional bool dont_wait_for_tickets = 6;
- * @return {boolean}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getDontWaitForTickets = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setDontWaitForTickets = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 6, value);
-};
-
-
-/**
- * optional int64 expiry_delta = 7;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getExpiryDelta = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 7, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setExpiryDelta = function(value) {
-  return jspb.Message.setProto3IntField(this, 7, value);
-};
-
-
-/**
- * optional string fee_source = 8;
- * @return {string}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getFeeSource = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setFeeSource = function(value) {
-  return jspb.Message.setProto3StringField(this, 8, value);
-};
-
-
-/**
- * optional double fee_target_scaling = 9;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getFeeTargetScaling = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 9, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setFeeTargetScaling = function(value) {
-  return jspb.Message.setProto3FloatField(this, 9, value);
-};
-
-
-/**
- * optional int64 min_fee = 10;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getMinFee = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 10, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setMinFee = function(value) {
-  return jspb.Message.setProto3IntField(this, 10, value);
-};
-
-
-/**
- * optional int64 max_fee = 12;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getMaxFee = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 12, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setMaxFee = function(value) {
-  return jspb.Message.setProto3IntField(this, 12, value);
-};
-
-
-/**
- * optional int64 max_per_block = 13;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getMaxPerBlock = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 13, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setMaxPerBlock = function(value) {
-  return jspb.Message.setProto3IntField(this, 13, value);
-};
-
-
-/**
- * optional int64 max_price_absolute = 14;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getMaxPriceAbsolute = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 14, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setMaxPriceAbsolute = function(value) {
-  return jspb.Message.setProto3IntField(this, 14, value);
-};
-
-
-/**
- * optional double max_price_relative = 15;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getMaxPriceRelative = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 15, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setMaxPriceRelative = function(value) {
-  return jspb.Message.setProto3FloatField(this, 15, value);
-};
-
-
-/**
- * optional int64 max_in_mempool = 17;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getMaxInMempool = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 17, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setMaxInMempool = function(value) {
-  return jspb.Message.setProto3IntField(this, 17, value);
-};
-
-
-/**
- * optional string pool_address = 18;
- * @return {string}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getPoolAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setPoolAddress = function(value) {
-  return jspb.Message.setProto3StringField(this, 18, value);
-};
-
-
-/**
- * optional double pool_fees = 19;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getPoolFees = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 19, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setPoolFees = function(value) {
-  return jspb.Message.setProto3FloatField(this, 19, value);
-};
-
-
-/**
- * optional bool spread_ticket_purchases = 20;
- * @return {boolean}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getSpreadTicketPurchases = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 20, false));
-};
-
-
-/**
- * @param {boolean} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setSpreadTicketPurchases = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 20, value);
-};
-
-
-/**
- * optional string voting_address = 21;
- * @return {string}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getVotingAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 21, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setVotingAddress = function(value) {
-  return jspb.Message.setProto3StringField(this, 21, value);
-};
-
-
-/**
- * optional int64 tx_fee = 22;
- * @return {number}
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.getTxFee = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 22, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.TicketBuyerConfigResponse} returns this
- */
-proto.walletrpc.TicketBuyerConfigResponse.prototype.setTxFee = function(value) {
-  return jspb.Message.setProto3IntField(this, 22, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetAccountRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetAccountRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetAccountRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetAccountRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    account: jspb.Message.getFieldWithDefault(msg, 1, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetAccountRequest}
- */
-proto.walletrpc.SetAccountRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetAccountRequest;
-  return proto.walletrpc.SetAccountRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetAccountRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetAccountRequest}
- */
-proto.walletrpc.SetAccountRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readUint32());
-      msg.setAccount(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetAccountRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetAccountRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetAccountRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetAccountRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getAccount();
-  if (f !== 0) {
-    writer.writeUint32(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional uint32 account = 1;
- * @return {number}
- */
-proto.walletrpc.SetAccountRequest.prototype.getAccount = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.SetAccountRequest} returns this
- */
-proto.walletrpc.SetAccountRequest.prototype.setAccount = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetAccountResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetAccountResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetAccountResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetAccountResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetAccountResponse}
- */
-proto.walletrpc.SetAccountResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetAccountResponse;
-  return proto.walletrpc.SetAccountResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetAccountResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetAccountResponse}
- */
-proto.walletrpc.SetAccountResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetAccountResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetAccountResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetAccountResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetAccountResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetBalanceToMaintainRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetBalanceToMaintainRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetBalanceToMaintainRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetBalanceToMaintainRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    balanceToMaintain: jspb.Message.getFieldWithDefault(msg, 1, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetBalanceToMaintainRequest}
- */
-proto.walletrpc.SetBalanceToMaintainRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetBalanceToMaintainRequest;
-  return proto.walletrpc.SetBalanceToMaintainRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetBalanceToMaintainRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetBalanceToMaintainRequest}
- */
-proto.walletrpc.SetBalanceToMaintainRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setBalanceToMaintain(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetBalanceToMaintainRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetBalanceToMaintainRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetBalanceToMaintainRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetBalanceToMaintainRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getBalanceToMaintain();
-  if (f !== 0) {
-    writer.writeInt64(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional int64 balance_to_maintain = 1;
- * @return {number}
- */
-proto.walletrpc.SetBalanceToMaintainRequest.prototype.getBalanceToMaintain = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.SetBalanceToMaintainRequest} returns this
- */
-proto.walletrpc.SetBalanceToMaintainRequest.prototype.setBalanceToMaintain = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetBalanceToMaintainResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetBalanceToMaintainResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetBalanceToMaintainResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetBalanceToMaintainResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetBalanceToMaintainResponse}
- */
-proto.walletrpc.SetBalanceToMaintainResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetBalanceToMaintainResponse;
-  return proto.walletrpc.SetBalanceToMaintainResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetBalanceToMaintainResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetBalanceToMaintainResponse}
- */
-proto.walletrpc.SetBalanceToMaintainResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetBalanceToMaintainResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetBalanceToMaintainResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetBalanceToMaintainResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetBalanceToMaintainResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetMaxFeeRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetMaxFeeRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetMaxFeeRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxFeeRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    maxFeePerKb: jspb.Message.getFieldWithDefault(msg, 1, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetMaxFeeRequest}
- */
-proto.walletrpc.SetMaxFeeRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetMaxFeeRequest;
-  return proto.walletrpc.SetMaxFeeRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetMaxFeeRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetMaxFeeRequest}
- */
-proto.walletrpc.SetMaxFeeRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMaxFeePerKb(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetMaxFeeRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetMaxFeeRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetMaxFeeRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxFeeRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getMaxFeePerKb();
-  if (f !== 0) {
-    writer.writeInt64(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional int64 max_fee_per_kb = 1;
- * @return {number}
- */
-proto.walletrpc.SetMaxFeeRequest.prototype.getMaxFeePerKb = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.SetMaxFeeRequest} returns this
- */
-proto.walletrpc.SetMaxFeeRequest.prototype.setMaxFeePerKb = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetMaxFeeResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetMaxFeeResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetMaxFeeResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxFeeResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetMaxFeeResponse}
- */
-proto.walletrpc.SetMaxFeeResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetMaxFeeResponse;
-  return proto.walletrpc.SetMaxFeeResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetMaxFeeResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetMaxFeeResponse}
- */
-proto.walletrpc.SetMaxFeeResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetMaxFeeResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetMaxFeeResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetMaxFeeResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxFeeResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetMaxPriceRelativeRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetMaxPriceRelativeRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetMaxPriceRelativeRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPriceRelativeRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    maxPriceRelative: jspb.Message.getFloatingPointFieldWithDefault(msg, 1, 0.0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetMaxPriceRelativeRequest}
- */
-proto.walletrpc.SetMaxPriceRelativeRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetMaxPriceRelativeRequest;
-  return proto.walletrpc.SetMaxPriceRelativeRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetMaxPriceRelativeRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetMaxPriceRelativeRequest}
- */
-proto.walletrpc.SetMaxPriceRelativeRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setMaxPriceRelative(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetMaxPriceRelativeRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetMaxPriceRelativeRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetMaxPriceRelativeRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPriceRelativeRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getMaxPriceRelative();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional double max_price_relative = 1;
- * @return {number}
- */
-proto.walletrpc.SetMaxPriceRelativeRequest.prototype.getMaxPriceRelative = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 1, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.SetMaxPriceRelativeRequest} returns this
- */
-proto.walletrpc.SetMaxPriceRelativeRequest.prototype.setMaxPriceRelative = function(value) {
-  return jspb.Message.setProto3FloatField(this, 1, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetMaxPriceRelativeResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetMaxPriceRelativeResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetMaxPriceRelativeResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPriceRelativeResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetMaxPriceRelativeResponse}
- */
-proto.walletrpc.SetMaxPriceRelativeResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetMaxPriceRelativeResponse;
-  return proto.walletrpc.SetMaxPriceRelativeResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetMaxPriceRelativeResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetMaxPriceRelativeResponse}
- */
-proto.walletrpc.SetMaxPriceRelativeResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetMaxPriceRelativeResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetMaxPriceRelativeResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetMaxPriceRelativeResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPriceRelativeResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetMaxPriceAbsoluteRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetMaxPriceAbsoluteRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetMaxPriceAbsoluteRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPriceAbsoluteRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    maxPriceAbsolute: jspb.Message.getFieldWithDefault(msg, 1, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetMaxPriceAbsoluteRequest}
- */
-proto.walletrpc.SetMaxPriceAbsoluteRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetMaxPriceAbsoluteRequest;
-  return proto.walletrpc.SetMaxPriceAbsoluteRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetMaxPriceAbsoluteRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetMaxPriceAbsoluteRequest}
- */
-proto.walletrpc.SetMaxPriceAbsoluteRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMaxPriceAbsolute(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetMaxPriceAbsoluteRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetMaxPriceAbsoluteRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetMaxPriceAbsoluteRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPriceAbsoluteRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getMaxPriceAbsolute();
-  if (f !== 0) {
-    writer.writeInt64(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional int64 max_price_absolute = 1;
- * @return {number}
- */
-proto.walletrpc.SetMaxPriceAbsoluteRequest.prototype.getMaxPriceAbsolute = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.SetMaxPriceAbsoluteRequest} returns this
- */
-proto.walletrpc.SetMaxPriceAbsoluteRequest.prototype.setMaxPriceAbsolute = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetMaxPriceAbsoluteResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetMaxPriceAbsoluteResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetMaxPriceAbsoluteResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPriceAbsoluteResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetMaxPriceAbsoluteResponse}
- */
-proto.walletrpc.SetMaxPriceAbsoluteResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetMaxPriceAbsoluteResponse;
-  return proto.walletrpc.SetMaxPriceAbsoluteResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetMaxPriceAbsoluteResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetMaxPriceAbsoluteResponse}
- */
-proto.walletrpc.SetMaxPriceAbsoluteResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetMaxPriceAbsoluteResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetMaxPriceAbsoluteResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetMaxPriceAbsoluteResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPriceAbsoluteResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetVotingAddressRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetVotingAddressRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetVotingAddressRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetVotingAddressRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    votingAddress: jspb.Message.getFieldWithDefault(msg, 1, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetVotingAddressRequest}
- */
-proto.walletrpc.SetVotingAddressRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetVotingAddressRequest;
-  return proto.walletrpc.SetVotingAddressRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetVotingAddressRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetVotingAddressRequest}
- */
-proto.walletrpc.SetVotingAddressRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setVotingAddress(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetVotingAddressRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetVotingAddressRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetVotingAddressRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetVotingAddressRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getVotingAddress();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional string voting_address = 1;
- * @return {string}
- */
-proto.walletrpc.SetVotingAddressRequest.prototype.getVotingAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.walletrpc.SetVotingAddressRequest} returns this
- */
-proto.walletrpc.SetVotingAddressRequest.prototype.setVotingAddress = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetVotingAddressResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetVotingAddressResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetVotingAddressResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetVotingAddressResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetVotingAddressResponse}
- */
-proto.walletrpc.SetVotingAddressResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetVotingAddressResponse;
-  return proto.walletrpc.SetVotingAddressResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetVotingAddressResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetVotingAddressResponse}
- */
-proto.walletrpc.SetVotingAddressResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetVotingAddressResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetVotingAddressResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetVotingAddressResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetVotingAddressResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetPoolAddressRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetPoolAddressRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetPoolAddressRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetPoolAddressRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    poolAddress: jspb.Message.getFieldWithDefault(msg, 1, "")
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetPoolAddressRequest}
- */
-proto.walletrpc.SetPoolAddressRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetPoolAddressRequest;
-  return proto.walletrpc.SetPoolAddressRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetPoolAddressRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetPoolAddressRequest}
- */
-proto.walletrpc.SetPoolAddressRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setPoolAddress(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetPoolAddressRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetPoolAddressRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetPoolAddressRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetPoolAddressRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getPoolAddress();
-  if (f.length > 0) {
-    writer.writeString(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional string pool_address = 1;
- * @return {string}
- */
-proto.walletrpc.SetPoolAddressRequest.prototype.getPoolAddress = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.walletrpc.SetPoolAddressRequest} returns this
- */
-proto.walletrpc.SetPoolAddressRequest.prototype.setPoolAddress = function(value) {
-  return jspb.Message.setProto3StringField(this, 1, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetPoolAddressResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetPoolAddressResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetPoolAddressResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetPoolAddressResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetPoolAddressResponse}
- */
-proto.walletrpc.SetPoolAddressResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetPoolAddressResponse;
-  return proto.walletrpc.SetPoolAddressResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetPoolAddressResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetPoolAddressResponse}
- */
-proto.walletrpc.SetPoolAddressResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetPoolAddressResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetPoolAddressResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetPoolAddressResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetPoolAddressResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetPoolFeesRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetPoolFeesRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetPoolFeesRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetPoolFeesRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    poolFees: jspb.Message.getFloatingPointFieldWithDefault(msg, 1, 0.0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetPoolFeesRequest}
- */
-proto.walletrpc.SetPoolFeesRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetPoolFeesRequest;
-  return proto.walletrpc.SetPoolFeesRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetPoolFeesRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetPoolFeesRequest}
- */
-proto.walletrpc.SetPoolFeesRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readDouble());
-      msg.setPoolFees(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetPoolFeesRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetPoolFeesRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetPoolFeesRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetPoolFeesRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getPoolFees();
-  if (f !== 0.0) {
-    writer.writeDouble(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional double pool_fees = 1;
- * @return {number}
- */
-proto.walletrpc.SetPoolFeesRequest.prototype.getPoolFees = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 1, 0.0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.SetPoolFeesRequest} returns this
- */
-proto.walletrpc.SetPoolFeesRequest.prototype.setPoolFees = function(value) {
-  return jspb.Message.setProto3FloatField(this, 1, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetPoolFeesResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetPoolFeesResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetPoolFeesResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetPoolFeesResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetPoolFeesResponse}
- */
-proto.walletrpc.SetPoolFeesResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetPoolFeesResponse;
-  return proto.walletrpc.SetPoolFeesResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetPoolFeesResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetPoolFeesResponse}
- */
-proto.walletrpc.SetPoolFeesResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetPoolFeesResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetPoolFeesResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetPoolFeesResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetPoolFeesResponse.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetMaxPerBlockRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetMaxPerBlockRequest.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetMaxPerBlockRequest} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPerBlockRequest.toObject = function(includeInstance, msg) {
-  var f, obj = {
-    maxPerBlock: jspb.Message.getFieldWithDefault(msg, 1, 0)
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetMaxPerBlockRequest}
- */
-proto.walletrpc.SetMaxPerBlockRequest.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetMaxPerBlockRequest;
-  return proto.walletrpc.SetMaxPerBlockRequest.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetMaxPerBlockRequest} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetMaxPerBlockRequest}
- */
-proto.walletrpc.SetMaxPerBlockRequest.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    case 1:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setMaxPerBlock(value);
-      break;
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetMaxPerBlockRequest.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetMaxPerBlockRequest.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetMaxPerBlockRequest} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPerBlockRequest.serializeBinaryToWriter = function(message, writer) {
-  var f = undefined;
-  f = message.getMaxPerBlock();
-  if (f !== 0) {
-    writer.writeInt64(
-      1,
-      f
-    );
-  }
-};
-
-
-/**
- * optional int64 max_per_block = 1;
- * @return {number}
- */
-proto.walletrpc.SetMaxPerBlockRequest.prototype.getMaxPerBlock = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.walletrpc.SetMaxPerBlockRequest} returns this
- */
-proto.walletrpc.SetMaxPerBlockRequest.prototype.setMaxPerBlock = function(value) {
-  return jspb.Message.setProto3IntField(this, 1, value);
-};
-
-
-
-
-
-if (jspb.Message.GENERATE_TO_OBJECT) {
-/**
- * Creates an object representation of this proto.
- * Field names that are reserved in JavaScript and will be renamed to pb_name.
- * Optional fields that are not set will be set to undefined.
- * To access a reserved field use, foo.pb_<name>, eg, foo.pb_default.
- * For the list of reserved names please see:
- *     net/proto2/compiler/js/internal/generator.cc#kKeyword.
- * @param {boolean=} opt_includeInstance Deprecated. whether to include the
- *     JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @return {!Object}
- */
-proto.walletrpc.SetMaxPerBlockResponse.prototype.toObject = function(opt_includeInstance) {
-  return proto.walletrpc.SetMaxPerBlockResponse.toObject(opt_includeInstance, this);
-};
-
-
-/**
- * Static version of the {@see toObject} method.
- * @param {boolean|undefined} includeInstance Deprecated. Whether to include
- *     the JSPB instance for transitional soy proto support:
- *     http://goto/soy-param-migration
- * @param {!proto.walletrpc.SetMaxPerBlockResponse} msg The msg instance to transform.
- * @return {!Object}
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPerBlockResponse.toObject = function(includeInstance, msg) {
-  var f, obj = {
-
-  };
-
-  if (includeInstance) {
-    obj.$jspbMessageInstance = msg;
-  }
-  return obj;
-};
-}
-
-
-/**
- * Deserializes binary data (in protobuf wire format).
- * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.walletrpc.SetMaxPerBlockResponse}
- */
-proto.walletrpc.SetMaxPerBlockResponse.deserializeBinary = function(bytes) {
-  var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.walletrpc.SetMaxPerBlockResponse;
-  return proto.walletrpc.SetMaxPerBlockResponse.deserializeBinaryFromReader(msg, reader);
-};
-
-
-/**
- * Deserializes binary data (in protobuf wire format) from the
- * given reader into the given message object.
- * @param {!proto.walletrpc.SetMaxPerBlockResponse} msg The message object to deserialize into.
- * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.walletrpc.SetMaxPerBlockResponse}
- */
-proto.walletrpc.SetMaxPerBlockResponse.deserializeBinaryFromReader = function(msg, reader) {
-  while (reader.nextField()) {
-    if (reader.isEndGroup()) {
-      break;
-    }
-    var field = reader.getFieldNumber();
-    switch (field) {
-    default:
-      reader.skipField();
-      break;
-    }
-  }
-  return msg;
-};
-
-
-/**
- * Serializes the message to binary data (in protobuf wire format).
- * @return {!Uint8Array}
- */
-proto.walletrpc.SetMaxPerBlockResponse.prototype.serializeBinary = function() {
-  var writer = new jspb.BinaryWriter();
-  proto.walletrpc.SetMaxPerBlockResponse.serializeBinaryToWriter(this, writer);
-  return writer.getResultBuffer();
-};
-
-
-/**
- * Serializes the given message to binary data (in protobuf wire
- * format), writing to the given BinaryWriter.
- * @param {!proto.walletrpc.SetMaxPerBlockResponse} message
- * @param {!jspb.BinaryWriter} writer
- * @suppress {unusedLocalVariables} f is only used for nested messages
- */
-proto.walletrpc.SetMaxPerBlockResponse.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
 };
 
