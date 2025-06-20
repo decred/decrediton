@@ -112,7 +112,7 @@ require (
 	github.com/gcash/bchwallet v0.10.0 // indirect
 	github.com/gcash/bchwallet/walletdb v0.0.0-20210524114850-4837f9798568 // indirect
 	github.com/getsentry/sentry-go v0.27.0 // indirect
-	github.com/go-chi/chi/v5 v5.0.1 // indirect
+	github.com/go-chi/chi/v5 v5.2.2 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
