@@ -5,11 +5,8 @@ import style from "./PrivacyForm.module.css";
 import { usePrivacyForm } from "./hooks";
 
 const PrivacyForm = ({ className }) => {
-  const {
-    mixedAccountName,
-    changeAccountName,
-    mixedAccountBranch
-  } = usePrivacyForm();
+  const { mixedAccountName, changeAccountName, mixedAccountBranch } =
+    usePrivacyForm();
 
   return (
     <div className={classNames(className, style.privacyForm)}>

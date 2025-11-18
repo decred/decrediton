@@ -180,11 +180,7 @@ export const purchaseTickets = (
 ) =>
   new Promise((resolve, reject) => {
     const request = new api.PurchaseTicketsRequest();
-    const {
-      mixedAccount,
-      changeAccount,
-      mixedAcctBranch
-    } = csppReq;
+    const { mixedAccount, changeAccount, mixedAcctBranch } = csppReq;
     // if mixed or change account is defined it is a privacy request.
     if (mixedAccount || changeAccount) {
       // check if any cspp argument is missing.
@@ -200,6 +196,7 @@ export const purchaseTickets = (
       request.setMixedSplitAccount(mixedAccount);
       request.setChangeAccount(changeAccount);
       request.setMixedAccountBranch(mixedAcctBranch);
+      request.setEnableMixing(true);
     } else {
       request.setChangeAccount(accountNum.value);
     }
@@ -558,11 +555,7 @@ export const startTicketAutoBuyer = (
   new Promise((ok) => {
     const request = new api.RunTicketBuyerRequest();
     if (mixedAccount && changeAccount) {
-      if (
-        !mixedAccount ||
-        !changeAccount ||
-        mixedAcctBranch === undefined
-      ) {
+      if (!mixedAccount || !changeAccount || mixedAcctBranch === undefined) {
         throw "missing cspp argument";
       }
 
@@ -570,6 +563,7 @@ export const startTicketAutoBuyer = (
       request.setMixedSplitAccount(mixedAccount);
       request.setChangeAccount(changeAccount);
       request.setMixedAccountBranch(mixedAcctBranch);
+      request.setEnableMixing(true);
     }
 
     request.setVspPubkey(pubkey);

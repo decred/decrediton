@@ -409,6 +409,8 @@ export const startWallet =
         const dexReady = walletCfg.get(cfgConstants.DEX_READY);
         const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
         const confirmDexSeed = walletCfg.get(cfgConstants.CONFIRM_DEX_SEED);
+        const mixing = walletCfg.get(cfgConstants.MIXED_ACCOUNT_CFG) != 0;
+
         let rpcCreds = {};
         if (enableDex) {
           rpcCreds = {
@@ -427,7 +429,8 @@ export const startWallet =
           isTestnet,
           rpcCreds,
           selectedWallet.value.gapLimit,
-          selectedWallet.value.disableCoinTypeUpgrades
+          selectedWallet.value.disableCoinTypeUpgrades,
+          mixing
         );
         const { port } = walletStarted;
         wallet.setPreviousWallet(selectedWallet);

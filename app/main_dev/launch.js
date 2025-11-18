@@ -23,11 +23,7 @@ import {
   AddToPrivacyLog
 } from "./logging";
 import parseArgs from "minimist";
-import {
-  OPTIONS,
-  UPGD_ELECTRON8,
-  PROXYTYPE_SOCKS5
-} from "constants";
+import { OPTIONS, UPGD_ELECTRON8, PROXYTYPE_SOCKS5 } from "constants";
 import * as cfgConstants from "constants/config";
 import os from "os";
 import fs from "fs";
@@ -658,7 +654,8 @@ export const launchDCRWallet = async (
   rpcListen,
   rpcCert,
   gapLimit,
-  disableCoinTypeUpgrades
+  disableCoinTypeUpgrades,
+  mixing
 ) => {
   const cfg = getWalletCfg(testnet, walletPath);
   const confFile = fs.existsSync(
@@ -687,6 +684,10 @@ export const launchDCRWallet = async (
   );
   if (proxyType === PROXYTYPE_SOCKS5 && proxyLocation) {
     args.push(`--proxy=${proxyLocation}`);
+  }
+  if (mixing) {
+    args.push("--mixing");
+    args.push("--mixchange");
   }
 
   const dcrwExe = getExecutablePath("dcrwallet", argv.custombinpath);

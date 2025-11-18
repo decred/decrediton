@@ -86,12 +86,7 @@ export const checkUnmixedAccountBalance =
   };
 
 export const runAccountMixer =
-  ({
-    passphrase,
-    mixedAccount,
-    mixedAccountBranch,
-    changeAccount
-  }) =>
+  ({ passphrase, mixedAccount, mixedAccountBranch, changeAccount }) =>
   (dispatch, getState) =>
     new Promise((resolve) => {
       dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
