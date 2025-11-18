@@ -37,16 +37,12 @@ import {
   SEND_FROM_UNMIXED,
   MIXED_ACCOUNT_CFG,
   CHANGE_ACCOUNT_CFG,
-  CSPP_SERVER,
-  CSPP_PORT,
   MIXED_ACC_BRANCH,
   REMEMBERED_VSP_HOST,
   NEEDS_VSPD_PROCESS_TICKETS,
   SHOW_STAKING_WARNING,
   AUTOBUYER_SETTINGS,
   LAST_ACCESS,
-  CSPP_URL_LEGACY,
-  CSPP_URL,
   DIFF_CONNECTION_ERROR
 } from "constants";
 import { cloneDeep } from "fp";
@@ -955,8 +951,6 @@ test("test startWallet", async () => {
   const testSendFromUnmixed = "test-SEND_FROM_UNMIXED";
   const testMixedAccountCfg = "test-MIXED_ACCOUNT_CFG";
   const testChangeAccountCfg = "test-CHANGE_ACCOUNT_CFG";
-  const testCsppServer = "test-CSPP_SERVER";
-  const testCsppPort = "test-CSPP_PORT";
   const testMixedAccBranch = "test-MIXED_ACC_BRANCH";
   const testRememberedVspHost = "test-REMEMBERED_VSP_HOST";
   const testNeedsVspdProcessTickets = "test-NEEDS_VSPD_PROCESS_TICKETS";
@@ -1003,10 +997,6 @@ test("test startWallet", async () => {
         return testMixedAccountCfg;
       case CHANGE_ACCOUNT_CFG:
         return testChangeAccountCfg;
-      case CSPP_SERVER:
-        return testCsppServer;
-      case CSPP_PORT:
-        return testCsppPort;
       case MIXED_ACC_BRANCH:
         return testMixedAccBranch;
       case REMEMBERED_VSP_HOST:
@@ -1096,8 +1086,6 @@ test("test startWallet", async () => {
   expect(store.getState().walletLoader.changeAccount).toBe(
     testChangeAccountCfg
   );
-  expect(store.getState().walletLoader.csppServer).toBe(testCsppServer);
-  expect(store.getState().walletLoader.csppPort).toBe(testCsppPort);
   expect(store.getState().walletLoader.mixedAccountBranch).toBe(
     testMixedAccBranch
   );
@@ -1201,21 +1189,6 @@ test("test startWallet - does need passphrase", async () => {
 
   await store.dispatch(daemonActions.startWallet(undefined, false));
   expect(store.getState().walletLoader.needsPassPhrase).toBeTruthy();
-});
-
-test("test startWallet - legacy cspp server", async () => {
-  mockWalletCfgGet = jest.fn((key) => {
-    switch (key) {
-      case CSPP_SERVER:
-        return CSPP_URL_LEGACY;
-      default:
-        undefined;
-    }
-  });
-  const store = createStore(cloneDeep(initialState));
-
-  await store.dispatch(daemonActions.startWallet(undefined, false));
-  expect(mockWalletCfgSet).toHaveBeenCalledWith(CSPP_SERVER, CSPP_URL);
 });
 
 test("test closeDaemonRequest", async () => {

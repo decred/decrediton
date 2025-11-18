@@ -183,8 +183,6 @@ export const purchaseTickets = (
     const {
       mixedAccount,
       changeAccount,
-      csppServer,
-      csppPort,
       mixedAcctBranch
     } = csppReq;
     // if mixed or change account is defined it is a privacy request.
@@ -194,8 +192,6 @@ export const purchaseTickets = (
       if (
         !mixedAccount ||
         !changeAccount ||
-        !csppServer ||
-        !csppPort ||
         (!mixedAcctBranch && mixedAcctBranch !== 0)
       ) {
         throw "missing cspp argument";
@@ -203,7 +199,6 @@ export const purchaseTickets = (
       request.setMixedAccount(mixedAccount);
       request.setMixedSplitAccount(mixedAccount);
       request.setChangeAccount(changeAccount);
-      request.setCsppServer(csppServer + ":" + csppPort);
       request.setMixedAccountBranch(mixedAcctBranch);
     } else {
       request.setChangeAccount(accountNum.value);
@@ -554,8 +549,6 @@ export const startTicketAutoBuyer = (
     mixedAccount,
     mixedAcctBranch,
     changeAccount,
-    csppServer,
-    csppPort,
     balanceToMaintain,
     accountNum,
     pubkey,
@@ -568,8 +561,6 @@ export const startTicketAutoBuyer = (
       if (
         !mixedAccount ||
         !changeAccount ||
-        !csppServer ||
-        !csppPort ||
         mixedAcctBranch === undefined
       ) {
         throw "missing cspp argument";
@@ -578,7 +569,6 @@ export const startTicketAutoBuyer = (
       request.setMixedAccount(mixedAccount);
       request.setMixedSplitAccount(mixedAccount);
       request.setChangeAccount(changeAccount);
-      request.setCsppServer(`${csppServer}:${csppPort}`);
       request.setMixedAccountBranch(mixedAcctBranch);
     }
 

@@ -8,8 +8,6 @@ const PrivacyForm = ({ className }) => {
   const {
     mixedAccountName,
     changeAccountName,
-    csppServer,
-    csppPort,
     mixedAccountBranch
   } = usePrivacyForm();
 
@@ -44,26 +42,6 @@ const PrivacyForm = ({ className }) => {
         value={mixedAccountBranch}
         id="accountBranch"
         className={classNames(style.textInput, style.accountBranch)}
-      />
-      <label htmlFor="csppServer">
-        <T id="privacy.mixing.server" m="Shuffle Server" />
-      </label>
-      <TextInput
-        required
-        disabled
-        value={csppServer}
-        id="csppServer"
-        className={style.textInput}
-      />
-      <label htmlFor="csppPort">
-        <T id="privacy.mixing.server.port" m="Shuffle Port" />
-      </label>
-      <TextInput
-        required
-        disabled
-        value={csppPort}
-        id="csppPort"
-        className={style.textInput}
       />
     </div>
   );

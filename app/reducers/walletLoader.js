@@ -122,8 +122,6 @@ export default function walletLoader(state = {}, action) {
         allowSendFromUnmixed: action.sendFromUnmixed,
         mixedAccount: action.mixedAccount,
         changeAccount: action.changeAccount,
-        csppServer: action.csppServer,
-        csppPort: action.csppPort,
         mixedAccountBranch: action.mixedAccountBranch,
         dexEnabled: action.enableDex,
         dexReady: action.dexReady,
@@ -242,8 +240,6 @@ export default function walletLoader(state = {}, action) {
         ...state,
         mixedAccount: action.mixedAccount,
         changeAccount: action.changeAccount,
-        csppServer: action.csppServer,
-        csppPort: action.csppPort,
         mixedAccountBranch: action.mixedAccountBranch
       };
     case TOGGLE_ALLOW_SEND_FROM_UNMIXED:

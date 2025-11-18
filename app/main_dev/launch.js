@@ -5,7 +5,6 @@ import {
   dcrdCfg,
   getAppDataDirectory,
   getDcrdPath,
-  getCertsPath,
   getSitePath
 } from "./paths";
 import { getWalletCfg, getGlobalCfg } from "../config";
@@ -27,9 +26,6 @@ import parseArgs from "minimist";
 import {
   OPTIONS,
   UPGD_ELECTRON8,
-  CSPP_URL,
-  CSPP_PORT_TESTNET,
-  CSPP_PORT_MAINNET,
   PROXYTYPE_SOCKS5
 } from "constants";
 import * as cfgConstants from "constants/config";
@@ -683,17 +679,6 @@ export const launchDCRWallet = async (
 
   // example of debug level case needed
   // args.push("--debuglevel=VSPC=debug")
-
-  // add cspp cert path.
-  // When in mainnet, we always include it, because if we doensn't and a user
-  // sets mixing config, we would need to restart dcrwallet.
-  const certPath = path.resolve(getCertsPath(), CSPP_URL + ".pem");
-  !testnet && args.push("--csppserver.ca=" + certPath);
-  args.push(
-    !testnet
-      ? "--csppserver=" + CSPP_URL + ":" + CSPP_PORT_MAINNET
-      : "--csppserver=" + CSPP_URL + ":" + CSPP_PORT_TESTNET
-  );
 
   const { proxyType, proxyLocation } = getProxyTypeAndLocation();
   logger.log(
