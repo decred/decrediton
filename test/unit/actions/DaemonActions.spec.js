@@ -1060,7 +1060,8 @@ test("test startWallet", async () => {
       rpcCert: `${testWalletPath}/rpc.cert`
     },
     testGapLimit,
-    testDisableCoinTypeUpgrades
+    testDisableCoinTypeUpgrades,
+    true
   );
 
   expect(store.getState().settings.currentSettings.currencyDisplay).toBe(
@@ -1142,7 +1143,8 @@ test("test startWallet - call without selectedWallet parameter, dex is not enabl
     false,
     {},
     undefined,
-    undefined
+    undefined,
+    false
   );
 });
 
