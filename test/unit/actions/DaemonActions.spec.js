@@ -1144,7 +1144,7 @@ test("test startWallet - call without selectedWallet parameter, dex is not enabl
     {},
     undefined,
     undefined,
-    false
+    true
   );
 });
 
