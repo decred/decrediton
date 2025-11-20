@@ -24,7 +24,6 @@ import { getJSON } from "helpers/fetch";
 import { STANDARD_EXTERNAL_REQUESTS } from "constants";
 import { DIFF_CONNECTION_ERROR, LOCALE, TESTNET } from "constants";
 import * as cfgConstants from "constants/config";
-import { CSPP_URL, CSPP_URL_LEGACY } from "constants";
 import { preDefinedGradients } from "helpers";
 
 export const DECREDITON_VERSION = "DECREDITON_VERSION";
@@ -410,6 +409,8 @@ export const startWallet =
         const dexReady = walletCfg.get(cfgConstants.DEX_READY);
         const dexAccount = walletCfg.get(cfgConstants.DEX_ACCOUNT);
         const confirmDexSeed = walletCfg.get(cfgConstants.CONFIRM_DEX_SEED);
+        const mixing = walletCfg.get(cfgConstants.MIXED_ACCOUNT_CFG) != 0;
+
         let rpcCreds = {};
         if (enableDex) {
           rpcCreds = {
@@ -423,19 +424,13 @@ export const startWallet =
           };
         }
 
-        // Check to see if wallet config has old cspp.decred.org setting, will
-        // update to mix.decred.org
-        const currentCSPP = walletCfg.get(cfgConstants.CSPP_SERVER);
-        if (currentCSPP == CSPP_URL_LEGACY) {
-          walletCfg.set(cfgConstants.CSPP_SERVER, CSPP_URL);
-        }
-
         const walletStarted = await wallet.startWallet(
           selectedWallet.value.wallet,
           isTestnet,
           rpcCreds,
           selectedWallet.value.gapLimit,
-          selectedWallet.value.disableCoinTypeUpgrades
+          selectedWallet.value.disableCoinTypeUpgrades,
+          mixing
         );
         const { port } = walletStarted;
         wallet.setPreviousWallet(selectedWallet);
@@ -457,8 +452,6 @@ export const startWallet =
         const sendFromUnmixed = walletCfg.get(cfgConstants.SEND_FROM_UNMIXED);
         const mixedAccount = walletCfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
         const changeAccount = walletCfg.get(cfgConstants.CHANGE_ACCOUNT_CFG);
-        const csppServer = walletCfg.get(cfgConstants.CSPP_SERVER);
-        const csppPort = walletCfg.get(cfgConstants.CSPP_PORT);
         const mixedAccountBranch = walletCfg.get(cfgConstants.MIXED_ACC_BRANCH);
         const rememberedVspHost = walletCfg.get(
           cfgConstants.REMEMBERED_VSP_HOST
@@ -500,8 +493,6 @@ export const startWallet =
           sendFromUnmixed,
           mixedAccount,
           changeAccount,
-          csppServer,
-          csppPort,
           mixedAccountBranch,
           enableDex,
           dexReady,

@@ -258,14 +258,13 @@ export const abandonTransaction = log(
 
 export const runAccountMixerRequest = (
   walletService,
-  { mixedAccount, mixedAccountBranch, changeAccount, csppServer }
+  { mixedAccount, mixedAccountBranch, changeAccount }
 ) =>
   new Promise((ok) => {
     const request = new api.RunAccountMixerRequest();
     request.setMixedAccount(mixedAccount);
     request.setMixedAccountBranch(mixedAccountBranch);
     request.setChangeAccount(changeAccount);
-    request.setCsppServer(csppServer);
     const mixer = getClient(walletService).runAccountMixer(request);
     ok(shimStreamedResponse(mixer));
   });

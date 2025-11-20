@@ -373,7 +373,14 @@ ipcMain.on("stop-wallet", (event) => {
 
 handle(
   "start-wallet",
-  (walletPath, testnet, rpcCreds, gapLimit, disableCoinTypeUpgrades) => {
+  (
+    walletPath,
+    testnet,
+    rpcCreds,
+    gapLimit,
+    disableCoinTypeUpgrades,
+    mixing
+  ) => {
     const { rpcUser, rpcPass, rpcListen, rpcCert } = rpcCreds;
     return startWallet(
       mainWindow,
@@ -386,7 +393,8 @@ handle(
       rpcListen,
       rpcCert,
       gapLimit,
-      disableCoinTypeUpgrades
+      disableCoinTypeUpgrades,
+      mixing
     );
   }
 );

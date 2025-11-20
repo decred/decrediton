@@ -69,8 +69,6 @@ export const LN_MACAROONPATH = "ln_macaroonpath";
 export const SEND_FROM_UNMIXED = "send_from_unmixed";
 export const MIXED_ACCOUNT_CFG = "mixedaccount";
 export const CHANGE_ACCOUNT_CFG = "changeaccount";
-export const CSPP_SERVER = "csppserver";
-export const CSPP_PORT = "csppport";
 export const MIXED_ACC_BRANCH = "mixedaccbranch";
 export const REMEMBERED_VSP_HOST = "remembered_vsp_host";
 export const LAST_ACCESS = "lastaccess";
@@ -111,8 +109,6 @@ export const WALLET_INITIAL_VALUE = {
   [MIXED_ACCOUNT_CFG]: null,
   // change_account used when mixing
   [CHANGE_ACCOUNT_CFG]: null,
-  [CSPP_SERVER]: "",
-  [CSPP_PORT]: "",
   [MIXED_ACC_BRANCH]: null,
   [REMEMBERED_VSP_HOST]: null,
   [LAST_ACCESS]: 0,

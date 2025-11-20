@@ -54,13 +54,9 @@ const selectedAccountForTicketPurchase = 1;
 const testTicketBuyerService = "test-ticket-buyer-service";
 const testVSP = { host: "test-vsp-host", pubkey: "test-vsp-pubkey" };
 const testMixedAccountBranch = "test-mixed-account-branch";
-const testCsppServer = "test-cspp-server";
-const testCsppPort = "test-cspp-port";
 const expectedCsppReq = {
   mixedAccount: mixedAccountNumber,
   changeAccount: changeAccountNumber,
-  csppServer: testCsppServer,
-  csppPort: testCsppPort,
   mixedAcctBranch: testMixedAccountBranch
 };
 
@@ -156,8 +152,6 @@ const initialState = {
     dexAccount: dexAccountName,
     mixedAccount: mixedAccountNumber,
     changeAccount: changeAccountNumber,
-    csppServer: testCsppServer,
-    csppPort: testCsppPort,
     mixedAccountBranch: testMixedAccountBranch
   },
   vsp: {
@@ -1324,8 +1318,7 @@ test("test purchase tickets - in a private wallet, mixer is running", async () =
     {
       mixedAccount: mixedAccountNumber,
       mixedAccountBranch: testMixedAccountBranch,
-      changeAccount: changeAccountNumber,
-      csppServer: `${testCsppServer}:${testCsppPort}`
+      changeAccount: changeAccountNumber
     }
   );
   expect(mockUnlockAccount).toHaveBeenCalledWith(
@@ -1548,8 +1541,7 @@ test("test purchase tickets - failed ", async () => {
     {
       mixedAccount: mixedAccountNumber,
       mixedAccountBranch: testMixedAccountBranch,
-      changeAccount: changeAccountNumber,
-      csppServer: `${testCsppServer}:${testCsppPort}`
+      changeAccount: changeAccountNumber
     }
   );
   expect(mockUnlockAccount).toHaveBeenCalledWith(
@@ -1658,8 +1650,7 @@ test("test purchase tickets - failed with insufficient balance", async () => {
     {
       mixedAccount: mixedAccountNumber,
       mixedAccountBranch: testMixedAccountBranch,
-      changeAccount: changeAccountNumber,
-      csppServer: `${testCsppServer}:${testCsppPort}`
+      changeAccount: changeAccountNumber
     }
   );
   expect(mockUnlockAccount).toHaveBeenCalledWith(
@@ -1702,8 +1693,6 @@ test("test start and stop ticket autobuyer start", async () => {
       mixedAccount: mixedAccountNumber,
       mixedAcctBranch: testMixedAccountBranch,
       changeAccount: changeAccountNumber,
-      csppServer: testCsppServer,
-      csppPort: testCsppPort,
       balanceToMaintain: testBalanceToMaintain,
       accountNum: mixedAccountNumber,
       pubkey: testVSP.pubkey,
@@ -1797,8 +1786,6 @@ test("test start ticket autobuyer in a non-private wallet - receive unknown erro
         ...initialState.walletLoader,
         mixedAccount: null,
         changeAccount: null,
-        csppServer: null,
-        csppPort: null,
         mixedAccountBranch: null
       }
     })
@@ -1820,8 +1807,6 @@ test("test start ticket autobuyer in a non-private wallet - receive unknown erro
         mixedAccount: null,
         mixedAcctBranch: null,
         changeAccount: null,
-        csppServer: null,
-        csppPort: null,
         balanceToMaintain: testBalanceToMaintain,
         accountNum: defaultAccountNumber,
         pubkey: testVSP.pubkey,

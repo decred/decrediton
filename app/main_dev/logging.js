@@ -171,7 +171,6 @@ export const AddToTrezordLog = (destIO, data, debug) => {
 export const AddToPrivacyLog = (destIO, data, debug) => {
   // if log contains any of those messages we consider it a privacy log.
   const privacyLogsArray = [
-    "Dialed CSPPServer",
     "Mixing output",
     "Completed CoinShuffle++ mix of output",
     "wallet.MixOutput",
