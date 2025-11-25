@@ -142,8 +142,6 @@ export const getMixedAccount = get(["walletLoader", "mixedAccount"]);
 // getChangeAccount get the changeaccount selector, which is used for unmixed
 // accounts on mixer.
 export const getChangeAccount = get(["walletLoader", "changeAccount"]);
-export const getCsppServer = get(["walletLoader", "csppServer"]);
-export const getCsppPort = get(["walletLoader", "csppPort"]);
 export const getMixedAccountBranch = get([
   "walletLoader",
   "mixedAccountBranch"

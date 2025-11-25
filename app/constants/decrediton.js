@@ -89,12 +89,6 @@ export const IMPORTED_ACCOUNT = "imported";
 export const MIXED_ACCOUNT = "mixed";
 export const CHANGE_ACCOUNT = "unmixed";
 
-// CSPP CONNECTION PARAMS
-export const CSPP_URL_LEGACY = "cspp.decred.org";
-export const CSPP_URL = "mix.decred.org";
-export const CSPP_PORT_TESTNET = "15760";
-export const CSPP_PORT_MAINNET = "5760";
-
 // MENU_LINKS_PER_ROW is the default number of menu items shown in sidebar when it's located on bottom.
 export const MENU_LINKS_PER_ROW = 4;
 

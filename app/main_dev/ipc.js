@@ -187,7 +187,8 @@ export const startWallet = async (
   rpcHost,
   rpcListen,
   gapLimit,
-  disableCoinTypeUpgrades
+  disableCoinTypeUpgrades,
+  mixing
 ) => {
   if (GetDcrwPID()) {
     logger.log("info", "dcrwallet already started " + GetDcrwPID());
@@ -211,7 +212,8 @@ export const startWallet = async (
       rpcHost,
       rpcListen,
       gapLimit,
-      disableCoinTypeUpgrades
+      disableCoinTypeUpgrades,
+      mixing
     );
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
