@@ -26,7 +26,6 @@ require (
 	github.com/decred/vspd/types/v3 v3.0.0 // indirect
 	github.com/ethereum/c-kzg-4844 v1.0.0 // indirect
 	github.com/ethereum/go-verkle v0.1.1-0.20240829091221-dffa7562dbe9 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/holiman/billy v0.0.0-20240216141850-2abb0c79d3c4 // indirect
 	github.com/huandu/skiplist v1.2.0 // indirect
 	github.com/ltcsuite/lnd/tlv v0.0.0-20240222214433-454d35886119 // indirect
