@@ -1,7 +1,7 @@
 {
   "name": "decrediton",
   "productName": "Decrediton",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Decrediton based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "main": "main.js",
   "scripts": {
@@ -240,7 +240,7 @@
     "core-decorators": "^0.20.0",
     "cross-env": "^7.0.3",
     "css-loader": "5.2.7",
-    "electron": "35.7.5",
+    "electron": "26.4.3",
     "electron-builder": "24.13.3",
     "enzyme": "^3.11.0",
     "eslint": "7.32.0",
