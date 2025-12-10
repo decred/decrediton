@@ -1,6 +1,6 @@
 {
   "name": "dex",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "DEX Core Library node implementation",
   "gypfile": true,
   "scripts": {
