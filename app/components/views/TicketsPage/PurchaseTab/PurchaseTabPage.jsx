@@ -72,6 +72,7 @@ export function PurchaseTabPage({
   isVSPListingEnabled,
   onEnableVSPListing,
   getRunningIndicator,
+  isPurchasingTicketsTrezor,
   ...props
 }) {
   return (
@@ -115,7 +116,9 @@ export function PurchaseTabPage({
             isLoading,
             rememberedVspHost,
             toggleRememberVspHostCheckBox,
-            getRunningIndicator
+            getRunningIndicator,
+            isPurchasingTicketsTrezor,
+            isWatchingOnly
           }}
         />
       )}

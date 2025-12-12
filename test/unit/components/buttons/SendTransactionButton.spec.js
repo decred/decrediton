@@ -80,10 +80,11 @@ test("render SendTransactionButton when trezor is enabled", async () => {
   const button = screen.getByRole("button");
   user.click(button);
   expect(mockSignTransactionAttempt).not.toHaveBeenCalled();
-  expect(mockSignTransactionAttemptTrezor).toHaveBeenCalledWith(
-    testUnsignedTransaction,
-    testConstructTxResponse
-  );
+  expect(
+    mockSignTransactionAttemptTrezor
+  ).toHaveBeenCalledWith(testUnsignedTransaction, [
+    testConstructTxResponse.changeIndex
+  ]);
   await wait(() => expect(mockOnSubmit).toHaveBeenCalled());
 });
 
