@@ -9,7 +9,7 @@ require (
 )
 
 require (
-	decred.org/dcrwallet/v5 v5.0.2 // indirect
+	decred.org/dcrwallet/v5 v5.0.3 // indirect
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/bits-and-blooms/bitset v1.13.0 // indirect
 	github.com/consensys/bavard v0.1.13 // indirect
@@ -21,7 +21,7 @@ require (
 	github.com/decred/dcrd/addrmgr/v3 v3.0.0 // indirect
 	github.com/decred/dcrd/container/lru v1.0.0 // indirect
 	github.com/decred/dcrd/crypto/rand v1.0.1 // indirect
-	github.com/decred/dcrd/mixing v0.6.0 // indirect
+	github.com/decred/dcrd/mixing v0.6.1 // indirect
 	github.com/decred/vspd/client/v4 v4.0.2 // indirect
 	github.com/decred/vspd/types/v2 v2.1.0 // indirect
 	github.com/decred/vspd/types/v3 v3.0.0 // indirect
@@ -29,6 +29,7 @@ require (
 	github.com/ethereum/go-verkle v0.1.1-0.20240829091221-dffa7562dbe9 // indirect
 	github.com/holiman/billy v0.0.0-20240216141850-2abb0c79d3c4 // indirect
 	github.com/huandu/skiplist v1.2.0 // indirect
+	github.com/jessevdk/go-flags v1.5.0 // indirect
 	github.com/ltcsuite/lnd/tlv v0.0.0-20240222214433-454d35886119 // indirect
 	github.com/ltcsuite/ltcd/chaincfg/chainhash v1.0.2 // indirect
 	github.com/mmcloughlin/addchain v0.4.0 // indirect
@@ -36,6 +37,8 @@ require (
 	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/stretchr/testify v1.10.0 // indirect
 	github.com/supranational/blst v0.3.13 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20251222181119-0a764e51fe1b // indirect
+	google.golang.org/grpc v1.76.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	rsc.io/tmplfunc v0.0.3 // indirect
 )
@@ -153,7 +156,7 @@ require (
 	golang.org/x/term v0.37.0 // indirect
 	golang.org/x/text v0.31.0 // indirect
 	golang.org/x/time v0.9.0 // indirect
-	google.golang.org/protobuf v1.36.10 // indirect
+	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	lukechampine.com/blake3 v1.3.0 // indirect
 )
