@@ -77,7 +77,7 @@ production.
 
 The current recommended versions for the main tools are:
 
-  - Node: 18.20+
+  - Node: 20.20+
   - Npm: 10.8+
   - Bun: 1.3+
 
