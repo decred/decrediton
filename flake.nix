@@ -21,8 +21,40 @@
         devShells.default = pkgs.mkShell {
           buildInputs = with pkgs; [
             bun
-            nodejs_24
+            nodejs_20
+            python311
+            cmake
           ];
+          LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath (
+            with pkgs;
+            [
+              alsa-lib
+              atk
+              cairo
+              cups
+              dbus
+              expat
+              gdk-pixbuf
+              glib
+              gtk3
+              libdrm
+              libgbm
+              libGL
+              libxkbcommon
+              mesa
+              nspr
+              nss
+              pango
+              stdenv.cc.cc.lib
+              xorg.libX11
+              xorg.libXcomposite
+              xorg.libXdamage
+              xorg.libXext
+              xorg.libXfixes
+              xorg.libXrandr
+              xorg.libxcb
+            ]
+          );
         };
       }
     );
