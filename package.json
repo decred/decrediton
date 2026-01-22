@@ -16,23 +16,24 @@
     "build-renderer": "webpack --config webpack/ui.prod.js --progress=profile --color",
     "build-trezor": "webpack --config webpack/trezor.js --progress=profile --color",
     "build-preload": "webpack --config webpack/preload.prod.js --progress=profile --color",
-    "build": "yarn build-trezor && yarn build-preload &&  yarn build-main && yarn build-renderer",
+    "build": "bun run build-trezor && bun run build-preload &&  bun run build-main && bun run build-renderer",
     "rebuild-natives": "node_modules/.bin/electron-rebuild",
-    "rebuild-dexc": "cd modules/dex && npm run install",
+    "rebuild-dexc": "cd modules/dex && bun run install",
+    "rebuild-pi-ui": "cd node_modules/pi-ui && bun install && bun run build && rm -rf node_modules/react node_modules/react-dom",
     "start": "cross-env NODE_ENV=production electron ./app/ --custombinpath=./bin",
     "start-hot": "webpack --progress -c webpack/electron.dev.js && cross-env HOT=1 NODE_ENV=development electron -r @babel/register -r @babel/polyfill ./app/main.js",
     "start-hot-nosandbox": "webpack -c webpack/electron.dev.js &&  cross-env HOT=1 NODE_ENV=development electron -r @babel/register -r @babel/polyfill ./app/main.js -r --no-sandbox",
     "start-preload": "webpack -c webpack/preload.dev.js --watch",
-    "postinstall": "electron-builder install-app-deps && yarn rebuild-dexc",
-    "dev": "yarn hot-server -- --start-hot",
-    "dev-nosandbox": "yarn hot-server -- --start-hot-nosandbox",
-    "package": "yarn build && ./node_modules/.bin/electron-builder build --publish never",
-    "package-win": "yarn build && ./node_modules/.bin/electron-builder build --win --x64",
-    "package-linux": "yarn build && ./node_modules/.bin/electron-builder build --linux",
-    "package-mac-amd64": "yarn build && ./node_modules/.bin/electron-builder build --mac --x64",
-    "package-mac-arm64": "yarn build && ./node_modules/.bin/electron-builder build --mac --arm64",
-    "package-all": "yarn build && ./node_modules/.bin/electron-builder build -mwl",
-    "package-dev-linux": "yarn build && ./node_modules/.bin/electron-builder build --linux tar.gz",
+    "postinstall": "unset npm_execpath npm_config_user_agent && node node_modules/electron-builder/cli.js install-app-deps && bun run rebuild-dexc && bun run rebuild-pi-ui",
+    "dev": "bun run hot-server -- --start-hot",
+    "dev-nosandbox": "bun run hot-server -- --start-hot-nosandbox",
+    "package": "bun run build && ./node_modules/.bin/electron-builder build --publish never",
+    "package-win": "bun run build && ./node_modules/.bin/electron-builder build --win --x64",
+    "package-linux": "bun run build && ./node_modules/.bin/electron-builder build --linux",
+    "package-mac-amd64": "bun run build && ./node_modules/.bin/electron-builder build --mac --x64",
+    "package-mac-arm64": "bun run build && ./node_modules/.bin/electron-builder build --mac --arm64",
+    "package-all": "bun run build && ./node_modules/.bin/electron-builder build -mwl",
+    "package-dev-linux": "bun run build && ./node_modules/.bin/electron-builder build --linux tar.gz",
     "i18n-prepare-untranslated": "node ./scripts/prepareUntranslated.js",
     "i18n-check-docs": "node ./scripts/docsTranslationStatus.js",
     "i18n-check-dupes": "node ./scripts/checkDuplicateTranslationIds.js",
@@ -341,10 +342,9 @@
     "grpc-tools": "1.11.3"
   },
   "engines": {
-    "node": ">=18.20",
-    "yarn": "^1.22"
+    "node": ">=18.20"
   },
-  "resolutions": {
+  "overrides": {
     "@ledgerhq/hw-transport": "6.27.1"
   }
 }
