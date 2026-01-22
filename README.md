@@ -78,9 +78,10 @@ production.
 The current recommended versions for the main tools are:
 
   - Node: 18.20+
+  - Npm: 10.8+
   - Bun: 1.3+
 
-To ease node version management, install node using [nvm](https://github.com/nvm-sh/nvm). Install bun from [bun.sh](https://bun.sh).
+To ease node version management, install bun from [bun.sh](https://bun.sh), and all other top-level tools (node/npm) using [nvm](https://github.com/nvm-sh/nvm).  Yarn is only required on older hardware where bun might not work.
 
 If you use [Nix](https://nixos.org/) and [direnv](https://direnv.net/), this repository includes a `flake.nix` that automatically provides all required dependencies. Simply run `direnv allow` in the project directory to activate the dev environment.
 
@@ -117,15 +118,16 @@ cd decrediton
 mkdir bin/
 cp $GOPATH/bin/dcr* bin/
 bun install
-# TODO ? prob these just go in some package file
-npm install -g prebuild
-npm install -g cmake-js
 bun run build-trezor
 bun run rebuild-natives
 bun run dev
 ```
 
 Note: The `bun run rebuild-natives` step is only required for the dev server, not for building release packages.
+
+### Managing Dependencies
+
+This project uses **yarn.lock** as the single source of truth for dependency versions. Bun automatically migrates from yarn.lock on first install, generating a bun.lock.
 
 ### Requirements for DEX Development Usage
 
@@ -300,12 +302,69 @@ You need to make sure you have the rpm-build package installed for the building 
 bun run package-linux
 ```
 
-After it is finished it will have the built rpm, deb and tar.gz in the release/ directory.
+After it is finished it will have the built AppImage and tar.gz in the release/ directory.
 
 If you're only interested in a tar.gz, you can alternatively use:
 
 ```bash
 bun run package-dev-linux
+```
+
+### Building on Older Hardware
+
+If you encounter an "illegal hardware instruction" error when running `bun install`, your CPU likely doesn't support the instruction set that bun was compiled with (e.g., AVX2). This is common on older processors.  Use yarn instead of bun.
+
+**Important:** The `yarn.lock` file is the source of truth for dependency versions. Use `--frozen-lockfile` to ensure yarn uses the committed lock file without modifying it.
+
+**Step 1: Install dependencies**
+
+```bash
+yarn install --frozen-lockfile --ignore-scripts
+```
+
+**Step 2: Run postinstall steps manually**
+
+The postinstall script uses bun internally, so run these equivalent commands:
+
+```bash
+# Download the electron binary
+node node_modules/electron/install.js
+
+# Install electron app dependencies
+yarn electron-builder install-app-deps
+
+# Install dex module dependencies (has its own package-lock.json)
+cd modules/dex && yarn install --ignore-scripts && cd ../..
+
+# Compile sbffi native module and copy to both locations
+CMAKE_POLICY_VERSION_MINIMUM=3.5 npx cmake-js compile --directory node_modules/sbffi --CDnapi_build_version=5
+cp -r node_modules/sbffi/build modules/dex/node_modules/sbffi/
+
+# Install pi-ui dependencies (has its own yarn.lock, skip scripts since dist is pre-built)
+cd node_modules/pi-ui && yarn install --ignore-scripts && rm -rf node_modules/react node_modules/react-dom && cd ../..
+```
+
+**Step 3: Build and run**
+
+```bash
+# Build trezor module and rebuild native modules
+yarn build-trezor
+yarn rebuild-natives
+
+# Run development server
+yarn hot-server -- --start-hot
+
+# Or build for production (run each step since compound 'build' script uses bun)
+yarn build-trezor
+yarn build-preload
+yarn build-main
+yarn build-renderer
+
+# Run the production build
+yarn start
+
+# Package for distribution
+yarn electron-builder build --publish never
 ```
 
 ## Contact

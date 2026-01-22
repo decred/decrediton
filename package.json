@@ -346,6 +346,9 @@
     "node": ">=18.20"
   },
   "overrides": {
-    "@ledgerhq/hw-transport": "6.27.1"
+    "@ledgerhq/hw-transport": "6.27.1",
+    "sharedworker-loader": {
+      "webpack": "$webpack"
+    }
   }
 }

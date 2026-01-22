@@ -22,6 +22,7 @@
           buildInputs = with pkgs; [
             bun
             nodejs_20
+            yarn # Supports older hardware that cannot use bun
             python311
             cmake
           ];

@@ -13,11 +13,13 @@ const webpack = require("webpack");
 class NodePolyfillPlugin {
   apply(compiler) {
     compiler.options.plugins.push(new webpack.ProvidePlugin({
-      Buffer: ["buffer", "Buffer"]
+      Buffer: ["buffer", "Buffer"],
+      process: "process/browser"
     }));
 
     compiler.options.resolve.fallback = {
       buffer: "buffer",
+      process: "process/browser",
       stream: "stream-browserify",
       /* eslint-disable camelcase */
       _stream_duplex: "readable-stream/duplex",
