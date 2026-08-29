@@ -44,9 +44,9 @@ This will start dcrd and dcrwallet for you.
 On macOS, double-click the .dmg file, drag the .app to your
 Applications folder.  Double click on Decrediton.app to start.
 
-You can also install via [brew cask](https://caskroom.github.io):
+You can also install via [brew cask](https://formulae.brew.sh/cask/decrediton):
 ```bash
-brew cask install decrediton
+brew install --cask decrediton
 ```
 
 From there follow the on screen instructions to setup your wallet.
@@ -77,11 +77,13 @@ production.
 
 The current recommended versions for the main tools are:
 
-  - Node: 18.20+
+  - Node: 20.20+
   - Npm: 10.8+
-  - Yarn: 1.22+
+  - Bun: 1.3+
 
-To ease node version management, install all top-level tools (node/npm/yarn) using [nvm](https://github.com/nvm-sh/nvm).
+To ease node version management, install bun from [bun.sh](https://bun.sh), and all other top-level tools (node/npm) using [nvm](https://github.com/nvm-sh/nvm).  Yarn is only required on older hardware where bun might not work.
+
+If you use [Nix](https://nixos.org/) and [direnv](https://direnv.net/), this repository includes a `flake.nix` that automatically provides all required dependencies. Simply run `direnv allow` in the project directory to activate the dev environment.
 
 ### Electron extensions
 
@@ -115,17 +117,21 @@ git clone https://github.com/decred/decrediton.git
 cd decrediton
 mkdir bin/
 cp $GOPATH/bin/dcr* bin/
-yarn
-# TODO ? prob these just go in some package file
-npm install -g prebuild
-npm install -g cmake-js
-yarn build-trezor
-yarn dev
+bun install
+bun run build-trezor
+bun run rebuild-natives
+bun run dev
 ```
+
+Note: The `bun run rebuild-natives` step is only required for the dev server, not for building release packages.
+
+### Managing Dependencies
+
+This project uses **yarn.lock** as the single source of truth for dependency versions. Bun automatically migrates from yarn.lock on first install, generating a bun.lock.
 
 ### Requirements for DEX Development Usage
 
-The building of the dex module requires Go to be installed.
+Building the dex module requires Go to be installed.
 
 ### Keeping up with dcrd/dcrwallet changes
 
@@ -179,7 +185,7 @@ Once you restart decrediton, you should be presented with a screen to specify
 the node parameters. Note that all of them are present in the command you used
 to start the node for your respective system.
 
-CLI options (including ```--advanced```) when running `yarn dev` are currently not supported.
+CLI options (including ```--advanced```) when running `bun run dev` are currently not supported.
 
 When generating the TLS keypairs for the rpc endpoint you should use the P-256 curve by starting the daemon with `--tlscurve=P-256`. Note that the rpccert/rpckey files need to be deleted before this.
 
@@ -220,8 +226,8 @@ After installing windows-build-tools, open a *non-administrative* prompt
 (cmd.exe) and then try recompiling the native modules:
 
 ```bash
-yarn
-yarn rebuild-natives
+bun install
+bun run rebuild-natives
 ```
 
 If you have multiple versions of VS Build Tools installed, you may need to
@@ -246,8 +252,8 @@ The end result for module compilation should be the following files:
 - `app/node_modules/dcrwin32ipc/build/Release/dcrwin32ipc.node`
 - `app/node_modules/grpc/src/node/extension_binary/electron-v3.0-win32-x64/grpc_node.node`
 
-*Note*: `yarn start` does _not_ currently correctly load the dcrwin32ipc module, so
-testing with yarn build/start will fail to correctly unload dcrd/dcrwallet when
+*Note*: `bun run start` does _not_ currently correctly load the dcrwin32ipc module, so
+testing with bun run build/start will fail to correctly unload dcrd/dcrwallet when
 closing.
 
 When using git bash, `cmd.exe` or Powershell, you might need to install [MingW-w64](https://www.mingw-w64.org/) to get access to gcc and be able to compile libdex. After installing it, ensure `gcc` and `python` are accessible in console (add the appropriate binary paths to the `%PATH%` environment variable).
@@ -264,7 +270,7 @@ might need to tweak stuff (in particular, you'll need to disable hardware
 acceleration and ui animations) to run decrediton on it.
 
 ```bash
-yarn rebuild-natives
+bun run rebuild-natives
 ```
 
 
@@ -277,15 +283,15 @@ You can test the production version (without most of the debugging info and with
 compiled and minified code) by using:
 
 ```bash
-yarn build
-yarn start
+bun run build
+bun run start
 ```
 
 And finally, a packaged version (including the final standalone electron
 binaries) for the current platform can be built with:
 
 ```bash
-yarn package
+bun run package
 ```
 
 ### Linux
@@ -293,15 +299,72 @@ yarn package
 You need to make sure you have the rpm-build package installed for the building to work.
 
 ```bash
-yarn package-linux
+bun run package-linux
 ```
 
-After it is finished it will have the built rpm, deb and tar.gz in the release/ directory.
+After it is finished it will have the built AppImage and tar.gz in the release/ directory.
 
 If you're only interested in a tar.gz, you can alternatively use:
 
 ```bash
-yarn package-dev-linux
+bun run package-dev-linux
+```
+
+### Building on Older Hardware
+
+If you encounter an "illegal hardware instruction" error when running `bun install`, your CPU likely doesn't support the instruction set that bun was compiled with (e.g., AVX2). This is common on older processors.  Use yarn instead of bun.
+
+**Important:** The `yarn.lock` file is the source of truth for dependency versions. Use `--frozen-lockfile` to ensure yarn uses the committed lock file without modifying it.
+
+**Step 1: Install dependencies**
+
+```bash
+yarn install --frozen-lockfile --ignore-scripts
+```
+
+**Step 2: Run postinstall steps manually**
+
+The postinstall script uses bun internally, so run these equivalent commands:
+
+```bash
+# Download the electron binary
+node node_modules/electron/install.js
+
+# Install electron app dependencies
+yarn electron-builder install-app-deps
+
+# Install dex module dependencies (has its own package-lock.json)
+cd modules/dex && yarn install --ignore-scripts && cd ../..
+
+# Compile sbffi native module and copy to both locations
+CMAKE_POLICY_VERSION_MINIMUM=3.5 npx cmake-js compile --directory node_modules/sbffi --CDnapi_build_version=5
+cp -r node_modules/sbffi/build modules/dex/node_modules/sbffi/
+
+# Install pi-ui dependencies (has its own yarn.lock, skip scripts since dist is pre-built)
+cd node_modules/pi-ui && yarn install --ignore-scripts && rm -rf node_modules/react node_modules/react-dom && cd ../..
+```
+
+**Step 3: Build and run**
+
+```bash
+# Build trezor module and rebuild native modules
+yarn build-trezor
+yarn rebuild-natives
+
+# Run development server
+yarn hot-server -- --start-hot
+
+# Or build for production (run each step since compound 'build' script uses bun)
+yarn build-trezor
+yarn build-preload
+yarn build-main
+yarn build-renderer
+
+# Run the production build
+yarn start
+
+# Package for distribution
+yarn electron-builder build --publish never
 ```
 
 ## Contact
