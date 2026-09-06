@@ -1,24 +1,18 @@
-import * as api from "../middleware/vspapi";
 import { withLog as log, withLogNoData } from "./index";
 import * as cfg from "../config";
 import * as cfgConstants from "constants/config";
 import { ipcRenderer } from "electron";
+import { invoke } from "helpers/electronRenderer";
 import { reloadAllowedExternalRequests } from "./daemon";
 import { allowVSPHost as confDialogAllowVSPHost } from "./confirmationDialog";
 
-const promisifyReqLogNoData = (fnName, Req) =>
-  withLogNoData(
-    (...args) =>
-      new Promise((ok, fail) =>
-        Req(...args, (res, err) => (err ? fail(err) : ok(res)))
-      ),
-    fnName
-  );
-
-export const getVSPInfo = promisifyReqLogNoData("getVSPInfo", api.getVSPInfo);
-export const getVSPTicketStatus = promisifyReqLogNoData(
-  "getVSPTicketStatus",
-  api.getVSPTicketStatus
+export const getVSPInfo = withLogNoData(
+  (host) => invoke("get-vsp-info", host),
+  "getVSPInfo"
+);
+export const getVSPTicketStatus = withLogNoData(
+  (req) => invoke("get-vsp-ticket-status", req),
+  "getVSPTicketStatus"
 );
 
 // addAllowedVSPsInCfg modifies the config file to allow the given VSP hosts
@@ -37,9 +31,7 @@ const addAllowedVSPsInCfg = (hosts) => {
 };
 
 export const getAllVSPs = withLogNoData(async () => {
-  const res = await new Promise((ok, fail) =>
-    api.getAllVspsInfo((res, err) => (err ? fail(err) : ok(res)))
-  );
+  const res = await invoke("get-all-vsps-info");
 
   // Allow access to all VSPs returned by the official VSP listing endpoint.
   // This is less then ideal because this endpoint might eventually return
