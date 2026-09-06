@@ -31,6 +31,11 @@ import {
 } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import {
+  getAllVspsInfo,
+  getVSPInfo,
+  getVSPTicketStatus
+} from "./main_dev/vspRequests";
+import {
   getDaemonInfo,
   cleanShutdown,
   GetDcrdPID,
@@ -470,6 +475,12 @@ handle("ln-remove-dir", removeDcrlnd);
 handle("check-daemon", getBlockChainInfo);
 
 handle("daemon-getinfo", getDaemonInfo);
+
+handle("get-all-vsps-info", getAllVspsInfo);
+
+handle("get-vsp-info", getVSPInfo);
+
+handle("get-vsp-ticket-status", getVSPTicketStatus);
 
 handle("clean-shutdown", () =>
   cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID())
