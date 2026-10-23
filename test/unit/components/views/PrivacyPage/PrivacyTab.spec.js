@@ -72,8 +72,6 @@ const mockVisibleAccounts = [
   mockMixedAccount,
   mockUnMixedAccount
 ];
-const mockCsppServer = "mockCsppServer.decred.org";
-const mockCsppPort = "1234";
 const mockMixedAccountBranch = 0;
 const mockNextAddress = "TsiTfsjizPgzBrPxovheccayb4UbLRmQAqY";
 const mockLogLine = "mock-log-line";
