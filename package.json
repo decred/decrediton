@@ -56,7 +56,8 @@
       "^trezord$": "<rootDir>/test/mocks/trezordMock.js",
       "^walletCrypto$": "<rootDir>/app/wallet/crypto.js",
       "^fetchModule$": "<rootDir>/app/helpers/fetchModule.js",
-      "wallet-preload-shim$": "<rootDir>/test/mocks/walletPreloadShimMock.js"
+      "wallet-preload-shim$": "<rootDir>/test/mocks/walletPreloadShimMock.js",
+      "logging$": "<rootDir>/test/mocks/loggingMock.js"
     },
     "transformIgnorePatterns": [
       "/node_modules/",

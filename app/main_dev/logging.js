@@ -48,7 +48,7 @@ const logLevelsPrintable = {
 export const getLogFileName = () =>
   path.join(getAppDataDirectory(), "decrediton.log");
 
-class Logger {
+export class Logger {
   constructor(debug) {
     this.debug = debug;
     this.logLevels = {
@@ -69,24 +69,22 @@ class Logger {
     this.drained = true;
     this.buffer = [];
     this.logFile = fs.createWriteStream(getLogFileName());
-    this.logFile.on("drain", this.dequeue);
-  }
+    this.logFile.on("drain", () => {
+      if (this.buffer.length === 0) {
+        this.drained = true;
+        return;
+      }
 
-  dequeue() {
-    if (this.buffer.length === 0) {
-      this.drained = true;
-      return;
-    }
-
-    // Keep writing data to the file until we either write all available data or
-    // the file becomes busy for writes (in which case this function will be
-    // called again once the file can be written to again).
-    let drained = true;
-    while (this.buffer.length() > 0 && drained) {
-      const data = this.buffer.shift();
-      this.drained = this.logFile.write(data);
-      drained = this.drained;
-    }
+      // Keep writing data to the file until we either write all available data or
+      // the file becomes busy for writes (in which case this function will be
+      // called again once the file can be written to again).
+      let drained = true;
+      while (this.buffer.length > 0 && drained) {
+        const data = this.buffer.shift();
+        this.drained = this.logFile.write(data);
+        drained = this.drained;
+      }
+    });
   }
 
   queue(data) {
@@ -101,7 +99,8 @@ class Logger {
 
   log(level, msg) {
     const levelLower = level.toLowerCase();
-    const logLevel = this.logLevels[levelLower] || 3;
+    const logLevel =
+      levelLower in this.logLevels ? this.logLevels[levelLower] : 3;
 
     const subsys = "DCTN";
     const lvl = logLevelsPrintable[levelLower] || "UNK";
@@ -203,7 +202,7 @@ const panicErr = "panic";
 
 export function lastLogLine(log) {
   const lastLineIdx = log.lastIndexOf(os.EOL, log.length - os.EOL.length - 1);
-  const lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
+  const lastLineBuff = log.slice(Math.max(0, lastLineIdx)).toString("utf-8");
   return lastLineBuff.trim();
 }
 
@@ -217,10 +216,13 @@ export function lastErrorLine(log) {
 }
 
 export function lastPanicLine(log) {
-  let lastLineIdx = log.indexOf(panicErr);
-  if (lastLineIdx < 0) lastLineIdx = log.indexOf("goroutine");
-  const lastLineBuff = log.slice(lastLineIdx).toString("utf-8");
-  return lastLineBuff;
+  let lastLineIdx = log.lastIndexOf(panicErr);
+  if (lastLineIdx < 0) lastLineIdx = log.lastIndexOf("goroutine");
+  const endOfErrorLineIdx = log.indexOf(os.EOL, lastLineIdx);
+  const lastLineBuff = log
+    .slice(lastLineIdx, endOfErrorLineIdx)
+    .toString("utf-8");
+  return lastLineBuff.trim();
 }
 
 export function ClearDcrwalletLogs() {
