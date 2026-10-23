@@ -1,0 +1,1 @@
+Lorsqu'un ticket est sélectionné, le détenteur est récompensé par une chance de voter. Les votes reçoivent une part de la récompense de bloc. Actuellement, lorsque 5 votes sont choisis pour faire parti d'un bloc, ils se partagent 80% du total de la récompense de bloc.

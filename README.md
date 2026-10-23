@@ -77,9 +77,9 @@ production.
 
 The current recommended versions for the main tools are:
 
-  - Node: 14.16.1
-  - Npm: 6.4+
-  - Yarn: 1.12+
+  - Node: 18.20+
+  - Npm: 10.8+
+  - Yarn: 1.22+
 
 To ease node version management, install all top-level tools (node/npm/yarn) using [nvm](https://github.com/nvm-sh/nvm).
 
@@ -116,6 +116,10 @@ cd decrediton
 mkdir bin/
 cp $GOPATH/bin/dcr* bin/
 yarn
+# TODO ? prob these just go in some package file
+npm install -g prebuild
+npm install -g cmake-js
+yarn build-trezor
 yarn dev
 ```
 
@@ -145,7 +149,7 @@ you're not developing on a daily basis, you can safely ignore this for the
 moment.
 
 When starting decrediton in RPC (or "normal") mode, it automatically runs dcrd
-in the backgound to gather blockchain data. If you need to constantly restart
+in the background to gather blockchain data. If you need to constantly restart
 decrediton, loading the node every time may be time consuming.
 
 In that case, it's helpful to run the dcrd node in a separate process and simply

@@ -1,0 +1,1 @@
+La Preuve-d'enjeu (PdE, Proof-of-Stake ou PoS) donne un moyen à ceux qui ont des "intérêts en jeu" d'avoir un effet direct sur la production de blocs. Cependant dans un contexte de pure PdE (PoS), la création de blocs mène encore une fois à la centralisation.

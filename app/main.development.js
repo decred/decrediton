@@ -31,6 +31,11 @@ import {
 } from "./main_dev/externalRequests";
 import { setupProxy } from "./main_dev/proxy";
 import {
+  getAllVspsInfo,
+  getVSPInfo,
+  getVSPTicketStatus
+} from "./main_dev/vspRequests";
+import {
   getDaemonInfo,
   cleanShutdown,
   GetDcrdPID,
@@ -62,6 +67,9 @@ import {
   startDcrlnd,
   stopDcrlnd,
   removeDcrlnd,
+  startTrezord,
+  stopTrezord,
+  needUdevRules,
   lnScbInfo,
   startDex,
   stopDex,
@@ -370,7 +378,14 @@ ipcMain.on("stop-wallet", (event) => {
 
 handle(
   "start-wallet",
-  (walletPath, testnet, rpcCreds, gapLimit, disableCoinTypeUpgrades) => {
+  (
+    walletPath,
+    testnet,
+    rpcCreds,
+    gapLimit,
+    disableCoinTypeUpgrades,
+    mixing
+  ) => {
     const { rpcUser, rpcPass, rpcListen, rpcCert } = rpcCreds;
     return startWallet(
       mainWindow,
@@ -383,7 +398,8 @@ handle(
       rpcListen,
       rpcCert,
       gapLimit,
-      disableCoinTypeUpgrades
+      disableCoinTypeUpgrades,
+      mixing
     );
   }
 );
@@ -409,6 +425,12 @@ handle("user-dex", userDex);
 handle("start-dex", startDex);
 
 handle("stop-dex", stopDex);
+
+handle("needs-udev-rules", needUdevRules);
+
+handle("start-trezord", startTrezord);
+
+handle("stop-trezord", stopTrezord);
 
 handle("launch-dex-window", createDexWindow);
 
@@ -453,6 +475,12 @@ handle("ln-remove-dir", removeDcrlnd);
 handle("check-daemon", getBlockChainInfo);
 
 handle("daemon-getinfo", getDaemonInfo);
+
+handle("get-all-vsps-info", getAllVspsInfo);
+
+handle("get-vsp-info", getVSPInfo);
+
+handle("get-vsp-ticket-status", getVSPTicketStatus);
 
 handle("clean-shutdown", () =>
   cleanShutdown(mainWindow, app, GetDcrdPID(), GetDcrwPID())

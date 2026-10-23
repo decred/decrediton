@@ -1,10 +1,10 @@
 {
   "name": "dex",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "DEX Core Library node implementation",
   "gypfile": true,
   "scripts": {
-    "install": "go build -buildmode=c-shared -o ./libdexc/libdexc.so ./libdexc/..."
+    "install": "go build -ldflags=\"-s -w\" -buildmode=c-shared -o ./libdexc/libdexc.so ./libdexc/..."
   },
   "keywords": [],
   "author": "Brian Stafford",

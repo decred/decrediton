@@ -2,7 +2,7 @@
 
 'use strict';
 var invoices_pb = require('./invoices_pb.js').invoicesrpc;
-var rpc_pb = require('./rpc_pb.js');
+var lightning_pb = require('./lightning_pb.js');
 
 function serialize_invoicesrpc_AddHoldInvoiceRequest(arg) {
   if (!(arg instanceof invoices_pb.AddHoldInvoiceRequest)) {
@@ -48,6 +48,17 @@ function deserialize_invoicesrpc_CancelInvoiceResp(buffer_arg) {
   return invoices_pb.CancelInvoiceResp.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_invoicesrpc_LookupInvoiceMsg(arg) {
+  if (!(arg instanceof invoices_pb.LookupInvoiceMsg)) {
+    throw new Error('Expected argument of type invoicesrpc.LookupInvoiceMsg');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_invoicesrpc_LookupInvoiceMsg(buffer_arg) {
+  return invoices_pb.LookupInvoiceMsg.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_invoicesrpc_SettleInvoiceMsg(arg) {
   if (!(arg instanceof invoices_pb.SettleInvoiceMsg)) {
     throw new Error('Expected argument of type invoicesrpc.SettleInvoiceMsg');
@@ -82,14 +93,14 @@ function deserialize_invoicesrpc_SubscribeSingleInvoiceRequest(buffer_arg) {
 }
 
 function serialize_lnrpc_Invoice(arg) {
-  if (!(arg instanceof rpc_pb.Invoice)) {
+  if (!(arg instanceof lightning_pb.Invoice)) {
     throw new Error('Expected argument of type lnrpc.Invoice');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
 function deserialize_lnrpc_Invoice(buffer_arg) {
-  return rpc_pb.Invoice.deserializeBinary(new Uint8Array(buffer_arg));
+  return lightning_pb.Invoice.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -105,7 +116,7 @@ subscribeSingleInvoice: {
     requestStream: false,
     responseStream: true,
     requestType: invoices_pb.SubscribeSingleInvoiceRequest,
-    responseType: rpc_pb.Invoice,
+    responseType: lightning_pb.Invoice,
     requestSerialize: serialize_invoicesrpc_SubscribeSingleInvoiceRequest,
     requestDeserialize: deserialize_invoicesrpc_SubscribeSingleInvoiceRequest,
     responseSerialize: serialize_lnrpc_Invoice,
@@ -153,6 +164,20 @@ settleInvoice: {
     requestDeserialize: deserialize_invoicesrpc_SettleInvoiceMsg,
     responseSerialize: serialize_invoicesrpc_SettleInvoiceResp,
     responseDeserialize: deserialize_invoicesrpc_SettleInvoiceResp,
+  },
+  //
+// LookupInvoiceV2 attempts to look up at invoice. An invoice can be refrenced
+// using either its payment hash, payment address, or set ID.
+lookupInvoiceV2: {
+    path: '/invoicesrpc.Invoices/LookupInvoiceV2',
+    requestStream: false,
+    responseStream: false,
+    requestType: invoices_pb.LookupInvoiceMsg,
+    responseType: lightning_pb.Invoice,
+    requestSerialize: serialize_invoicesrpc_LookupInvoiceMsg,
+    requestDeserialize: deserialize_invoicesrpc_LookupInvoiceMsg,
+    responseSerialize: serialize_lnrpc_Invoice,
+    responseDeserialize: deserialize_lnrpc_Invoice,
   },
 };
 

@@ -6,7 +6,6 @@ package main
 import "C"
 import (
 	"context"
-	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -16,19 +15,13 @@ import (
 	"sync/atomic"
 
 	"decred.org/dcrdex/client/core"
+	"decred.org/dcrdex/client/mm"
 	"decred.org/dcrdex/client/webserver"
 	"decred.org/dcrdex/dex"
 	"github.com/decred/slog"
 
 	// Register the supported assets.
-	_ "decred.org/dcrdex/client/asset/bch"
-	_ "decred.org/dcrdex/client/asset/btc"
-	_ "decred.org/dcrdex/client/asset/dcr"
-	_ "decred.org/dcrdex/client/asset/dgb"
-	_ "decred.org/dcrdex/client/asset/doge"
-	_ "decred.org/dcrdex/client/asset/eth"
-	_ "decred.org/dcrdex/client/asset/ltc"
-	_ "decred.org/dcrdex/client/asset/zec"
+	_ "decred.org/dcrdex/client/asset/importall"
 )
 
 type callHandler func(json.RawMessage) (string, error)
@@ -56,6 +49,7 @@ type CoreAdapter struct {
 	inited        uint32
 	serverRunning uint32
 	core          *core.Core
+	mm            *mm.MarketMaker
 	webServer     *dex.ConnectionMaster
 	wg            *sync.WaitGroup
 	logMaker      *dex.LoggerMaker
@@ -83,7 +77,6 @@ func NewCoreAdapter() *CoreAdapter {
 		"SetWalletPassword": c.setWalletPassword,
 		"User":              c.user,
 		"PreRegister":       c.discoverAcct,
-		"Register":          c.register,
 		"Login":             c.login,
 		"Logout":            c.logout,
 		"DexConfig":         c.getDexConfig,
@@ -151,12 +144,31 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 	}
 	c.core = ccore
 
+	netDirectory := filepath.Dir(form.DBPath)
+	mmLogFilename := filepath.Join(netDirectory, "eventlog.db")
+	mmCfgFilename := filepath.Join(netDirectory, "mm_cfg.json")
+
+	c.mm, err = mm.NewMarketMaker(ccore, mmLogFilename, mmCfgFilename, c.logMaker.Logger("MM"))
+	if err != nil {
+		return fmt.Errorf("error creating market maker: %w", err)
+	}
+
 	c.wg.Add(1)
 	go func() {
 		defer c.wg.Done()
 		ccore.Run(c.ctx)
 	}()
 	<-ccore.Ready()
+
+	mmCM := dex.NewConnectionMaster(c.mm)
+	if err := mmCM.ConnectOnce(c.ctx); err != nil {
+		return fmt.Errorf("error connecting market maker: %w", err)
+	}
+	c.wg.Add(1)
+	go func() {
+		defer c.wg.Done()
+		mmCM.Wait()
+	}()
 
 	return nil
 }
@@ -173,8 +185,10 @@ func (c *CoreAdapter) startServer(raw json.RawMessage) (string, error) {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
+
 	webSrv, err := webserver.New(&webserver.Config{
 		Core:          c.core,
+		MarketMaker:   c.mm,
 		Addr:          form.WebAddr,
 		CustomSiteDir: form.SiteDir,
 		Language:      form.Language,
@@ -241,13 +255,11 @@ func (c *CoreAdapter) init(raw json.RawMessage) (string, error) {
 		return "", err
 	}
 	if form.Seed != "" {
-		seed, err := hex.DecodeString(form.Seed)
-		if err != nil {
-			return "", err
-		}
-		return "", c.core.InitializeClient([]byte(form.Pass), seed)
+		_, err := c.core.InitializeClient([]byte(form.Pass), &form.Seed)
+		return "", err
 	}
-	return "", c.core.InitializeClient([]byte(form.Pass), nil)
+	_, err := c.core.InitializeClient([]byte(form.Pass), nil)
+	return "", err
 
 }
 
@@ -341,14 +353,6 @@ func (c *CoreAdapter) getDexConfig(raw json.RawMessage) (string, error) {
 	return replyWithErrorCheck(c.core.GetDEXConfig(form.Addr, []byte(form.Cert)))
 }
 
-func (c *CoreAdapter) register(raw json.RawMessage) (string, error) {
-	form := new(core.RegisterForm)
-	if err := json.Unmarshal(raw, form); err != nil {
-		return "", err
-	}
-	return replyWithErrorCheck(c.core.Register(form))
-}
-
 // When restoring from seed with init/InitializeClient, it may be desirable to
 // first attempt DEX account discovery without committing to a fee payment. This
 // checks with the given DEX server if our account (a public key) is already
@@ -393,6 +397,8 @@ func (c *CoreAdapter) logout(raw json.RawMessage) (string, error) {
 
 const extensionModeConfigJSON = `
 {
+	"name": "Decrediton",
+	"useDEXBranding": true,
 	"restrictedWallets": {
 		"dcr": {
 			"hiddenFields": [

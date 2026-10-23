@@ -1,4 +1,5 @@
 import { wallet, fs } from "wallet-preload-shim";
+import { trezord } from "wallet-preload-shim";
 import * as selectors from "selectors";
 import { hexToBytes, str2utf8hex, rawToHex } from "helpers";
 import {
@@ -23,6 +24,7 @@ import {
   SIGNMESSAGE_SUCCESS
 } from "./ControlActions";
 import { getAmountFromTxInputs, getTxFromInputs } from "./TransactionActions";
+import { push as pushHistory } from "connected-react-router";
 
 const session = require("trezor-connect").default;
 const {
@@ -44,20 +46,26 @@ let setListeners = false;
 
 export const TRZ_WALLET_CLOSED = "TRZ_WALLET_CLOSED";
 export const TRZ_TREZOR_ENABLED = "TRZ_TREZOR_ENABLED";
+export const TRZ_TREZORD_STARTED = "TRZ_TREZORD_STARTED";
 
 // enableTrezor attepts to start a connection with connect if none exist and
 // connect to a trezor device.
-export const enableTrezor = () => (dispatch, getState) => {
+export const enableTrezor = () => async (dispatch, getState) => {
   dispatch({ type: TRZ_TREZOR_ENABLED });
 
   if (!setListeners) {
     setDeviceListeners(dispatch, getState);
     setListeners = true;
   }
+  const trezordStarted = getState().trezor.trezordStarted;
+  if (!trezordStarted) {
+    await trezord.start();
+    dispatch({ type: TRZ_TREZORD_STARTED });
+  }
   connect()(dispatch, getState);
 };
 
-export const initTransport = async (session, debug) => {
+const initTransport = async (session, debug) => {
   await session
     .init({
       connectSrc: "./",
@@ -80,23 +88,42 @@ export const initTransport = async (session, debug) => {
 export const TRZ_CONNECT_ATTEMPT = "TRZ_CONNECT_ATTEMPT";
 export const TRZ_CONNECT_FAILED = "TRZ_CONNECT_FAILED";
 export const TRZ_CONNECT_SUCCESS = "TRZ_CONNECT_SUCCESS";
+export const TRZ_UDEV_ERROR = "TREZOR_UDEV_ERROR";
 
 export const connect = () => async (dispatch, getState) => {
   const {
-    trezor: { connected, connectAttempt }
+    trezor: { connected, connectAttempt, initted }
   } = getState();
   if (connected || connectAttempt) return;
   dispatch({ type: TRZ_CONNECT_ATTEMPT });
 
   wallet.allowExternalRequest(EXTERNALREQUEST_TREZOR_BRIDGE);
 
-  const debug = getState().trezor.debug;
-  await initTransport(session, debug).catch((error) => {
-    dispatch({ error, type: TRZ_CONNECT_FAILED });
+  // We can only ever init transport once.
+  if (!initted) {
+    const debug = getState().trezor.debug;
+    await initTransport(session, debug).catch((error) => {
+      dispatch({ error, type: TRZ_CONNECT_FAILED });
+      return;
+    });
+  }
+  try {
+    await dispatch(getFeatures());
+  } catch (err) {
+    dispatch({
+      error: err.message,
+      type: TRZ_CONNECT_FAILED
+    });
+    const needRules = await trezord.needsUdevRules();
+    if (needRules.needs) {
+      dispatch({ type: TRZ_UDEV_ERROR });
+      setTimeout(() => {
+        dispatch(pushHistory("/error"));
+      }, 1000);
+    }
     return;
-  });
+  }
   dispatch({ type: TRZ_CONNECT_SUCCESS });
-  dispatch(getFeatures());
 };
 
 export const TRZ_TREZOR_DISABLED = "TRZ_TREZOR_DISABLED";
@@ -104,7 +131,8 @@ export const TRZ_TREZOR_DISABLED = "TRZ_TREZOR_DISABLED";
 // disableTrezor disables trezor integration for the current wallet. Note
 // that it does **not** disable in the config, so the wallet will restart as a
 // trezor wallet next time it's opened.
-export const disableTrezor = () => (dispatch) => {
+export const disableTrezor = () => async (dispatch) => {
+  await trezord.stop();
   dispatch({ type: TRZ_TREZOR_DISABLED });
 };
 
@@ -117,8 +145,6 @@ export const TRZ_NOCONNECTEDDEVICE = "TRZ_NOCONNECTEDDEVICE";
 function onChange(dispatch, getState, features) {
   if (features == null) throw "no features on change";
   const currentDevice = selectors.trezorDevice(getState());
-  // No current device handle by connect.
-  if (!currentDevice) return;
   let device = features.id;
   if (features.mode == BOOTLOADER_MODE) {
     device = BOOTLOADER_MODE;
@@ -126,7 +152,6 @@ function onChange(dispatch, getState, features) {
   if (device == currentDevice) return;
   const deviceLabel = features.label;
   dispatch({ deviceLabel, device, type: TRZ_SELECTEDDEVICE_CHANGED });
-  dispatch(getFeatures());
 }
 
 function onConnect(dispatch, getState, features) {
@@ -137,7 +162,6 @@ function onConnect(dispatch, getState, features) {
     device = BOOTLOADER_MODE;
   }
   dispatch({ deviceLabel, device, type: TRZ_LOADDEVICE });
-  dispatch(getFeatures());
   return device;
 }
 
@@ -327,16 +351,12 @@ async function deviceRun(dispatch, getState, fn) {
 
 export const TRZ_GETFEATURES_SUCCESS = "TRZ_GETFEATURES_SUCCESS";
 export const getFeatures = () => async (dispatch, getState) => {
-  try {
-    const features = await deviceRun(dispatch, getState, async () => {
-      const res = await session.getFeatures();
-      return res.payload;
-    });
-    dispatch({ type: TRZ_GETFEATURES_SUCCESS, features });
-    return features;
-  } catch (error) {
-    return null;
-  }
+  const features = await deviceRun(dispatch, getState, async () => {
+    const res = await session.getFeatures();
+    return res.payload;
+  });
+  dispatch({ type: TRZ_GETFEATURES_SUCCESS, features });
+  return features;
 };
 
 export const TRZ_CANCELOPERATION_SUCCESS = "TRZ_CANCELOPERATION_SUCCESS";

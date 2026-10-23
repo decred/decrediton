@@ -620,7 +620,7 @@ const parseScript = (script, opcodes = opcodeArray) => {
       }
       pop.data = script.slice(i + 1, i + op.length);
       i += op.length - 1;
-    } else if (op.legnth < 0) {
+    } else if (op.length < 0) {
       let l;
       let off = i + 1;
 

@@ -18,6 +18,10 @@ import {
   launchDCRLnd,
   GetDcrlndPID,
   GetDcrlndCreds,
+  launchTrezord,
+  GetTrezordPID,
+  closeTrezord,
+  needsUdevRules,
   launchDex,
   initCheckDex,
   initDexCall,
@@ -183,7 +187,8 @@ export const startWallet = async (
   rpcHost,
   rpcListen,
   gapLimit,
-  disableCoinTypeUpgrades
+  disableCoinTypeUpgrades,
+  mixing
 ) => {
   if (GetDcrwPID()) {
     logger.log("info", "dcrwallet already started " + GetDcrwPID());
@@ -207,7 +212,8 @@ export const startWallet = async (
       rpcHost,
       rpcListen,
       gapLimit,
-      disableCoinTypeUpgrades
+      disableCoinTypeUpgrades,
+      mixing
     );
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
@@ -247,6 +253,30 @@ export const startDcrlnd = async (
     return e;
   }
 };
+
+export const needUdevRules = () => {
+  return { needs: needsUdevRules() };
+};
+
+export const startTrezord = async () => {
+  if (GetTrezordPID() && GetTrezordPID() !== -1) {
+    logger.log(
+      "info",
+      `Skipping restart of trezord-go as it is already running ${GetTrezordPID()}`
+    );
+    return { wasRunning: true };
+  }
+
+  try {
+    const started = await launchTrezord();
+    return started;
+  } catch (e) {
+    logger.log("error", `error launching trezord-go: ${e}`);
+    return e;
+  }
+};
+
+export const stopTrezord = () => closeTrezord();
 
 export const startDex = async (walletPath, testnet, locale) => {
   if (GetDexPID()) {

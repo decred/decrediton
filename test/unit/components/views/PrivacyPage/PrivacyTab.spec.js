@@ -127,8 +127,6 @@ beforeEach(() => {
     () => () => {}
   );
 
-  selectors.getCsppServer = jest.fn(() => mockCsppServer);
-  selectors.getCsppPort = jest.fn(() => mockCsppPort);
   selectors.getMixedAccountBranch = jest.fn(() => mockMixedAccountBranch);
   selectors.getAllowSendFromUnmixed = jest.fn(() => false);
 
@@ -306,7 +304,6 @@ test("start coin mixer", async () => {
     changeAccount: mockUnMixedAccount.accountNumber,
     mixedAccount: mockMixedAccount.accountNumber,
     passphrase: testPassphrase,
-    csppServer: `${mockCsppServer}:${mockCsppPort}`,
     mixedAccountBranch: mockMixedAccountBranch
   });
 });

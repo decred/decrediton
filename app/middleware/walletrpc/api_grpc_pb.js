@@ -113,6 +113,28 @@ function deserialize_walletrpc_AccountsResponse(buffer_arg) {
   return api_pb.AccountsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_walletrpc_AddressRequest(arg) {
+  if (!(arg instanceof api_pb.AddressRequest)) {
+    throw new Error('Expected argument of type walletrpc.AddressRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AddressRequest(buffer_arg) {
+  return api_pb.AddressRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_AddressResponse(arg) {
+  if (!(arg instanceof api_pb.AddressResponse)) {
+    throw new Error('Expected argument of type walletrpc.AddressResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_AddressResponse(buffer_arg) {
+  return api_pb.AddressResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_walletrpc_AgendasRequest(arg) {
   if (!(arg instanceof api_pb.AgendasRequest)) {
     throw new Error('Expected argument of type walletrpc.AgendasRequest');
@@ -177,6 +199,28 @@ function serialize_walletrpc_BestBlockResponse(arg) {
 
 function deserialize_walletrpc_BestBlockResponse(buffer_arg) {
   return api_pb.BestBlockResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_BirthBlockRequest(arg) {
+  if (!(arg instanceof api_pb.BirthBlockRequest)) {
+    throw new Error('Expected argument of type walletrpc.BirthBlockRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_BirthBlockRequest(buffer_arg) {
+  return api_pb.BirthBlockRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_BirthBlockResponse(arg) {
+  if (!(arg instanceof api_pb.BirthBlockResponse)) {
+    throw new Error('Expected argument of type walletrpc.BirthBlockResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_BirthBlockResponse(buffer_arg) {
+  return api_pb.BirthBlockResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_BlockInfoRequest(arg) {
@@ -463,6 +507,28 @@ function serialize_walletrpc_DiscoverUsageResponse(arg) {
 
 function deserialize_walletrpc_DiscoverUsageResponse(buffer_arg) {
   return api_pb.DiscoverUsageResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_DumpPrivateKeyRequest(arg) {
+  if (!(arg instanceof api_pb.DumpPrivateKeyRequest)) {
+    throw new Error('Expected argument of type walletrpc.DumpPrivateKeyRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DumpPrivateKeyRequest(buffer_arg) {
+  return api_pb.DumpPrivateKeyRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_walletrpc_DumpPrivateKeyResponse(arg) {
+  if (!(arg instanceof api_pb.DumpPrivateKeyResponse)) {
+    throw new Error('Expected argument of type walletrpc.DumpPrivateKeyResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_walletrpc_DumpPrivateKeyResponse(buffer_arg) {
+  return api_pb.DumpPrivateKeyResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_FundTransactionRequest(arg) {
@@ -1202,50 +1268,6 @@ function deserialize_walletrpc_RescanResponse(buffer_arg) {
   return api_pb.RescanResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_walletrpc_RevokeTicketRequest(arg) {
-  if (!(arg instanceof api_pb.RevokeTicketRequest)) {
-    throw new Error('Expected argument of type walletrpc.RevokeTicketRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_RevokeTicketRequest(buffer_arg) {
-  return api_pb.RevokeTicketRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_RevokeTicketResponse(arg) {
-  if (!(arg instanceof api_pb.RevokeTicketResponse)) {
-    throw new Error('Expected argument of type walletrpc.RevokeTicketResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_RevokeTicketResponse(buffer_arg) {
-  return api_pb.RevokeTicketResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_RevokeTicketsRequest(arg) {
-  if (!(arg instanceof api_pb.RevokeTicketsRequest)) {
-    throw new Error('Expected argument of type walletrpc.RevokeTicketsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_RevokeTicketsRequest(buffer_arg) {
-  return api_pb.RevokeTicketsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_RevokeTicketsResponse(arg) {
-  if (!(arg instanceof api_pb.RevokeTicketsResponse)) {
-    throw new Error('Expected argument of type walletrpc.RevokeTicketsResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_RevokeTicketsResponse(buffer_arg) {
-  return api_pb.RevokeTicketsResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_walletrpc_RpcSyncRequest(arg) {
   if (!(arg instanceof api_pb.RpcSyncRequest)) {
     throw new Error('Expected argument of type walletrpc.RpcSyncRequest');
@@ -1334,182 +1356,6 @@ function deserialize_walletrpc_SetAccountPassphraseResponse(buffer_arg) {
   return api_pb.SetAccountPassphraseResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_walletrpc_SetAccountRequest(arg) {
-  if (!(arg instanceof api_pb.SetAccountRequest)) {
-    throw new Error('Expected argument of type walletrpc.SetAccountRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetAccountRequest(buffer_arg) {
-  return api_pb.SetAccountRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetAccountResponse(arg) {
-  if (!(arg instanceof api_pb.SetAccountResponse)) {
-    throw new Error('Expected argument of type walletrpc.SetAccountResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetAccountResponse(buffer_arg) {
-  return api_pb.SetAccountResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetBalanceToMaintainRequest(arg) {
-  if (!(arg instanceof api_pb.SetBalanceToMaintainRequest)) {
-    throw new Error('Expected argument of type walletrpc.SetBalanceToMaintainRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetBalanceToMaintainRequest(buffer_arg) {
-  return api_pb.SetBalanceToMaintainRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetBalanceToMaintainResponse(arg) {
-  if (!(arg instanceof api_pb.SetBalanceToMaintainResponse)) {
-    throw new Error('Expected argument of type walletrpc.SetBalanceToMaintainResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetBalanceToMaintainResponse(buffer_arg) {
-  return api_pb.SetBalanceToMaintainResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetMaxFeeRequest(arg) {
-  if (!(arg instanceof api_pb.SetMaxFeeRequest)) {
-    throw new Error('Expected argument of type walletrpc.SetMaxFeeRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetMaxFeeRequest(buffer_arg) {
-  return api_pb.SetMaxFeeRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetMaxFeeResponse(arg) {
-  if (!(arg instanceof api_pb.SetMaxFeeResponse)) {
-    throw new Error('Expected argument of type walletrpc.SetMaxFeeResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetMaxFeeResponse(buffer_arg) {
-  return api_pb.SetMaxFeeResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetMaxPerBlockRequest(arg) {
-  if (!(arg instanceof api_pb.SetMaxPerBlockRequest)) {
-    throw new Error('Expected argument of type walletrpc.SetMaxPerBlockRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetMaxPerBlockRequest(buffer_arg) {
-  return api_pb.SetMaxPerBlockRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetMaxPerBlockResponse(arg) {
-  if (!(arg instanceof api_pb.SetMaxPerBlockResponse)) {
-    throw new Error('Expected argument of type walletrpc.SetMaxPerBlockResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetMaxPerBlockResponse(buffer_arg) {
-  return api_pb.SetMaxPerBlockResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetMaxPriceAbsoluteRequest(arg) {
-  if (!(arg instanceof api_pb.SetMaxPriceAbsoluteRequest)) {
-    throw new Error('Expected argument of type walletrpc.SetMaxPriceAbsoluteRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetMaxPriceAbsoluteRequest(buffer_arg) {
-  return api_pb.SetMaxPriceAbsoluteRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetMaxPriceAbsoluteResponse(arg) {
-  if (!(arg instanceof api_pb.SetMaxPriceAbsoluteResponse)) {
-    throw new Error('Expected argument of type walletrpc.SetMaxPriceAbsoluteResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetMaxPriceAbsoluteResponse(buffer_arg) {
-  return api_pb.SetMaxPriceAbsoluteResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetMaxPriceRelativeRequest(arg) {
-  if (!(arg instanceof api_pb.SetMaxPriceRelativeRequest)) {
-    throw new Error('Expected argument of type walletrpc.SetMaxPriceRelativeRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetMaxPriceRelativeRequest(buffer_arg) {
-  return api_pb.SetMaxPriceRelativeRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetMaxPriceRelativeResponse(arg) {
-  if (!(arg instanceof api_pb.SetMaxPriceRelativeResponse)) {
-    throw new Error('Expected argument of type walletrpc.SetMaxPriceRelativeResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetMaxPriceRelativeResponse(buffer_arg) {
-  return api_pb.SetMaxPriceRelativeResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetPoolAddressRequest(arg) {
-  if (!(arg instanceof api_pb.SetPoolAddressRequest)) {
-    throw new Error('Expected argument of type walletrpc.SetPoolAddressRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetPoolAddressRequest(buffer_arg) {
-  return api_pb.SetPoolAddressRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetPoolAddressResponse(arg) {
-  if (!(arg instanceof api_pb.SetPoolAddressResponse)) {
-    throw new Error('Expected argument of type walletrpc.SetPoolAddressResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetPoolAddressResponse(buffer_arg) {
-  return api_pb.SetPoolAddressResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetPoolFeesRequest(arg) {
-  if (!(arg instanceof api_pb.SetPoolFeesRequest)) {
-    throw new Error('Expected argument of type walletrpc.SetPoolFeesRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetPoolFeesRequest(buffer_arg) {
-  return api_pb.SetPoolFeesRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetPoolFeesResponse(arg) {
-  if (!(arg instanceof api_pb.SetPoolFeesResponse)) {
-    throw new Error('Expected argument of type walletrpc.SetPoolFeesResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetPoolFeesResponse(buffer_arg) {
-  return api_pb.SetPoolFeesResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_walletrpc_SetTSpendPolicyRequest(arg) {
   if (!(arg instanceof api_pb.SetTSpendPolicyRequest)) {
     throw new Error('Expected argument of type walletrpc.SetTSpendPolicyRequest');
@@ -1574,28 +1420,6 @@ function serialize_walletrpc_SetVoteChoicesResponse(arg) {
 
 function deserialize_walletrpc_SetVoteChoicesResponse(buffer_arg) {
   return api_pb.SetVoteChoicesResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetVotingAddressRequest(arg) {
-  if (!(arg instanceof api_pb.SetVotingAddressRequest)) {
-    throw new Error('Expected argument of type walletrpc.SetVotingAddressRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetVotingAddressRequest(buffer_arg) {
-  return api_pb.SetVotingAddressRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_SetVotingAddressResponse(arg) {
-  if (!(arg instanceof api_pb.SetVotingAddressResponse)) {
-    throw new Error('Expected argument of type walletrpc.SetVotingAddressResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_SetVotingAddressResponse(buffer_arg) {
-  return api_pb.SetVotingAddressResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_SetVspdVoteChoicesRequest(arg) {
@@ -1796,50 +1620,6 @@ function deserialize_walletrpc_StakeInfoResponse(buffer_arg) {
   return api_pb.StakeInfoResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_walletrpc_StartAutoBuyerRequest(arg) {
-  if (!(arg instanceof api_pb.StartAutoBuyerRequest)) {
-    throw new Error('Expected argument of type walletrpc.StartAutoBuyerRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_StartAutoBuyerRequest(buffer_arg) {
-  return api_pb.StartAutoBuyerRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_StartAutoBuyerResponse(arg) {
-  if (!(arg instanceof api_pb.StartAutoBuyerResponse)) {
-    throw new Error('Expected argument of type walletrpc.StartAutoBuyerResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_StartAutoBuyerResponse(buffer_arg) {
-  return api_pb.StartAutoBuyerResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_StopAutoBuyerRequest(arg) {
-  if (!(arg instanceof api_pb.StopAutoBuyerRequest)) {
-    throw new Error('Expected argument of type walletrpc.StopAutoBuyerRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_StopAutoBuyerRequest(buffer_arg) {
-  return api_pb.StopAutoBuyerRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_StopAutoBuyerResponse(arg) {
-  if (!(arg instanceof api_pb.StopAutoBuyerResponse)) {
-    throw new Error('Expected argument of type walletrpc.StopAutoBuyerResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_StopAutoBuyerResponse(buffer_arg) {
-  return api_pb.StopAutoBuyerResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_walletrpc_SweepAccountRequest(arg) {
   if (!(arg instanceof api_pb.SweepAccountRequest)) {
     throw new Error('Expected argument of type walletrpc.SweepAccountRequest');
@@ -1904,28 +1684,6 @@ function serialize_walletrpc_TSpendPoliciesResponse(arg) {
 
 function deserialize_walletrpc_TSpendPoliciesResponse(buffer_arg) {
   return api_pb.TSpendPoliciesResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_TicketBuyerConfigRequest(arg) {
-  if (!(arg instanceof api_pb.TicketBuyerConfigRequest)) {
-    throw new Error('Expected argument of type walletrpc.TicketBuyerConfigRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_TicketBuyerConfigRequest(buffer_arg) {
-  return api_pb.TicketBuyerConfigRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_walletrpc_TicketBuyerConfigResponse(arg) {
-  if (!(arg instanceof api_pb.TicketBuyerConfigResponse)) {
-    throw new Error('Expected argument of type walletrpc.TicketBuyerConfigResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_walletrpc_TicketBuyerConfigResponse(buffer_arg) {
-  return api_pb.TicketBuyerConfigResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_walletrpc_TicketPriceRequest(arg) {
@@ -2242,6 +2000,17 @@ ping: {
     responseSerialize: serialize_walletrpc_AccountsResponse,
     responseDeserialize: deserialize_walletrpc_AccountsResponse,
   },
+  address: {
+    path: '/walletrpc.WalletService/Address',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.AddressRequest,
+    responseType: api_pb.AddressResponse,
+    requestSerialize: serialize_walletrpc_AddressRequest,
+    requestDeserialize: deserialize_walletrpc_AddressRequest,
+    responseSerialize: serialize_walletrpc_AddressResponse,
+    responseDeserialize: deserialize_walletrpc_AddressResponse,
+  },
   balance: {
     path: '/walletrpc.WalletService/Balance',
     requestStream: false,
@@ -2395,6 +2164,28 @@ ping: {
     requestDeserialize: deserialize_walletrpc_GetPeerInfoRequest,
     responseSerialize: serialize_walletrpc_GetPeerInfoResponse,
     responseDeserialize: deserialize_walletrpc_GetPeerInfoResponse,
+  },
+  dumpPrivateKey: {
+    path: '/walletrpc.WalletService/DumpPrivateKey',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.DumpPrivateKeyRequest,
+    responseType: api_pb.DumpPrivateKeyResponse,
+    requestSerialize: serialize_walletrpc_DumpPrivateKeyRequest,
+    requestDeserialize: deserialize_walletrpc_DumpPrivateKeyRequest,
+    responseSerialize: serialize_walletrpc_DumpPrivateKeyResponse,
+    responseDeserialize: deserialize_walletrpc_DumpPrivateKeyResponse,
+  },
+  birthBlock: {
+    path: '/walletrpc.WalletService/BirthBlock',
+    requestStream: false,
+    responseStream: false,
+    requestType: api_pb.BirthBlockRequest,
+    responseType: api_pb.BirthBlockResponse,
+    requestSerialize: serialize_walletrpc_BirthBlockRequest,
+    requestDeserialize: deserialize_walletrpc_BirthBlockRequest,
+    responseSerialize: serialize_walletrpc_BirthBlockResponse,
+    responseDeserialize: deserialize_walletrpc_BirthBlockResponse,
   },
   // Notifications
 transactionNotifications: {
@@ -2628,28 +2419,6 @@ changePassphrase: {
     requestDeserialize: deserialize_walletrpc_PurchaseTicketsRequest,
     responseSerialize: serialize_walletrpc_PurchaseTicketsResponse,
     responseDeserialize: deserialize_walletrpc_PurchaseTicketsResponse,
-  },
-  revokeTicket: {
-    path: '/walletrpc.WalletService/RevokeTicket',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.RevokeTicketRequest,
-    responseType: api_pb.RevokeTicketResponse,
-    requestSerialize: serialize_walletrpc_RevokeTicketRequest,
-    requestDeserialize: deserialize_walletrpc_RevokeTicketRequest,
-    responseSerialize: serialize_walletrpc_RevokeTicketResponse,
-    responseDeserialize: deserialize_walletrpc_RevokeTicketResponse,
-  },
-  revokeTickets: {
-    path: '/walletrpc.WalletService/RevokeTickets',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.RevokeTicketsRequest,
-    responseType: api_pb.RevokeTicketsResponse,
-    requestSerialize: serialize_walletrpc_RevokeTicketsRequest,
-    requestDeserialize: deserialize_walletrpc_RevokeTicketsRequest,
-    responseSerialize: serialize_walletrpc_RevokeTicketsResponse,
-    responseDeserialize: deserialize_walletrpc_RevokeTicketsResponse,
   },
   loadActiveDataFilters: {
     path: '/walletrpc.WalletService/LoadActiveDataFilters',
@@ -3000,9 +2769,9 @@ var AccountMixerServiceService = exports['walletrpc.AccountMixerService'] = {
   },
 };
 
-var TicketBuyerV2ServiceService = exports['walletrpc.TicketBuyerV2Service'] = {
+var TicketBuyerServiceService = exports['walletrpc.TicketBuyerService'] = {
   runTicketBuyer: {
-    path: '/walletrpc.TicketBuyerV2Service/RunTicketBuyer',
+    path: '/walletrpc.TicketBuyerService/RunTicketBuyer',
     requestStream: false,
     responseStream: true,
     requestType: api_pb.RunTicketBuyerRequest,
@@ -3011,141 +2780,6 @@ var TicketBuyerV2ServiceService = exports['walletrpc.TicketBuyerV2Service'] = {
     requestDeserialize: deserialize_walletrpc_RunTicketBuyerRequest,
     responseSerialize: serialize_walletrpc_RunTicketBuyerResponse,
     responseDeserialize: deserialize_walletrpc_RunTicketBuyerResponse,
-  },
-};
-
-var TicketBuyerServiceService = exports['walletrpc.TicketBuyerService'] = {
-  startAutoBuyer: {
-    path: '/walletrpc.TicketBuyerService/StartAutoBuyer',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.StartAutoBuyerRequest,
-    responseType: api_pb.StartAutoBuyerResponse,
-    requestSerialize: serialize_walletrpc_StartAutoBuyerRequest,
-    requestDeserialize: deserialize_walletrpc_StartAutoBuyerRequest,
-    responseSerialize: serialize_walletrpc_StartAutoBuyerResponse,
-    responseDeserialize: deserialize_walletrpc_StartAutoBuyerResponse,
-  },
-  stopAutoBuyer: {
-    path: '/walletrpc.TicketBuyerService/StopAutoBuyer',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.StopAutoBuyerRequest,
-    responseType: api_pb.StopAutoBuyerResponse,
-    requestSerialize: serialize_walletrpc_StopAutoBuyerRequest,
-    requestDeserialize: deserialize_walletrpc_StopAutoBuyerRequest,
-    responseSerialize: serialize_walletrpc_StopAutoBuyerResponse,
-    responseDeserialize: deserialize_walletrpc_StopAutoBuyerResponse,
-  },
-  ticketBuyerConfig: {
-    path: '/walletrpc.TicketBuyerService/TicketBuyerConfig',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.TicketBuyerConfigRequest,
-    responseType: api_pb.TicketBuyerConfigResponse,
-    requestSerialize: serialize_walletrpc_TicketBuyerConfigRequest,
-    requestDeserialize: deserialize_walletrpc_TicketBuyerConfigRequest,
-    responseSerialize: serialize_walletrpc_TicketBuyerConfigResponse,
-    responseDeserialize: deserialize_walletrpc_TicketBuyerConfigResponse,
-  },
-  setAccount: {
-    path: '/walletrpc.TicketBuyerService/SetAccount',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.SetAccountRequest,
-    responseType: api_pb.SetAccountResponse,
-    requestSerialize: serialize_walletrpc_SetAccountRequest,
-    requestDeserialize: deserialize_walletrpc_SetAccountRequest,
-    responseSerialize: serialize_walletrpc_SetAccountResponse,
-    responseDeserialize: deserialize_walletrpc_SetAccountResponse,
-  },
-  setBalanceToMaintain: {
-    path: '/walletrpc.TicketBuyerService/SetBalanceToMaintain',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.SetBalanceToMaintainRequest,
-    responseType: api_pb.SetBalanceToMaintainResponse,
-    requestSerialize: serialize_walletrpc_SetBalanceToMaintainRequest,
-    requestDeserialize: deserialize_walletrpc_SetBalanceToMaintainRequest,
-    responseSerialize: serialize_walletrpc_SetBalanceToMaintainResponse,
-    responseDeserialize: deserialize_walletrpc_SetBalanceToMaintainResponse,
-  },
-  setMaxFee: {
-    path: '/walletrpc.TicketBuyerService/SetMaxFee',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.SetMaxFeeRequest,
-    responseType: api_pb.SetMaxFeeResponse,
-    requestSerialize: serialize_walletrpc_SetMaxFeeRequest,
-    requestDeserialize: deserialize_walletrpc_SetMaxFeeRequest,
-    responseSerialize: serialize_walletrpc_SetMaxFeeResponse,
-    responseDeserialize: deserialize_walletrpc_SetMaxFeeResponse,
-  },
-  setMaxPriceRelative: {
-    path: '/walletrpc.TicketBuyerService/SetMaxPriceRelative',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.SetMaxPriceRelativeRequest,
-    responseType: api_pb.SetMaxPriceRelativeResponse,
-    requestSerialize: serialize_walletrpc_SetMaxPriceRelativeRequest,
-    requestDeserialize: deserialize_walletrpc_SetMaxPriceRelativeRequest,
-    responseSerialize: serialize_walletrpc_SetMaxPriceRelativeResponse,
-    responseDeserialize: deserialize_walletrpc_SetMaxPriceRelativeResponse,
-  },
-  setMaxPriceAbsolute: {
-    path: '/walletrpc.TicketBuyerService/SetMaxPriceAbsolute',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.SetMaxPriceAbsoluteRequest,
-    responseType: api_pb.SetMaxPriceAbsoluteResponse,
-    requestSerialize: serialize_walletrpc_SetMaxPriceAbsoluteRequest,
-    requestDeserialize: deserialize_walletrpc_SetMaxPriceAbsoluteRequest,
-    responseSerialize: serialize_walletrpc_SetMaxPriceAbsoluteResponse,
-    responseDeserialize: deserialize_walletrpc_SetMaxPriceAbsoluteResponse,
-  },
-  setVotingAddress: {
-    path: '/walletrpc.TicketBuyerService/SetVotingAddress',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.SetVotingAddressRequest,
-    responseType: api_pb.SetVotingAddressResponse,
-    requestSerialize: serialize_walletrpc_SetVotingAddressRequest,
-    requestDeserialize: deserialize_walletrpc_SetVotingAddressRequest,
-    responseSerialize: serialize_walletrpc_SetVotingAddressResponse,
-    responseDeserialize: deserialize_walletrpc_SetVotingAddressResponse,
-  },
-  setPoolAddress: {
-    path: '/walletrpc.TicketBuyerService/SetPoolAddress',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.SetPoolAddressRequest,
-    responseType: api_pb.SetPoolAddressResponse,
-    requestSerialize: serialize_walletrpc_SetPoolAddressRequest,
-    requestDeserialize: deserialize_walletrpc_SetPoolAddressRequest,
-    responseSerialize: serialize_walletrpc_SetPoolAddressResponse,
-    responseDeserialize: deserialize_walletrpc_SetPoolAddressResponse,
-  },
-  setPoolFees: {
-    path: '/walletrpc.TicketBuyerService/SetPoolFees',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.SetPoolFeesRequest,
-    responseType: api_pb.SetPoolFeesResponse,
-    requestSerialize: serialize_walletrpc_SetPoolFeesRequest,
-    requestDeserialize: deserialize_walletrpc_SetPoolFeesRequest,
-    responseSerialize: serialize_walletrpc_SetPoolFeesResponse,
-    responseDeserialize: deserialize_walletrpc_SetPoolFeesResponse,
-  },
-  setMaxPerBlock: {
-    path: '/walletrpc.TicketBuyerService/SetMaxPerBlock',
-    requestStream: false,
-    responseStream: false,
-    requestType: api_pb.SetMaxPerBlockRequest,
-    responseType: api_pb.SetMaxPerBlockResponse,
-    requestSerialize: serialize_walletrpc_SetMaxPerBlockRequest,
-    requestDeserialize: deserialize_walletrpc_SetMaxPerBlockRequest,
-    responseSerialize: serialize_walletrpc_SetMaxPerBlockResponse,
-    responseDeserialize: deserialize_walletrpc_SetMaxPerBlockResponse,
   },
 };
 

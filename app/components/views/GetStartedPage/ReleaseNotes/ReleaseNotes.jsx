@@ -4,6 +4,11 @@ import ReleaseNotesForm from "./Form";
 // versions with release notes available. From newer to older.
 const availableVersions = [
   {
+    version: "2.1.1",
+    docName: "ReleaseNote2_1_1",
+    imgClassName: "v211"
+  },
+  {
     version: "1.8.0",
     docName: "ReleaseNote1_8_0",
     imgClassName: "v180"

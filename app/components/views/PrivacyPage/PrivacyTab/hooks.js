@@ -24,8 +24,6 @@ export function usePrivacy() {
   const isAutoBuyerRunning = useSelector(sel.getTicketAutoBuyerRunning);
   const mixedAccount = useSelector(sel.getMixedAccount);
   const changeAccount = useSelector(sel.getChangeAccount);
-  const csppServer = useSelector(sel.getCsppServer);
-  const csppPort = useSelector(sel.getCsppPort);
   const mixedAccountBranch = useSelector(sel.getMixedAccountBranch);
   const balances = useSelector(sel.balances);
   const accounts = balances
@@ -75,8 +73,7 @@ export function usePrivacy() {
       passphrase,
       mixedAccount,
       changeAccount,
-      mixedAccountBranch,
-      csppServer: `${csppServer}:${csppPort}`
+      mixedAccountBranch
     };
     runAccountMixer(request)
       .then((r) => r)

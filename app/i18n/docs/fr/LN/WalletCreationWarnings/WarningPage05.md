@@ -1,0 +1,1 @@
+Le compte du portefeuille utilisé pour les opérations Lightning Network reste déverrouillé tant que le réseau Lightning est utilisé. Un risque existe pour les fonds de ce compte si quelqu'un accède à distance ou physiquement à cet ordinateur. Il est recommandé d'utiliser un compte distinct (ou mieux, un autre portefeuille) avec un petit montant pour minimiser les risques.

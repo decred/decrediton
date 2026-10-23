@@ -142,8 +142,6 @@ export const getMixedAccount = get(["walletLoader", "mixedAccount"]);
 // getChangeAccount get the changeaccount selector, which is used for unmixed
 // accounts on mixer.
 export const getChangeAccount = get(["walletLoader", "changeAccount"]);
-export const getCsppServer = get(["walletLoader", "csppServer"]);
-export const getCsppPort = get(["walletLoader", "csppPort"]);
 export const getMixedAccountBranch = get([
   "walletLoader",
   "mixedAccountBranch"
@@ -1106,6 +1104,7 @@ export const confirmationDialogModalVisible = bool(
 
 export const isTrezor = get(["trezor", "enabled"]);
 export const isPerformingTrezorUpdate = get(["trezor", "performingUpdate"]);
+export const trezorUdevError = get(["trezor", "udevError"]);
 
 export const isLedger = get(["ledger", "enabled"]);
 
