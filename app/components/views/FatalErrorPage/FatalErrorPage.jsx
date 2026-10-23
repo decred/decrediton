@@ -20,6 +20,7 @@ function FatalErrorPage() {
   const {
     daemonError,
     walletError,
+    trezorUdevError,
     isAdvancedDaemon,
     shutdownApp,
     backToCredentials,
@@ -125,6 +126,17 @@ function FatalErrorPage() {
                 <textarea rows="10" value={walletError} disabled />
               </>
             )}
+            {trezorUdevError && (
+              <>
+                <div className={styles.error}>
+                  <T id="fatal.trezor.udev.title" m="Udev Rules Error" />
+                </div>
+                <T
+                  id="fatal.trezor.udev.details"
+                  m="Udev rules were not found at /etc/udev/rules.d/51-trezor.rules"
+                />
+              </>
+            )}
           </div>
         </div>
         <div className={styles.title}>
@@ -136,6 +148,19 @@ function FatalErrorPage() {
         </div>
         <div className={styles.suggestion}>
           {daemonError && getErrorAction()}
+          {trezorUdevError && (
+            <T
+              id="fatal.trezor.suggestion.udev"
+              m="Follow the instuctions at {link}."
+              values={{
+                link: (
+                  <ExternalLink href="https://trezor.io/learn/a/udev-rules">
+                    https://trezor.io/learn/a/udev-rules
+                  </ExternalLink>
+                )
+              }}
+            />
+          )}
         </div>
         <div className={styles.toolbar}>
           {isAdvancedDaemon && (

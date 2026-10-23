@@ -14,12 +14,7 @@ import {
 import {
   MIN_RELAY_FEE_ATOMS,
   MIN_MIX_DENOMINATION_ATOMS,
-  CSPP_URL,
-  CSPP_PORT_TESTNET,
-  CSPP_PORT_MAINNET,
   SEND_FROM_UNMIXED,
-  CSPP_SERVER,
-  CSPP_PORT,
   MIXED_ACCOUNT_CFG,
   CHANGE_ACCOUNT_CFG,
   MIXED_ACC_BRANCH
@@ -91,13 +86,7 @@ export const checkUnmixedAccountBalance =
   };
 
 export const runAccountMixer =
-  ({
-    passphrase,
-    mixedAccount,
-    mixedAccountBranch,
-    changeAccount,
-    csppServer
-  }) =>
+  ({ passphrase, mixedAccount, mixedAccountBranch, changeAccount }) =>
   (dispatch, getState) =>
     new Promise((resolve) => {
       dispatch({ type: RUNACCOUNTMIXER_ATTEMPT });
@@ -113,8 +102,7 @@ export const runAccountMixer =
                 {
                   mixedAccount,
                   mixedAccountBranch,
-                  changeAccount,
-                  csppServer
+                  changeAccount
                 }
               ),
             true
@@ -217,11 +205,6 @@ export const setCoinjoinCfg =
     const walletName = sel.getWalletName(getState());
     const cfg = wallet.getWalletCfg(isTestnet, walletName);
 
-    const csppServer = CSPP_URL;
-    const csppPort = isTestnet ? CSPP_PORT_TESTNET : CSPP_PORT_MAINNET;
-
-    cfg.set(CSPP_SERVER, csppServer);
-    cfg.set(CSPP_PORT, csppPort);
     cfg.set(MIXED_ACCOUNT_CFG, mixedNumber);
     cfg.set(CHANGE_ACCOUNT_CFG, changeNumber);
     cfg.set(MIXED_ACC_BRANCH, 0);
@@ -232,8 +215,6 @@ export const setCoinjoinCfg =
       type: CREATEMIXERACCOUNTS_SUCCESS,
       mixedAccount: mixedNumber,
       changeAccount: changeNumber,
-      csppPort,
-      csppServer,
       mixedAccountBranch: 0
     });
   };

@@ -39,7 +39,7 @@ export const getLoader = withLogNoData(
   "Get Loader"
 );
 
-export const startRpc = log(
+export const startRpc = withLogNoData(
   (loader, daemonhost, rpcport, rpcuser, rpcpass, cert) =>
     new Promise((resolve, reject) => {
       const request = new StartConsensusRpcRequest();
@@ -55,7 +55,7 @@ export const startRpc = log(
   logOptionNoArgs()
 );
 
-export const createWallet = log(
+export const createWallet = withLogNoData(
   async (loader, pubPass, privPass, seed) => {
     // Show seed confirmation dialog via BrowserView. If the passed hex seed has
     // exactly 64 chars (i.e. 256 bit seed) convert it to a standard 33-word
@@ -93,7 +93,7 @@ export const createWatchingOnlyWallet = log(
   logOptionNoArgs()
 );
 
-export const openWallet = log(
+export const openWallet = withLogNoData(
   (loader, pubPass) =>
     new Promise((resolve, reject) => {
       const request = new OpenWalletRequest();
@@ -116,7 +116,7 @@ export const closeWallet = log(
   "Close Wallet"
 );
 
-export const discoverAddresses = log(
+export const discoverAddresses = withLogNoData(
   (loader, shouldDiscoverAccounts, privPass, startingBlockHash) =>
     new Promise((resolve, reject) => {
       const request = new DiscoverAddressesRequest();
@@ -160,7 +160,7 @@ export const fetchHeaders = log(
   "Fetch Headers"
 );
 
-export const spvSync = log(
+export const spvSync = withLogNoData(
   async (loader, spvConnect, discoverAccts, setPrivPass) => {
     const request = new SpvSyncRequest();
     for (let i = 0; spvConnect && i < spvConnect.length; i++) {
@@ -176,7 +176,7 @@ export const spvSync = log(
   "Start SPV Sync"
 );
 
-export const rpcSync = log(
+export const rpcSync = withLogNoData(
   async (loader, rpcCreds, discoverAccts, setPrivPass) => {
     const { rpc_user, rpc_cert, rpc_pass, rpc_host, rpc_port } = rpcCreds;
     const request = new RpcSyncRequest();

@@ -1,4 +1,1 @@
-Decred community of stakeholders votes to fund contractors to complete projects ... e.g. dev, marketing, design,
-
-Politeia proposals, CMS
-Bad actors side
+Lastly, ticket holders are able to shape the course of overall project development.  [Politeia](proposals.decred.org) is a platform for people to submit proposals for development, marketing or other possibly expenditures of the Decred Treasury funds.  Upon stake-holder approval of these proposals, the proposal creators are able to submit invoices to be paid out by the Decred Treasury.  Stakeholders are then given final say as to whether of not these spends from the Treasury funds should be allowed.

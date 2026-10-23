@@ -78,7 +78,7 @@ export const installSessionHandlers = (mainLogger) => {
         );
         callback({ cancel: true, requestHeaders: details.requestHeaders });
       } else {
-        //logger.log("verbose", details.method + " " + details.url);
+        // logger.log("verbose", details.method + " " + details.url);
         if (
           allowedExternalRequests[EXTERNALREQUEST_TREZOR_BRIDGE] &&
           /^http:\/\/127.0.0.1:21325\//.test(details.url)

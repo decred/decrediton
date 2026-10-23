@@ -1,0 +1,1 @@
+Dans Politeia, les propositions, commentaires, les votes sur les commentaires et maintenant aussi les mises à jour, sont signés avec la clé liée à l'identité. Ces messages peuvent avoir un grand impact sur la prise de décision et les dépenses, ce qui pourrait rendre les signatures plus importantes au fil du temps.

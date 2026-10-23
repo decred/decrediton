@@ -59,6 +59,7 @@ export const IS_WATCH_ONLY = "iswatchonly";
 export const POLITEIA_LAST_ACCESS_TIME = "politeia_last_access_time";
 export const POLITEIA_LAST_ACCESS_BLOCK = "politeia_last_access_block";
 export const TREZOR = "trezor";
+export const LEDGER = "ledger";
 export const ENABLE_PRIVACY = "enableprivacy";
 export const LN_ACCOUNT = "ln_account";
 export const LN_ADDRESS = "ln_address";
@@ -68,8 +69,6 @@ export const LN_MACAROONPATH = "ln_macaroonpath";
 export const SEND_FROM_UNMIXED = "send_from_unmixed";
 export const MIXED_ACCOUNT_CFG = "mixedaccount";
 export const CHANGE_ACCOUNT_CFG = "changeaccount";
-export const CSPP_SERVER = "csppserver";
-export const CSPP_PORT = "csppport";
 export const MIXED_ACC_BRANCH = "mixedaccbranch";
 export const REMEMBERED_VSP_HOST = "remembered_vsp_host";
 export const LAST_ACCESS = "lastaccess";
@@ -98,6 +97,7 @@ export const WALLET_INITIAL_VALUE = {
   [POLITEIA_LAST_ACCESS_TIME]: 0,
   [POLITEIA_LAST_ACCESS_BLOCK]: 0,
   [TREZOR]: false,
+  [LEDGER]: false,
   // enable_privacy only shows the privacy menu on the wallet
   [ENABLE_PRIVACY]: true,
   [LN_ACCOUNT]: null,
@@ -109,8 +109,6 @@ export const WALLET_INITIAL_VALUE = {
   [MIXED_ACCOUNT_CFG]: null,
   // change_account used when mixing
   [CHANGE_ACCOUNT_CFG]: null,
-  [CSPP_SERVER]: "",
-  [CSPP_PORT]: "",
   [MIXED_ACC_BRANCH]: null,
   [REMEMBERED_VSP_HOST]: null,
   [LAST_ACCESS]: 0,

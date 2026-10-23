@@ -2,6 +2,9 @@ import { FormattedMessage as T } from "react-intl";
 
 export const LN_KEY = "ln";
 export const DEX_KEY = "dex";
+export const TICKETS_KEY = "tickets";
+export const GOV_KEY = "governance";
+export const PRIV_KEY = "privacy";
 
 export const linkList = [
   {
@@ -27,6 +30,7 @@ export const linkList = [
     path: "/governance",
     link: <T id="sidebar.link.governance" m="Governance" />,
     icon: "governance",
+    key: GOV_KEY,
     notifProp: [
       "newProposalsStartedVoting",
       "newNotYetVotedAgendasCount",
@@ -38,12 +42,14 @@ export const linkList = [
     path: "/tickets",
     link: <T id="sidebar.link.staking" m="Staking" />,
     icon: "tickets",
+    key: TICKETS_KEY,
     ariaLabel: "Staking"
   },
   {
     path: "/privacy",
     link: <T id="sidebar.link.privacy" m="Privacy and Security" />,
     icon: "securitycntr",
+    key: PRIV_KEY,
     ariaLabel: "Privacy"
   },
   {

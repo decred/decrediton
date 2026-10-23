@@ -18,6 +18,10 @@ import {
   launchDCRLnd,
   GetDcrlndPID,
   GetDcrlndCreds,
+  launchTrezord,
+  GetTrezordPID,
+  closeTrezord,
+  needsUdevRules,
   launchDex,
   initCheckDex,
   initDexCall,
@@ -56,6 +60,7 @@ export const getAvailableWallets = (network) => {
     const lastAccess = cfg.get(cfgConstants.LAST_ACCESS);
     const isWatchingOnly = cfg.get(cfgConstants.IS_WATCH_ONLY);
     const isTrezor = cfg.get(cfgConstants.TREZOR);
+    const isLedger = cfg.get(cfgConstants.LEDGER);
     const isPrivacy = cfg.get(cfgConstants.MIXED_ACCOUNT_CFG);
     const walletDbFilePath = getWalletDb(isTestNet, wallet);
     const finished = fs.existsSync(walletDbFilePath);
@@ -68,6 +73,7 @@ export const getAvailableWallets = (network) => {
       lastAccess,
       isWatchingOnly,
       isTrezor,
+      isLedger,
       isPrivacy,
       isLN,
       displayWalletGradient
@@ -181,7 +187,8 @@ export const startWallet = async (
   rpcHost,
   rpcListen,
   gapLimit,
-  disableCoinTypeUpgrades
+  disableCoinTypeUpgrades,
+  mixing
 ) => {
   if (GetDcrwPID()) {
     logger.log("info", "dcrwallet already started " + GetDcrwPID());
@@ -205,7 +212,8 @@ export const startWallet = async (
       rpcHost,
       rpcListen,
       gapLimit,
-      disableCoinTypeUpgrades
+      disableCoinTypeUpgrades,
+      mixing
     );
   } catch (e) {
     logger.log("error", "error launching dcrwallet: " + e);
@@ -246,7 +254,31 @@ export const startDcrlnd = async (
   }
 };
 
-export const startDex = (walletPath, testnet, locale) => {
+export const needUdevRules = () => {
+  return { needs: needsUdevRules() };
+};
+
+export const startTrezord = async () => {
+  if (GetTrezordPID() && GetTrezordPID() !== -1) {
+    logger.log(
+      "info",
+      `Skipping restart of trezord-go as it is already running ${GetTrezordPID()}`
+    );
+    return { wasRunning: true };
+  }
+
+  try {
+    const started = await launchTrezord();
+    return started;
+  } catch (e) {
+    logger.log("error", `error launching trezord-go: ${e}`);
+    return e;
+  }
+};
+
+export const stopTrezord = () => closeTrezord();
+
+export const startDex = async (walletPath, testnet, locale) => {
   if (GetDexPID()) {
     logger.log(
       "info",

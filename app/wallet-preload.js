@@ -3,6 +3,7 @@ import * as wallet from "wallet";
 import * as walletCrypto from "wallet/crypto";
 import * as dex from "wallet/dex";
 import * as ln from "wallet/ln";
+import * as trezord from "wallet/trezord";
 import * as politeia from "wallet/politeia";
 import { contextBridge } from "electron";
 
@@ -13,7 +14,8 @@ const api = {
   walletCrypto: walletCrypto,
   dex: dex,
   ln: ln,
-  politeia: politeia
+  politeia: politeia,
+  trezord: trezord
 };
 
 try {

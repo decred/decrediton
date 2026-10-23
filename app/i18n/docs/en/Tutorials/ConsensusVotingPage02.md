@@ -1,5 +1,1 @@
-Rondel signs a ban on a selection of activities that are detrimental to Decred’s network.
-
-This signifies that the network is governed by laws, depicted in a way that is relatable in a real world context.
-
-Staking allowed, fishing not allowed
+The Consensus Vote at the core requires 75% of the votes to be one way or another for the vote to be finalized.  And for a vote to be considered valid, the total number of votes must be above the base quorom of 10%.  

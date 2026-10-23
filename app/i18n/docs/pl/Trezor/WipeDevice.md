@@ -1,0 +1,1 @@
+**_Ostrzeżenie!_** Jeśli to urządzenie zawiera istniejący portfel, przed wykonaniem operacji wymazywania i odzyskiwania urządzenia upewnij się, że jego ziarno znajduje się w bezpiecznym i dostępnym miejscu. Niezastosowanie się do tego zalecenia spowoduje utratę środków.

@@ -21,8 +21,15 @@ export const useCreateWallet = () => {
   );
   // TODO implement pubpass
   const createWatchOnlyWalletRequest = useCallback(
-    (extendedPubKey, pubPass = "") =>
-      dispatch(wla.createWatchOnlyWalletRequest(extendedPubKey, pubPass)),
+    (extendedPubKey, isLedger, isTrezor, pubPass = "") =>
+      dispatch(
+        wla.createWatchOnlyWalletRequest(
+          extendedPubKey,
+          isLedger,
+          isTrezor,
+          pubPass
+        )
+      ),
     [dispatch]
   );
   const createWalletRequest = useCallback(

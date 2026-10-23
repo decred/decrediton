@@ -12,6 +12,7 @@ import snackbar from "./snackbar";
 import statistics from "./statistics";
 import governance from "./governance";
 import trezor from "./trezor";
+import ledger from "./ledger";
 import ln from "./ln";
 import vsp from "./vsp";
 import dex from "./dex";
@@ -30,6 +31,7 @@ export default {
   statistics,
   governance,
   trezor,
+  ledger,
   ln,
   vsp,
   dex

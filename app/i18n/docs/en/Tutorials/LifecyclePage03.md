@@ -1,5 +1,2 @@
-A basic runthrough of Immature ticket states.
+When mined into a block they become 'immature.'  After 256 blocks (approx. 21 hrs.) they become 'mature' and are ready to be selected for voting.
 
-A representation that shows the ticket surrounded by a vessel, volume that isolates the ticket from surrounding elements
-
-This signifies that that tickets cannot be interacted with during the 21 hours of immaturity and are isolated from the actions of both holder and network.

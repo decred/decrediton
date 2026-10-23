@@ -5,19 +5,15 @@ import { FormattedMessage as T } from "react-intl";
 import CastVoteModalButton from "./CastVoteModalButton";
 
 const VoteSection = ({
-  piKey,
+  votingFor,
   policyOptions,
-  treasuryPolicies,
-  setTreasuryPolicy,
+  vote,
+  initSelectedValue,
   isLoading
 }) => {
-  const [selected, setSelected] = useState(
-    () =>
-      treasuryPolicies &&
-      (treasuryPolicies.find((tp) => tp.key === piKey)?.policy ?? "abstain")
-  );
+  const [selected, setSelected] = useState(() => initSelectedValue);
   const updatePreferences = (passphrase) =>
-    setTreasuryPolicy(piKey, selected, passphrase);
+    vote(votingFor, selected, passphrase);
   const handleChange = (option) => setSelected(option.value);
 
   return (
@@ -31,6 +27,7 @@ const VoteSection = ({
           )}
         </div>
         <RadioButtonGroup
+          name={`${votingFor}-radioButtonGroup`}
           className={styles.voteRadioButtons}
           options={policyOptions}
           onChange={handleChange}

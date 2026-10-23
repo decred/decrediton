@@ -1,5 +1,1 @@
-A basic introduction to on-chain consensus.
-
-Depiction of a firm handshake signifying consensus being established between 2 parties.
-
-This signifies the importance of establishing consensus at the heart of Decred’s network design and proposition.
+In the past, numerous projects have splintered due to no orderly process to upgrade consensus.  To avoid this, we have instituted a network upgrade process that strives to be as painless and orderly as possible.

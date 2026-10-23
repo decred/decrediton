@@ -142,8 +142,6 @@ export const getMixedAccount = get(["walletLoader", "mixedAccount"]);
 // getChangeAccount get the changeaccount selector, which is used for unmixed
 // accounts on mixer.
 export const getChangeAccount = get(["walletLoader", "changeAccount"]);
-export const getCsppServer = get(["walletLoader", "csppServer"]);
-export const getCsppPort = get(["walletLoader", "csppPort"]);
 export const getMixedAccountBranch = get([
   "walletLoader",
   "mixedAccountBranch"
@@ -1103,10 +1101,15 @@ export const confirmationDialogModalVisible = bool(
 
 export const isTrezor = get(["trezor", "enabled"]);
 export const isPerformingTrezorUpdate = get(["trezor", "performingUpdate"]);
+export const trezorUdevError = get(["trezor", "udevError"]);
+
+export const isLedger = get(["ledger", "enabled"]);
 
 export const isSignMessageDisabled = and(isWatchingOnly, not(isTrezor));
 export const isChangePassPhraseDisabled = isWatchingOnly;
-export const isTransactionsSendTabDisabled = not(isTrezor);
+export const isTransactionsSendTabDisabled = bool(
+  and(not(isTrezor), not(isLedger))
+);
 
 export const politeiaURL = createSelector([isTestNet], (isTestNet) =>
   isTestNet ? POLITEIA_URL_TESTNET : POLITEIA_URL_MAINNET
@@ -1260,6 +1263,11 @@ export const setTreasuryPolicyRequestAttempt = get([
   "grpc",
   "setTreasuryPolicyRequestAttempt"
 ]);
+export const tspendPolicies = get(["grpc", "getTSpendPoliciesResponse"]);
+export const setTSpendPolicyRequestAttempt = get([
+  "grpc",
+  "setTSpendPolicyRequestAttempt"
+]);
 
 export const trezorWaitingForPin = get(["trezor", "waitingForPin"]);
 export const trezorWaitingForPassPhrase = get([
@@ -1308,6 +1316,12 @@ export const trezorWalletCreationMasterPubkeyAttempt = get([
   "walletCreationMasterPubkeyAttempt"
 ]);
 
+export const ledgerDevice = get(["ledger", "device"]);
+export const ledgerWalletCreationMasterPubkeyAttempt = get([
+  "ledger",
+  "walletCreationMasterPubkeyAttempt"
+]);
+
 // selectors for checking if decrediton can be closed.
 // getRunningIndicator is a indicator for indicate something is runnning on
 // decrediton, like the ticket auto buyer or the mixer.
@@ -1324,7 +1338,9 @@ export const loggedInDex = bool(get(["dex", "loggedIn"]));
 
 // ln selectors
 
-export const lnEnabled = bool(and(not(isWatchingOnly), not(isTrezor)));
+export const lnEnabled = bool(
+  and(not(isWatchingOnly), not(isTrezor), not(isLedger))
+);
 export const lnActive = bool(get(["ln", "active"]));
 export const lnStartupStage = get(["ln", "startupStage"]);
 export const lnStartAttempt = bool(get(["ln", "startAttempt"]));

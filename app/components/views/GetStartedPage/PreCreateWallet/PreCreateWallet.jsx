@@ -1,9 +1,11 @@
 import { FormattedMessage as T } from "react-intl";
 import CreateWalletForm from "./CreateWalletForm";
 import CreateTrezorWalletForm from "./CreateTrezorWalletForm";
+import CreateLedgerWalletForm from "./CreateLedgerWalletForm";
 import { usePreCreateWallet } from "./hooks";
 import { injectIntl } from "react-intl";
 import NoDevicePage from "views/TrezorPage/NoDevicePage";
+import { default as NoDevicePageLedger } from "views/LedgerPage/NoDevicePage";
 import styles from "./PreCreateWallet.module.css";
 import { InvisibleButton } from "buttons";
 
@@ -15,7 +17,8 @@ const PreCreateWallet = ({
   isCreateNewWallet,
   onShowCreateWallet,
   isTrezor,
-  creatingWallet
+  creatingWallet,
+  isLedger
 }) => {
   const {
     availableWallets,
@@ -29,6 +32,7 @@ const PreCreateWallet = ({
     walletNameError,
     isSPV,
     trezorDevice,
+    ledgerDevice,
     hideCreateWalletForm,
     onChangeCreateWalletName,
     createWallet,
@@ -38,14 +42,16 @@ const PreCreateWallet = ({
     toggleDisableCoinTypeUpgrades,
     gapLimit,
     setGapLimit,
-    connectTrezor
+    connectTrezor,
+    connectLedger
   } = usePreCreateWallet({
     onSendContinue,
     onSendBack,
     onSendError,
     isCreateNewWallet,
     onShowCreateWallet,
-    isTrezor
+    isTrezor,
+    isLedger
   });
 
   return isTrezor && !trezorDevice ? (
@@ -81,7 +87,45 @@ const PreCreateWallet = ({
         disableCoinTypeUpgrades,
         toggleDisableCoinTypeUpgrades,
         gapLimit,
-        setGapLimit
+        setGapLimit,
+        isLedger
+      }}
+    />
+  ) : isLedger && !ledgerDevice ? (
+    <div className={styles.noDeviceContainer}>
+      <NoDevicePageLedger onConnect={connectLedger} />
+      <InvisibleButton onClick={hideCreateWalletForm} className={styles.backBt}>
+        <T id="preCreateWallet.noDevice.back" m="Back" />
+      </InvisibleButton>
+    </div>
+  ) : isLedger ? (
+    <CreateLedgerWalletForm
+      {...{
+        selectedWallet: availableWallets[0],
+        availableWallets,
+        isCreateNewWallet,
+        newWalletName,
+        hasFailedAttemptName,
+        hasFailedAttemptPubKey,
+        getDaemonSynced,
+        isWatchingOnly,
+        isTrezor,
+        walletMasterPubKey,
+        masterPubKeyError,
+        walletNameError,
+        isSPV,
+        creatingWallet,
+        hideCreateWalletForm,
+        onChangeCreateWalletName,
+        createWallet,
+        toggleWatchOnly,
+        onChangeCreateWalletMasterPubKey,
+        intl,
+        disableCoinTypeUpgrades,
+        toggleDisableCoinTypeUpgrades,
+        gapLimit,
+        setGapLimit,
+        isLedger
       }}
     />
   ) : (
@@ -110,7 +154,8 @@ const PreCreateWallet = ({
         disableCoinTypeUpgrades,
         toggleDisableCoinTypeUpgrades,
         gapLimit,
-        setGapLimit
+        setGapLimit,
+        isLedger
       }}
     />
   );

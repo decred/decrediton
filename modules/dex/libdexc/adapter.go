@@ -6,8 +6,8 @@ package main
 import "C"
 import (
 	"context"
-	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -15,17 +15,13 @@ import (
 	"sync/atomic"
 
 	"decred.org/dcrdex/client/core"
+	"decred.org/dcrdex/client/mm"
 	"decred.org/dcrdex/client/webserver"
 	"decred.org/dcrdex/dex"
 	"github.com/decred/slog"
 
 	// Register the supported assets.
-	_ "decred.org/dcrdex/client/asset/bch"
-	_ "decred.org/dcrdex/client/asset/btc"
-	_ "decred.org/dcrdex/client/asset/dcr"
-	_ "decred.org/dcrdex/client/asset/doge"
-	_ "decred.org/dcrdex/client/asset/ltc"
-	_ "decred.org/dcrdex/client/asset/zec"
+	_ "decred.org/dcrdex/client/asset/importall"
 )
 
 type callHandler func(json.RawMessage) (string, error)
@@ -53,6 +49,7 @@ type CoreAdapter struct {
 	inited        uint32
 	serverRunning uint32
 	core          *core.Core
+	mm            *mm.MarketMaker
 	webServer     *dex.ConnectionMaster
 	wg            *sync.WaitGroup
 	logMaker      *dex.LoggerMaker
@@ -80,7 +77,6 @@ func NewCoreAdapter() *CoreAdapter {
 		"SetWalletPassword": c.setWalletPassword,
 		"User":              c.user,
 		"PreRegister":       c.discoverAcct,
-		"Register":          c.register,
 		"Login":             c.login,
 		"Logout":            c.logout,
 		"DexConfig":         c.getDexConfig,
@@ -105,7 +101,8 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return err
 	}
-	err := os.MkdirAll(filepath.Dir(form.DBPath), 0700)
+	dexDir := filepath.Dir(form.DBPath)
+	err := os.MkdirAll(dexDir, 0700)
 	if err != nil {
 		return err
 	}
@@ -114,6 +111,16 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 	err = os.MkdirAll(filepath.Dir(form.LogFilename), 0700)
 	if err != nil {
 		return err
+	}
+
+	extensionModeFile := filepath.Join(dexDir, "dextension.conf")
+	if _, err := os.Stat(extensionModeFile); err != nil {
+		if !os.IsNotExist(err) {
+			return fmt.Errorf("error checking extension file: %w", err)
+		}
+		if err := os.WriteFile(extensionModeFile, []byte(extensionModeConfigJSON), 0644); err != nil {
+			return fmt.Errorf("error writing extension mode configuration: %w", err)
+		}
 	}
 
 	c.logMaker = initLogging(filepath.Dir(form.LogFilename), form.LogFilename, form.LogLevel.String(), false)
@@ -127,13 +134,24 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 		// Onion applies ONLY to .onion addresses, unlike TorProxy, which is
 		// used for connections to all servers regardless of hostname. TODO:
 		// expose an option for the user to set this and TorProxy.
-		Onion:    "127.0.0.1:9050",
-		Language: form.Language,
+		Onion:             "127.0.0.1:9050",
+		Language:          form.Language,
+		NoAutoWalletLock:  true, // Decrediton user locks it when done
+		ExtensionModeFile: extensionModeFile,
 	})
 	if err != nil {
 		return fmt.Errorf("error creating client core: %v", err)
 	}
 	c.core = ccore
+
+	netDirectory := filepath.Dir(form.DBPath)
+	mmLogFilename := filepath.Join(netDirectory, "eventlog.db")
+	mmCfgFilename := filepath.Join(netDirectory, "mm_cfg.json")
+
+	c.mm, err = mm.NewMarketMaker(ccore, mmLogFilename, mmCfgFilename, c.logMaker.Logger("MM"))
+	if err != nil {
+		return fmt.Errorf("error creating market maker: %w", err)
+	}
 
 	c.wg.Add(1)
 	go func() {
@@ -141,6 +159,16 @@ func (c *CoreAdapter) startCore(raw json.RawMessage) error {
 		ccore.Run(c.ctx)
 	}()
 	<-ccore.Ready()
+
+	mmCM := dex.NewConnectionMaster(c.mm)
+	if err := mmCM.ConnectOnce(c.ctx); err != nil {
+		return fmt.Errorf("error connecting market maker: %w", err)
+	}
+	c.wg.Add(1)
+	go func() {
+		defer c.wg.Done()
+		mmCM.Wait()
+	}()
 
 	return nil
 }
@@ -157,8 +185,10 @@ func (c *CoreAdapter) startServer(raw json.RawMessage) (string, error) {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
+
 	webSrv, err := webserver.New(&webserver.Config{
 		Core:          c.core,
+		MarketMaker:   c.mm,
 		Addr:          form.WebAddr,
 		CustomSiteDir: form.SiteDir,
 		Language:      form.Language,
@@ -225,13 +255,11 @@ func (c *CoreAdapter) init(raw json.RawMessage) (string, error) {
 		return "", err
 	}
 	if form.Seed != "" {
-		seed, err := hex.DecodeString(form.Seed)
-		if err != nil {
-			return "", err
-		}
-		return "", c.core.InitializeClient([]byte(form.Pass), seed)
+		_, err := c.core.InitializeClient([]byte(form.Pass), &form.Seed)
+		return "", err
 	}
-	return "", c.core.InitializeClient([]byte(form.Pass), nil)
+	_, err := c.core.InitializeClient([]byte(form.Pass), nil)
+	return "", err
 
 }
 
@@ -280,6 +308,15 @@ func (c *CoreAdapter) setWalletPassword(raw json.RawMessage) (string, error) {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
+	ws := c.core.WalletState(form.AssetID)
+	if ws == nil {
+		return "", errors.New("no wallet")
+	}
+	if ws.WalletType != "dcrwalletRPC" { // client/asset/dcr.walletTypeDcrwRPC
+		// Only change the wallet password if it's Decrediton's dcrwallet (as
+		// opposed to a native SPV wallet built into DEX).
+		return "", nil
+	}
 	return "", c.core.SetWalletPassword([]byte(form.AppPW), form.AssetID, []byte(form.Pass))
 }
 
@@ -316,14 +353,6 @@ func (c *CoreAdapter) getDexConfig(raw json.RawMessage) (string, error) {
 	return replyWithErrorCheck(c.core.GetDEXConfig(form.Addr, []byte(form.Cert)))
 }
 
-func (c *CoreAdapter) register(raw json.RawMessage) (string, error) {
-	form := new(core.RegisterForm)
-	if err := json.Unmarshal(raw, form); err != nil {
-		return "", err
-	}
-	return replyWithErrorCheck(c.core.Register(form))
-}
-
 // When restoring from seed with init/InitializeClient, it may be desirable to
 // first attempt DEX account discovery without committing to a fee payment. This
 // checks with the given DEX server if our account (a public key) is already
@@ -355,7 +384,7 @@ func (c *CoreAdapter) login(raw json.RawMessage) (string, error) {
 	if err := json.Unmarshal(raw, form); err != nil {
 		return "", err
 	}
-	return replyWithErrorCheck(c.core.Login([]byte(form.Pass)))
+	return replyWithErrorCheck("ok", c.core.Login([]byte(form.Pass)))
 }
 
 func (c *CoreAdapter) logout(raw json.RawMessage) (string, error) {
@@ -365,3 +394,25 @@ func (c *CoreAdapter) logout(raw json.RawMessage) (string, error) {
 	}
 	return "", nil
 }
+
+const extensionModeConfigJSON = `
+{
+	"name": "Decrediton",
+	"useDEXBranding": true,
+	"restrictedWallets": {
+		"dcr": {
+			"hiddenFields": [
+				"account",
+				"unmixedaccount",
+				"tradingaccount",
+				"username",
+				"password",
+				"rpclisten",
+				"rpccert"
+			],
+			"disableWalletType": true,
+			"disablePassword": true
+		}
+	}
+}
+`

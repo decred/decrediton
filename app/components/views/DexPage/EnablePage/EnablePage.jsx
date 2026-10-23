@@ -17,7 +17,7 @@ const EnablePage = () => {
       <ResetNetworkButton
         className="margin-top-m"
         modalTitle={
-          <T id="dex.resetWalletRequired" m="Wallet reset required" />
+          <T id="dex.resetWalletRequired" m="Wallet restart required" />
         }
         buttonLabel={<T id="dex.enableButton" m="Enable DEX" />}
         modalContent={

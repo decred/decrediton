@@ -26,6 +26,7 @@ export const getStartedMachine = Machine({
       initial: "preStart",
       on: {
         SHOW_TREZOR_CONFIG: "trezorConfig",
+        SHOW_LEDGER_CONFIG: "ledgerConfig",
         SHOW_CREATE_WALLET: "creatingWallet",
         SHOW_SETTING_UP_WALLET: "settingUpWallet"
       },
@@ -213,7 +214,8 @@ export const getStartedMachine = Machine({
                   !isUndefined(event.isNew)
                     ? !event.isNew
                     : context.isRestoreNewWallet,
-                isTrezor: (context, event) => event.isTrezor
+                isTrezor: (context, event) => event.isTrezor,
+                isLedger: (context, event) => event.isLedger
               })
             },
             ERROR: {
@@ -319,7 +321,8 @@ export const getStartedMachine = Machine({
                   CreateWalletMachine.withContext({
                     isNew: e.isNew,
                     walletMasterPubKey: e.walletMasterPubKey,
-                    isTrezor: e.isTrezor
+                    isTrezor: e.isTrezor,
+                    isLedger: e.isLedger
                   })
                 );
               } catch (e) {
@@ -373,6 +376,7 @@ export const getStartedMachine = Machine({
                     isCreateNewWallet: ctx.isCreateNewWallet,
                     isWatchingOnly: ctx.selectedWallet.isWatchingOnly,
                     isTrezor: ctx.selectedWallet.isTrezor,
+                    isLedger: ctx.selectedWallet.isLedger,
                     passPhrase: ctx.passPhrase
                   })
                 );
@@ -393,6 +397,16 @@ export const getStartedMachine = Machine({
       on: {
         BACK: "startMachine.hist",
         SHOW_TREZOR_CONFIG: "trezorConfig"
+      }
+    },
+    ledgerConfig: {
+      initial: "ledgerConfig",
+      states: {
+        ledgerConfig: {}
+      },
+      on: {
+        BACK: "startMachine.hist",
+        SHOW_LEDGER_CONFIG: "ledgerConfig"
       }
     }
   }

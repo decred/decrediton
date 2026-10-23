@@ -22,6 +22,7 @@ const Form = ({
   unsignedRawTx,
   isWatchingOnly,
   isTrezor,
+  isLedger,
   insuficientFunds,
   styles,
   hideDetails,
@@ -71,7 +72,9 @@ const Form = ({
               <T id="send.insuficient.funds" m="Insufficient funds" />
             </div>
           )}
-          {((isTrezor && isWatchingOnly) || !isWatchingOnly) &&
+          {((isTrezor && isWatchingOnly) ||
+            (isLedger && isWatchingOnly) ||
+            !isWatchingOnly) &&
             (getRunningIndicator ? (
               <Tooltip
                 contentClassName={styles.disabledTooltip}
@@ -144,7 +147,7 @@ const Form = ({
         </div>
       </div>
     </div>
-    {unsignedRawTx && isWatchingOnly && !isTrezor && (
+    {unsignedRawTx && isWatchingOnly && !isTrezor && !isLedger && (
       <UnsignedTx
         title={<T id="send.unsignedRawTxTite" m="Unsigned Raw Transaction:" />}
         tx={unsignedRawTx}

@@ -1,5 +1,3 @@
-A basic introduction to Decred’s PoS.
+Upon purchase, tickets are put into the mempool just like any other transaction.  They then go through the following statuses throughout their lifecycle:
 
-Abstract grid of the key ticket states to be explored in the section.
-
-Frames the subject matter of onboarding piece.
+Mempool --> Mined/Immature -->  Mature/Live --> Missed/Voted --> Rewarded/Revoked 

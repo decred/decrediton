@@ -48,6 +48,12 @@ import {
   SETTREASURY_POLICY_ATTEMPT,
   SETTREASURY_POLICY_FAILED,
   SETTREASURY_POLICY_SUCCESS,
+  GETTSPEND_POLICIES_ATTEMPT,
+  GETTSPEND_POLICIES_FAILED,
+  GETTSPEND_POLICIES_SUCCESS,
+  SETTSPEND_POLICY_ATTEMPT,
+  SETTSPEND_POLICY_FAILED,
+  SETTSPEND_POLICY_SUCCESS,
   GETBESTBLOCK_ATTEMPT,
   GETBESTBLOCK_FAILED,
   GETBESTBLOCK_SUCCESS,
@@ -681,6 +687,42 @@ export default function grpc(state = {}, action) {
       return {
         ...state,
         setTreasuryPolicyRequestAttempt: false
+      };
+    case GETTSPEND_POLICIES_ATTEMPT:
+      return {
+        ...state,
+        getTSpendPoliciesError: null,
+        getTSpendPoliciesRequestAttempt: true
+      };
+    case GETTSPEND_POLICIES_FAILED:
+      return {
+        ...state,
+        getTSpendPoliciesError: String(action.error),
+        getTSpendPoliciesRequestAttempt: false
+      };
+    case GETTSPEND_POLICIES_SUCCESS:
+      return {
+        ...state,
+        getTSpendPoliciesRequestAttempt: false,
+        getTSpendPoliciesResponse: action.tspendPoliciesResponse,
+        getTSpendPoliciesError: null
+      };
+    case SETTSPEND_POLICY_ATTEMPT:
+      return {
+        ...state,
+        setTSpendPolicyError: null,
+        setTSpendPolicyRequestAttempt: true
+      };
+    case SETTSPEND_POLICY_FAILED:
+      return {
+        ...state,
+        setTSpendPolicyError: String(action.error),
+        setTSpendPolicyRequestAttempt: false
+      };
+    case SETTSPEND_POLICY_SUCCESS:
+      return {
+        ...state,
+        setTSpendPolicyRequestAttempt: false
       };
     case GETSTARTUPTRANSACTIONS_SUCCESS:
       return {

@@ -1,0 +1,2 @@
+Creates a new Trezor device based Wallet and inputs a new seed into the device. Note! Follow the instructions on the device and write down the 24 seed words displayed one at a time. Failure to do so will result in loss of funds.
+Tworzy nowy portfel na urządzeniu Trezor i wprowadza do urządzenia nowe ziarno. Uwaga! Postępuj zgodnie z instrukcjami na urządzeniu i zapisz 24 słowa ziarna, które wyświetlą się jedno po drugim. Niezastosowanie się do tego kroku spowoduje utratę środków w razie nieprzewidzianej awarii.

@@ -1,4 +1,1 @@
-A section further clarifying how the PoS voting component works.
-This is communicated through an endless set of traffic lights/ abstract depiction.
-
-This signifies the Yes/No/Abstain voting structure of PoS in a tangible way.
+If a vote does not receive the required number of votes (75% yes/no), or the quorom is not met (10%), the vote will roll over and begin anew in the following Rule Change Activation Interval.  Typically, every vote is given a 6 month period of time in which they can attempt to be activated (or voted down).  If no decision is made by that point, they are considered disproved and removed from voting.

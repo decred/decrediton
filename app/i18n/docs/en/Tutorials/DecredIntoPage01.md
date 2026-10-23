@@ -1,1 +1,1 @@
-Decred was created to address a crisis of governance (link) in Bitcoin. Decred has built a hybrid Proof-of-Work/Proof-of-Stake system, which puts Decred currency holders in charge of its governance to ensure order and faireness in decision-making and dispute resolving processes.
+Decred was created to address a crisis of governance in Bitcoin. Decred has built a hybrid Proof-of-Work/Proof-of-Stake system, which puts Decred currency holders in charge of its governance to ensure order and fairness in decision-making and dispute resolving processes.

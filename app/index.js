@@ -131,7 +131,7 @@ const initialState = {
   },
   version: {
     // RequiredVersion
-    requiredVersion: "7.12.0",
+    requiredVersion: "10.0.0",
     versionInvalid: false,
     versionInvalidError: null,
     // VersionService
@@ -405,6 +405,11 @@ const initialState = {
     performingTogglePassphraseProtection: false,
     performingTogglePassphraseOnDeviceProtection: false,
     deviceLabel: undefined
+  },
+  ledger: {
+    enabled: false,
+    device: false,
+    walletCreationMasterPubkeyAttempt: false
   },
   ln: {
     enabled: globalCfg.get(cfgConstants.LN_ENABLED),

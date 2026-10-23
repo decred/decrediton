@@ -6,6 +6,7 @@ import * as da from "actions/DaemonActions";
 import * as ca from "actions/ClientActions";
 import * as ctrla from "actions/ControlActions";
 import * as trza from "actions/TrezorActions";
+import * as ldgr from "actions/LedgerActions";
 import * as ama from "actions/AccountMixerActions";
 import * as va from "actions/VSPActions";
 
@@ -38,7 +39,9 @@ const useDaemonStartup = () => {
   const getDaemonStarted = useSelector(sel.getDaemonStarted);
   const getEstimatedTimeLeft = useSelector(sel.getEstimatedTimeLeft);
   const trezorDevice = useSelector(sel.trezorDevice);
+  const ledgerDevice = useSelector(sel.ledgerDevice);
   const isTrezor = useSelector(sel.isTrezor);
+  const isLedger = useSelector(sel.isLedger);
   const syncAttemptRequest = useSelector(sel.getSyncAttemptRequest);
   const daemonWarning = useSelector(sel.daemonWarning);
   const isSettingAccountsPassphrase = useSelector(
@@ -230,6 +233,22 @@ const useDaemonStartup = () => {
     () => dispatch(trza.getWalletCreationMasterPubKey()),
     [dispatch]
   );
+  const ledgerEnable = useCallback(
+    () => dispatch(ldgr.enableLedger()),
+    [dispatch]
+  );
+  const ledgerDisable = useCallback(
+    () => dispatch(ldgr.disableLedger()),
+    [dispatch]
+  );
+  const ledgerAlertNoConnectedDevice = useCallback(
+    () => dispatch(ldgr.alertNoConnectedDevice()),
+    [dispatch]
+  );
+  const ledgerGetWalletCreationMasterPubKey = useCallback(
+    () => dispatch(ldgr.getWalletCreationMasterPubKey()),
+    [dispatch]
+  );
   const validateMasterPubKey = useCallback(
     (masterPubKey) => dispatch(ctrla.validateMasterPubKey(masterPubKey)),
     [dispatch]
@@ -279,6 +298,11 @@ const useDaemonStartup = () => {
     trezorDisable,
     trezorEnable,
     trezorLoadDeviceList,
+    ledgerGetWalletCreationMasterPubKey,
+    ledgerAlertNoConnectedDevice,
+    ledgerDisable,
+    ledgerEnable,
+    ledgerDevice,
     getDcrwalletLogs,
     onCreateWallet,
     goToErrorPage,
@@ -325,6 +349,7 @@ const useDaemonStartup = () => {
     getEstimatedTimeLeft,
     trezorDevice,
     isTrezor,
+    isLedger,
     peerCount,
     synced,
     syncFetchMissingCfiltersAttempt,

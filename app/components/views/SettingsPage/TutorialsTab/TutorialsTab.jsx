@@ -1,6 +1,11 @@
 import { FormattedMessage as T } from "react-intl";
 import { Subtitle } from "shared";
-import { TutorialOverview, TutorialPage, tutorials } from "./helpers";
+import {
+  TutorialOverview,
+  TutorialPage,
+  tutorials,
+  tutorialList
+} from "./helpers";
 import { useTutorialsTab } from "./hooks";
 import styles from "./TutorialsTab.module.css";
 
@@ -40,18 +45,7 @@ const TutorialsTab = () => {
       <Subtitle
         title={<T id="tutorials.learnAboutDecred" m="Learn about decred" />}
       />
-      {[
-        "decredIntro",
-        "ln",
-        "consensusCode",
-        "powPos",
-        "tickets",
-        "staking",
-        "lifecycle",
-        "consensusVoting",
-        "blocks",
-        "identity"
-      ].map((name) => (
+      {tutorialList.map((name) => (
         <TutorialOverview
           {...{
             key: name,

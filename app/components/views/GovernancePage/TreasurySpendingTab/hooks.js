@@ -14,10 +14,17 @@ export function useTreasurySpending() {
   const dcrdSourceLink = isTestNet
     ? "https://github.com/decred/dcrd/blob/master/chaincfg/testnetparams.go#L391"
     : "https://github.com/decred/dcrd/blob/master/chaincfg/mainnetparams.go#L479";
+  const tspendPolicies = useSelector(sel.tspendPolicies);
+  const setTSpendPolicyRequestAttempt = useSelector(
+    sel.setTSpendPolicyRequestAttempt
+  );
+  const txURLBuilder = useSelector(sel.txURLBuilder);
   const dispatch = useDispatch();
 
   const setTreasuryPolicy = (key, policy, passphrase) =>
     dispatch(cla.setTreasuryPolicy(key, policy, passphrase));
+  const setTspendPolicy = (hash, policy, passphrase) =>
+    dispatch(cla.setTSpendPolicy(hash, policy, passphrase));
 
   const policyOptions = [
     {
@@ -37,9 +44,13 @@ export function useTreasurySpending() {
   return {
     treasuryPolicies,
     setTreasuryPolicy,
+    setTreasuryPolicyRequestAttempt,
+    tspendPolicies,
+    setTspendPolicy,
+    setTSpendPolicyRequestAttempt,
     policyOptions,
     dcrdSourceLink,
     PiKeys,
-    isLoading: !!setTreasuryPolicyRequestAttempt
+    txURLBuilder
   };
 }

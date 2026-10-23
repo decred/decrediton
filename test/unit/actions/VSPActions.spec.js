@@ -348,7 +348,11 @@ test("test getVSPsPubkeys (error)", async () => {
   const testErrorMessage = "test-error-message";
   wallet.getAllVSPs = jest.fn(() => Promise.reject(testErrorMessage));
   const store = createStore({});
-  await store.dispatch(vspActions.getVSPsPubkeys());
+  try {
+    await store.dispatch(vspActions.getVSPsPubkeys());
+  } catch (error) {
+    console.log({ error });
+  }
 
   expect(store.getState().vsp.availableVSPsPubkeys).toEqual(undefined);
   expect(store.getState().vsp.availableVSPsPubkeysError).toEqual(

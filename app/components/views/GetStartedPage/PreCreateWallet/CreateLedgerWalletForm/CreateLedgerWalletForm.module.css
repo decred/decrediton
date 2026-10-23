@@ -1,0 +1,59 @@
+.container {
+  width: 764px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 30rem);
+  grid-column-gap: 76px;
+  font-size: 13px;
+  line-height: 17px;
+  color: var(--grey-7);
+  margin: 38px 0 32px 0;
+}
+
+.title {
+  font-size: 27px;
+  line-height: 34px;
+  color: var(--grey-7);
+  width: 32rem;
+}
+
+.textToggle {
+  font-size: 13px;
+  line-height: 16px;
+  height: 29px;
+  grid-column: 1;
+  margin-top: 20px;
+}
+
+.textToggleChild {
+  padding: 6px 31px;
+}
+
+.walletNameInput,
+.walletNameInput input {
+  width: 279px !important;
+}
+
+.buttonContrainer {
+  width: 279px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.cancelBt,
+.createWalletBt {
+  height: 44px;
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 355px;
+  }
+
+  .grid {
+    grid-template-columns: 30rem;
+  }
+}

@@ -19,6 +19,7 @@ const testSelectedWallet = {
   value: {
     isNew: true,
     isTrezor: false,
+    isLedger: false,
     isWatchingOnly: false,
     network: "mainnet",
     wallet: testWalletName,
@@ -70,6 +71,7 @@ beforeEach(() => {
   });
   mockEnableTrezor = trezorActions.enableTrezor = jest.fn(() => () => {});
   mockDisableTrezor = trezorActions.disableTrezor = jest.fn(() => () => {});
+
   mockGetWalletCreationMasterPubKey =
     trezorActions.getWalletCreationMasterPubKey = jest.fn(
       () => () => Promise.resolve(testWalletCreationMasterPubKey)
@@ -81,6 +83,7 @@ beforeEach(() => {
   );
   mockTrezorDevice = selectors.trezorDevice = jest.fn(() => null);
   mockTrezorConnect = trezorActions.connect = jest.fn(() => () => {});
+  trezorActions.getFeatures = jest.fn(() => () => {});
   mockCreateWatchOnlyWalletRequest = wlActions.createWatchOnlyWalletRequest =
     jest.fn(
       () => () => Promise.reject("rejecting mock createWatchOnlyWalletRequest")
@@ -258,6 +261,8 @@ test("test watch only control on restore wallet", async () => {
   await wait(() =>
     expect(mockCreateWatchOnlyWalletRequest).toHaveBeenCalledWith(
       testValidMasterPubKey,
+      undefined,
+      undefined,
       ""
     )
   );
@@ -286,7 +291,7 @@ test("test create trezor-backed wallet page (trezor device is connected)", async
   });
   const testRestoreSelectedWallet = {
     ...testSelectedWallet,
-    value: { ...testSelectedWallet.value, isNew: false, isTrezor: true },
+    value: { ...testSelectedWallet.value, isNew: false, isTrezor: true, isLedger: false },
     isWatchingOnly: true
   };
 
@@ -338,6 +343,8 @@ test("test create trezor-backed wallet page (trezor device is connected)", async
   await wait(() =>
     expect(mockCreateWatchOnlyWalletRequest).toHaveBeenCalledWith(
       testWalletCreationMasterPubKey,
+      undefined,
+      true,
       ""
     )
   );

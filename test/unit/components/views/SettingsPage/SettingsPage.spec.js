@@ -467,6 +467,14 @@ test.each([
     testSpvConnectValue.join(","),
     { spvConnect: testSpvConnectValue },
     false
+  ],
+  [
+    // clear input field
+    "SPV Connect",
+    testDefaultSpvConnectValue.join(","),
+    "",
+    { spvConnect: [] },
+    false
   ]
 ])("change '%s' TextInput from '%s' to '%s' expeced %s", testTextFieldInput);
 

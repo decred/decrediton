@@ -1,1 +1,1 @@
-LN zostało wdrożone przy założeniu, że węzły (portfele) będą online przez większość czasu, więc portfele _epizodyczne_ (te, które pozostają online przez bardzo krótki okres czasu) mogą mieć utrudnioną zdolność do wysyłania i odbierania płatności.
+Lightning Network zostało wdrożone przy założeniu, że węzły (portfele) będą online przez większość czasu, więc portfele _epizodyczne_ (te, które pozostają online przez bardzo krótki okres czasu) mogą mieć utrudnioną zdolność do wysyłania i odbierania płatności.

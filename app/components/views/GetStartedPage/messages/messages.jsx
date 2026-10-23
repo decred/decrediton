@@ -81,6 +81,10 @@ export const messages = defineMessages({
     id: "getStarted.trezor",
     defaultMessage: "Setup a Trezor Wallet"
   },
+  ledgerTabMsg: {
+    id: "getStarted.ledger",
+    defaultMessage: "Setup a Ledger Wallet"
+  },
   closeEditWallets: {
     id: "getStarted.closeEditWallets",
     defaultMessage: "Close"
@@ -107,6 +111,11 @@ export const messages = defineMessages({
     id: "createwallet.trezor.description",
     defaultMessage:
       "Trezor is a hardware wallet. For more information, visit {link}"
+  },
+  messageWalletLedgerDescription: {
+    id: "createwallet.ledger.description",
+    defaultMessage:
+      "Ledger is a hardware wallet. For more information, visit {link}"
   },
   messageWalletMasterPubKey: {
     id: "createwallet.walletpubkey.placeholder",

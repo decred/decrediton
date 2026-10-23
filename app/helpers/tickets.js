@@ -114,6 +114,28 @@ export function decodeVoteScript(network, outputScript) {
           choices: { 0x80: "no", 0x100: "yes" },
           defaultChoice: "abstain"
         }
+      ],
+      11: [
+        {
+          mask: 0x0006,
+          name: "blake3pow",
+          choices: { 0x0002: "no", 0x0004: "yes" },
+          defaultChoice: "abstain"
+        },
+        {
+          mask: 0x0060,
+          name: "changesubsidysplitr2",
+          choices: { 0x0020: "no", 0x0040: "yes" },
+          defaultChoice: "abstain"
+        }
+      ],
+      12: [
+        {
+          mask: 0x0006,
+          name: "maxtreasuryspend",
+          choices: { 0x0002: "no", 0x0004: "yes" },
+          defaultChoice: "abstain"
+        }
       ]
     },
     mainnet: {
@@ -186,6 +208,28 @@ export function decodeVoteScript(network, outputScript) {
           mask: 0x180,
           name: "changesubsidysplit",
           choices: { 0x80: "no", 0x100: "yes" },
+          defaultChoice: "abstain"
+        }
+      ],
+      10: [
+        {
+          mask: 0x0006,
+          name: "blake3pow",
+          choices: { 0x0002: "no", 0x0004: "yes" },
+          defaultChoice: "abstain"
+        },
+        {
+          mask: 0x0060,
+          name: "changesubsidysplitr2",
+          choices: { 0x0020: "no", 0x0040: "yes" },
+          defaultChoice: "abstain"
+        }
+      ],
+      11: [
+        {
+          mask: 0x0006,
+          name: "maxtreasuryspend",
+          choices: { 0x0002: "no", 0x0004: "yes" },
           defaultChoice: "abstain"
         }
       ]

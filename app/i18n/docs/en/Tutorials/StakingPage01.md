@@ -1,4 +1,3 @@
-As you might understand already, staking and the tickets have three core functions. Firstly cover block creation -> ensuring good miner behaviour.
+As you might understand already, staking and the tickets have three core functions. First and arguably the most important, is the validation of previous blocks.
 
-Stakeholders maintain direct power over the miners, ensuring good behaviour through aligned incentives.
-Anyone can be a stakeholder,  including miners.
+Tickets that are selected are offered the ability to vote on the previous block's validity.  So, for example, if the previous block wasn't a version that you want to support or didn't contain any transaction a voter can vote against the block.  If the previous block receives a major of votes against it's validation, then all of the 'regular' are put back into the mempool and need to be mined again in a future block.  Also, the PoW miner of that block no longer receives their block creation reward.  

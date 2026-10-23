@@ -1,6 +1,7 @@
 import {
   TutorialOverview,
-  tutorials
+  tutorials,
+  tutorialList
 } from "../../SettingsPage/TutorialsTab/helpers";
 import { Subtitle } from "shared";
 import { FormattedMessage as T } from "react-intl";
@@ -18,18 +19,7 @@ const LoadingPage = ({ onShowOnboardingTutorial }) => {
           />
         }
       />
-      {[
-        "decredIntro",
-        "ln",
-        "consensusCode",
-        "powPos",
-        "tickets",
-        "staking",
-        "lifecycle",
-        "consensusVoting",
-        "blocks",
-        "identity"
-      ].map((name) => (
+      {tutorialList.map((name) => (
         <TutorialOverview
           {...{
             key: name,

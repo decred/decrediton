@@ -1,5 +1,1 @@
-A runthrough of the timeframe of the prior process.
-
-An interpretation of the passing of days on a calendar/chart. This may change based on the Rolling window and the threshold provided by PoS.
-
-The clearly presented that there is a due process for enacting a network upgrade.
+Once the voting begins in runs for an entire Rule Change Activation Interval (8064 blocks) approximately 4 weeks.  The votes are tallied throughout that interval.  Votes can be yes, no or abstain from voting entirely.  Voters are not penalized for abstaining from any consensus vote.  

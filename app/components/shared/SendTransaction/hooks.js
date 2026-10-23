@@ -24,6 +24,7 @@ export function useSendTransaction() {
     shallowEqual
   );
   const isTrezor = useSelector(sel.isTrezor);
+  const isLedger = useSelector(sel.isLedger);
   const isWatchingOnly = useSelector(sel.isWatchingOnly);
   const isConstructingTransaction = useSelector(sel.isConstructingTransaction);
   const constructTxRequestAttempt = useSelector(sel.constructTxRequestAttempt);
@@ -61,6 +62,7 @@ export function useSendTransaction() {
     totalSpent,
     notMixedAccounts,
     isTrezor,
+    isLedger,
     isWatchingOnly,
     isConstructingTransaction,
     attemptConstructTransaction,

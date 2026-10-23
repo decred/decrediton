@@ -4,11 +4,6 @@ import * as cla from "actions/ClientActions";
 import * as cta from "actions/ControlActions";
 import {
   CHANGE_ACCOUNT_CFG,
-  CSPP_PORT,
-  CSPP_PORT_MAINNET,
-  CSPP_PORT_TESTNET,
-  CSPP_SERVER,
-  CSPP_URL,
   MAINNET,
   MIN_MIX_DENOMINATION_ATOMS,
   MIN_RELAY_FEE_ATOMS,
@@ -48,7 +43,6 @@ const testPassphrase = "test-passphrase";
 const testMixedAccount = "test-mixed-account";
 const testMixedAccountBranch = "test-mixed-account-branch";
 const testChangeAccount = "test-change-account";
-const testCsppServer = "test-cspp-server";
 
 const testError = "test-error";
 const testMixedAccountName = "text-mixed-account-name";
@@ -294,8 +288,7 @@ test("test runAccountMixer start and stop", async () => {
       passphrase: testPassphrase,
       mixedAccount: testMixedAccount,
       mixedAccountBranch: testMixedAccountBranch,
-      changeAccount: changeAccountNumber,
-      csppServer: testCsppServer
+      changeAccount: changeAccountNumber
     })
   );
 
@@ -313,8 +306,7 @@ test("test runAccountMixer start and stop", async () => {
       {
         mixedAccount: testMixedAccount,
         mixedAccountBranch: testMixedAccountBranch,
-        changeAccount: changeAccountNumber,
-        csppServer: testCsppServer
+        changeAccount: changeAccountNumber
       }
     )
   );
@@ -371,8 +363,7 @@ test("test runAccountMixer - unlockAcctAndExecFn failed", async () => {
       passphrase: testPassphrase,
       mixedAccount: testMixedAccount,
       mixedAccountBranch: testMixedAccountBranch,
-      changeAccount: changeAccountNumber,
-      csppServer: testCsppServer
+      changeAccount: changeAccountNumber
     })
   );
 
@@ -438,7 +429,7 @@ test("test stopAccountMixer - cancel mixer failed", () => {
   expect(store.getState().grpc.mixerStreamer).not.toBeNull();
 });
 
-const testCreateNeededAccounts = async (initialState, expectedCsppPort) => {
+const testCreateNeededAccounts = async (initialState) => {
   const { mockGetAccountsAttempt } = mockUnlockLockAndGetAccountsAttempt();
 
   const store = createStore(initialState);
@@ -465,8 +456,6 @@ const testCreateNeededAccounts = async (initialState, expectedCsppPort) => {
 
   expect(mockWalletCfgSet).toHaveBeenCalledWith(SEND_FROM_UNMIXED, false);
   expect(mockWalletCfgSet).toHaveBeenCalledWith(MIXED_ACC_BRANCH, 0);
-  expect(mockWalletCfgSet).toHaveBeenCalledWith(CSPP_SERVER, CSPP_URL);
-  expect(mockWalletCfgSet).toHaveBeenCalledWith(CSPP_PORT, expectedCsppPort);
   expect(mockWalletCfgSet).toHaveBeenCalledWith(
     MIXED_ACCOUNT_CFG,
     testMixedAccount
@@ -478,22 +467,15 @@ const testCreateNeededAccounts = async (initialState, expectedCsppPort) => {
 
   expect(store.getState().walletLoader.mixedAccount).toBe(testMixedAccount);
   expect(store.getState().walletLoader.changeAccount).toBe(testChangeAccount);
-  expect(store.getState().walletLoader.csppServer).toBe(CSPP_URL);
-  expect(store.getState().walletLoader.csppPort).toBe(expectedCsppPort);
   expect(store.getState().walletLoader.mixedAccountBranch).toBe(0);
 };
-
-test("test createNeededAccounts", () => {
-  testCreateNeededAccounts(cloneDeep(initialState), CSPP_PORT_MAINNET);
-});
 
 test("test createNeededAccounts on testnet", () => {
   testCreateNeededAccounts(
     cloneDeep({
       ...initialState,
       settings: { currentSettings: { network: TESTNET } }
-    }),
-    CSPP_PORT_TESTNET
+    })
   );
 });
 
@@ -524,8 +506,6 @@ test("test createNeededAccounts - failed", async () => {
 
   expect(store.getState().walletLoader.mixedAccount).toBe(undefined);
   expect(store.getState().walletLoader.changeAccount).toBe(undefined);
-  expect(store.getState().walletLoader.csppServer).toBe(undefined);
-  expect(store.getState().walletLoader.csppPort).toBe(undefined);
   expect(store.getState().walletLoader.mixedAccountBranch).toBe(undefined);
 });
 

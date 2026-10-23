@@ -1,3 +1,1 @@
-New consensus rules ... forming agreement from both miners as well stakers
-
-number of successful and smooth consensus change votes since 2017?
+Periodically, there are changes to the consensus that are required.  Decred has a employed an innovative technique to provide an orderly update process.  When a consensus vote occurs, the 5 selected votes are also polled for their choice.  Over the course of 4096 blocks these votes are tabulated and if enough Yes or No votes are received then the choice is finalized and becomes the consensus rules for the network. 

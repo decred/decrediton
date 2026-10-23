@@ -58,7 +58,9 @@ import {
   SETVOTECHOICES_FAILED,
   SETVOTECHOICES_SUCCESS,
   SETTREASURY_POLICY_SUCCESS,
-  SETTREASURY_POLICY_FAILED
+  SETTREASURY_POLICY_FAILED,
+  SETTSPEND_POLICY_SUCCESS,
+  SETTSPEND_POLICY_FAILED
 } from "actions/ClientActions";
 import {
   SNACKBAR_DISMISS_MESSAGES,
@@ -103,6 +105,10 @@ import {
   TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED,
   TRZ_NOTBACKEDUP
 } from "actions/TrezorActions";
+import {
+  LDG_NOCONNECTEDDEVICE,
+  LDG_GETWALLETCREATIONMASTERPUBKEY_FAILED
+} from "actions/LedgerActions";
 import {
   NEW_TRANSACTIONS_RECEIVED,
   TRANSACTION_TYPES,
@@ -360,6 +366,16 @@ const messages = defineMessages({
     defaultMessage:
       "Trezor must be backed up in order to perform this operation."
   },
+  LDG_NOCONNECTEDDEVICE: {
+    id: "ledger.noConnectedDevice",
+    defaultMessage:
+      "No Ledger device connected. Check the device connection and Ledger bridge."
+  },
+  LDG_GETWALLETCREATIONMASTERPUBKEY_FAILED: {
+    id: "ledger.getWalletCreationMasterPubKey.failed",
+    defaultMessage:
+      "Failed to obtain master extended pubkey from Ledger device: {originalError}"
+  },
   ERROR_IS_OBJECT: {
     id: "snackbar.errorObject",
     defaultMessage: "The following error happened: {error}"
@@ -523,6 +539,15 @@ const messages = defineMessages({
   SETTREASURY_POLICY_FAILED: {
     id: "setTreasuryPolicy.updateVoteChoiceFailed",
     defaultMessage: "Set treasury policy failed: {originalError}"
+  },
+  SETTSPEND_POLICY_SUCCESS: {
+    id: "setTSpendPolicy.updateVoteChoiceSuccess",
+    defaultMessage:
+      "Your tspend policy has been successfully updated! Thanks for participating in Decred's governance."
+  },
+  SETTSPEND_POLICY_FAILED: {
+    id: "setTSpendPolicy.updateVoteChoiceFailed",
+    defaultMessage: "Set tspend policy failed: {originalError}"
   },
   CREATEMIXERACCOUNTS_SUCCESS: {
     id: "mixer.ntf.createdAcct",
@@ -727,6 +752,7 @@ export default function snackbar(state = {}, action) {
     case SYNCVSPTICKETS_SUCCESS:
     case SETVOTECHOICES_SUCCESS:
     case SETTREASURY_POLICY_SUCCESS:
+    case SETTSPEND_POLICY_SUCCESS:
     case SETVSPDVOTECHOICE_PARTIAL_SUCCESS:
     case DISCOVERUSAGE_SUCCESS:
     case SETTINGS_SAVE:
@@ -812,6 +838,7 @@ export default function snackbar(state = {}, action) {
     case SPVSYNC_FAILED:
     case UPDATEVOTECHOICE_FAILED:
     case SETTREASURY_POLICY_FAILED:
+    case SETTSPEND_POLICY_FAILED:
     case GETACCOUNTEXTENDEDKEY_FAILED:
     case TRZ_TOGGLEPINPROTECTION_FAILED:
     case TRZ_TOGGLEPASSPHRASEPROTECTION_FAILED:
@@ -826,6 +853,8 @@ export default function snackbar(state = {}, action) {
     case TRZ_NOTBACKEDUP:
     case TRZ_BACKUPDEVICE_FAILED:
     case TRZ_GETWALLETCREATIONMASTERPUBKEY_FAILED:
+    case LDG_NOCONNECTEDDEVICE:
+    case LDG_GETWALLETCREATIONMASTERPUBKEY_FAILED:
     case LNWALLET_CREATEACCOUNT_FAILED:
     case LNWALLET_STARTDCRLND_FAILED:
     case LNWALLET_CONNECT_FAILED:

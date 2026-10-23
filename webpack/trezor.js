@@ -53,7 +53,8 @@ module.exports = {
 
         new CopyWebpackPlugin({
             patterns: [
-                { from: "./node_modules/trezor-connect/data", to: "data" }
+                { from: "./node_modules/trezor-connect/data", to: "data" },
+                { from: "./node_modules/@trezor/transport/messages.json", to: "data/messages" }
             ]
         }),
 

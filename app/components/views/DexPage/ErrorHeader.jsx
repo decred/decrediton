@@ -5,7 +5,7 @@ import { DEX_ICON } from "constants";
 const ErrorHeader = () => (
   <StandaloneHeader
     title={<T id="dex.error.title" m="DEX Error" />}
-    description={<T id="dex.error.description" m="Dex not running" />}
+    description={<T id="dex.error.description" m="DEX not running" />}
     iconType={DEX_ICON}
   />
 );

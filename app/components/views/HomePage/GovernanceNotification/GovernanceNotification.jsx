@@ -6,8 +6,10 @@ const GovernanceNotification = () => {
   const {
     newNotYetVotedAgendasCount,
     newNotYetVotedActiveProposalsCount,
+    newNotYetVotedTSpendCount,
     goToConsensusChanges,
-    goToActiveProposals
+    goToActiveProposals,
+    goToTreasurySpending
   } = useGovernanceNotification();
 
   return (
@@ -27,6 +29,15 @@ const GovernanceNotification = () => {
             id="home.newNotYetVotedActiveProposalsCount"
             m="{count, plural, one {1 active proposal} other {# new active proposals}}"
             values={{ count: newNotYetVotedActiveProposalsCount }}
+          />
+        </a>
+      ) : null}
+      {newNotYetVotedTSpendCount > 0 ? (
+        <a onClick={goToTreasurySpending}>
+          <T
+            id="home.newNotYetVotedTSpendCount"
+            m="{count, plural, one {1 active tspend} other {# new active tspends}}"
+            values={{ count: newNotYetVotedTSpendCount }}
           />
         </a>
       ) : null}

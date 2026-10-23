@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.desc {
+  font-size: 27px;
+  line-height: 34px;
+  color: var(--grey-7);
+  width: 522px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.button {
+  height: 29px;
+  font-size: 13px;
+  line-height: 16.34px;
+  padding: 6px 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .desc {
+    width: 80%;
+    font-size: 22px;
+    line-height: 23px;
+  }
+}

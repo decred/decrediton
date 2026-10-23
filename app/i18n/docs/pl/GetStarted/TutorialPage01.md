@@ -1,9 +1,9 @@
-# Czym jest Decred Blockchain?
+# Czym jest blockchain Decred?
 
-Celem Decreda jest rozwijanie listy globalnie odstępnych rekordów jako zdecentralizowany rejestr; Tym właśnie jest Decred Blockchain.
+Sercem projektu Decred jest nieustannie powiększająca się i dostępna na całym świecie dzięki zdecentralizowanemu rejestrowi ewidencja transakcji; tym właśnie jest blockchain Decred.
 
-Blockchain zawiera wszystkie dane o transakcjach Derced i wykorzystuje innowacyjny **system Proof-of-Stake (PoS)/Proof-of-Work (PoW)** do weryfikacji transakcji i utrzymywania bezpieczeństwa sieci.
+Blockchain przechowuje wszystkie dane transakcyjne sieci Decred oraz wykorzystuje innowacyjny **system Proof-of-Stake (PoS)/Proof-of-Work (PoW)** do weryfikacji transakcji i utrzymywania bezpieczeństwa sieci.
 
-Ten hybrydowy system eliminuje słabości, które PoS i PoW posiadają indywidualnie. Ponadto stanowi on podstawę do **mądrego zarządzania** projektem.
+Ten hybrydowy system ogranicza słabości, które indywidualnie trapią systemy PoS i PoW. Ponadto, stanowi on podstawę **inteligentnego zarządzania** projektem.
 
-Powszechny udział w **staking (PoS)** i **mining (PoW)** pomaga chronić neutralność sieci i nagradza uczestników nowo wygenerowanym DCR jako nagroda za kolejne bloki.
+Powszechny udział w **stakingu (PoS)** i **wydobyciu (PoW)** pomaga chronić neutralność sieci i nagradza uczestników nowo wygenerowanymi DCR jako nagrodą za wydobycie bloku.
