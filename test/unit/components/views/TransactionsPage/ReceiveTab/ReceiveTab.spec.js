@@ -1,8 +1,7 @@
 import { ReceiveTab } from "components/views/TransactionsPage/ReceiveTab";
 import TransactionsPage from "components/views/TransactionsPage/";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import * as sel from "selectors";
 import * as ca from "actions/ControlActions";
 import * as wl from "wallet";
@@ -135,9 +134,18 @@ const getCopyButton = () => screen.getByText("Copy").nextElementSibling;
 const getQRCodeButton = () => screen.getByText("QR code").nextElementSibling;
 const getModalCloseButton = () => screen.getByText("Close");
 
-test("render ReceiveTab within its parent", () => {
-  render(<TransactionsPage />);
-  user.click(screen.getByText("Receive"));
+test("render ReceiveTab within its parent", async () => {
+  const { user } = render(<TransactionsPage />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
+  await user.click(screen.getByText("Receive"));
 
   expect(
     screen.getByText(/Each time you request a payment/i).textContent
@@ -147,24 +155,42 @@ test("render ReceiveTab within its parent", () => {
 });
 
 test("change destination account", async () => {
-  render(<ReceiveTab />);
+  const { user } = render(<ReceiveTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
   selectors.nextAddressAccount = jest.fn(() => mockAccount2);
   expect(screen.getByText(mockNextAddress)).toBeInTheDocument();
 
-  user.click(screen.getByText(mockDefaultAccount.name));
+  await user.click(screen.getByText(mockDefaultAccount.name));
   expect(screen.getByText(mockEmptyAccount.name)).toBeInTheDocument();
   expect(screen.getByText(mockAccount2.name)).toBeInTheDocument();
   expect(screen.getAllByText(mockDefaultAccount.name).length).toBe(2);
-  user.click(screen.getByText(mockAccount2.name));
-  await wait(() =>
+  await user.click(screen.getByText(mockAccount2.name));
+  await waitFor(() =>
     expect(screen.getAllByText(mockAccount2.name).length).toBe(1)
   );
   expect(mockGetNextAddressAttempt).toHaveBeenCalled();
 });
 
-test("generate new address", () => {
-  render(<ReceiveTab />);
-  user.click(screen.getByText(/generate new address/i));
+test("generate new address", async () => {
+  const { user } = render(<ReceiveTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
+  await user.click(screen.getByText(/generate new address/i));
   expect(mockGetNextAddressAttempt).toHaveBeenCalled();
 });
 
@@ -181,18 +207,36 @@ test("show error when there is no walletService", () => {
   expect(mockWalletService).toHaveBeenCalled();
 });
 
-test("test copy button", () => {
-  render(<ReceiveTab />);
-  user.click(getCopyButton());
+test("test copy button", async () => {
+  const { user } = render(<ReceiveTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
+  await user.click(getCopyButton());
   expect(mockCopy).toHaveBeenCalledWith(mockNextAddress);
 });
 
-test("test QR button", () => {
-  render(<ReceiveTab />);
-  user.click(getQRCodeButton());
+test("test QR button", async () => {
+  const { user } = render(<ReceiveTab />, {
+    initialState: {
+      control: {
+        getNextAddressResponse: {
+          accountNumber: mockDefaultAccount.value
+        }
+      }
+    }
+  });
+
+  await user.click(getQRCodeButton());
   expect(mockGenQRCodeSVG).toHaveBeenCalledWith(`decred:${mockNextAddress}`);
   expect(screen.getAllByText(mockNextAddress).length).toBe(2); // + modal
-  user.click(getModalCloseButton());
+  await user.click(getModalCloseButton());
 
   // set amount
   mockGenQRCodeSVG.mockClear();
@@ -205,11 +249,11 @@ test("test QR button", () => {
   });
   expect(amountInput.value).toBe(mockAmountValue);
 
-  user.click(getQRCodeButton());
+  await user.click(getQRCodeButton());
   expect(mockGenQRCodeSVG).toHaveBeenCalledWith(
     `decred:${mockNextAddress}?amount=${mockAmountValue}`
   );
   expect(screen.getAllByText(mockNextAddress).length).toBe(2); // + modal
-  user.click(getModalCloseButton());
+  await user.click(getModalCloseButton());
   expect(screen.getAllByText(mockNextAddress).length).toBe(1); // modal has been disappeared
 });

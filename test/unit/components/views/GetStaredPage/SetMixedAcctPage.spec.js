@@ -1,6 +1,6 @@
 import SetMixedAcctPage from "components/views/GetStartedPage/SetupWallet/SetMixedAcctPage/SetMixedAcctPage";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { fireEvent } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import * as ama from "actions/AccountMixerActions";
@@ -40,7 +40,7 @@ beforeEach(() => {
 test("test SetMixedAcctPage", async () => {
   render(<SetMixedAcctPage onSendContinue={mockOnSendContinue} />);
   expect(mockGetCoinjoinOutputspByAcct).toHaveBeenCalled();
-  await wait(() => screen.getByText(/continue/i));
+  await waitFor(() => screen.getByText(/continue/i));
   expect(screen.getByText(/looks like you/i).textContent)
     .toMatchInlineSnapshot(`
     "Looks like you have accounts with coinjoin outputs. Past
@@ -69,11 +69,11 @@ test("test SetMixedAcctPage", async () => {
   const secondUnMixedCheckbox = unmixedAccountCheckboxes[1];
 
   fireEvent.click(firstMixedCheckbox);
-  await wait(() => expect(firstMixedCheckbox.checked).toEqual(true));
+  await waitFor(() => expect(firstMixedCheckbox.checked).toEqual(true));
 
   // clicking on unmixed checkbox should uncheck the same account's mixed checkbox
   fireEvent.click(firstUnMixedCheckbox);
-  await wait(() => expect(firstMixedCheckbox.checked).toEqual(false));
+  await waitFor(() => expect(firstMixedCheckbox.checked).toEqual(false));
   expect(
     screen.getByText(/you need to set/i).textContent
   ).toMatchInlineSnapshot(
@@ -82,23 +82,23 @@ test("test SetMixedAcctPage", async () => {
 
   // Click on another account for change account
   fireEvent.click(secondUnMixedCheckbox);
-  await wait(() => expect(secondUnMixedCheckbox.checked).toEqual(true));
-  await wait(() => expect(firstUnMixedCheckbox.checked).toEqual(false));
+  await waitFor(() => expect(secondUnMixedCheckbox.checked).toEqual(true));
+  await waitFor(() => expect(firstUnMixedCheckbox.checked).toEqual(false));
 
   // clicking on mixed checkbox should uncheck the same account's unmixed checkbox
   fireEvent.click(secondMixedCheckbox);
-  await wait(() => expect(secondMixedCheckbox.checked).toEqual(true));
-  await wait(() => expect(secondUnMixedCheckbox.checked).toEqual(false));
+  await waitFor(() => expect(secondMixedCheckbox.checked).toEqual(true));
+  await waitFor(() => expect(secondUnMixedCheckbox.checked).toEqual(false));
   //
   // Click on the first account for unmixed account
   fireEvent.click(firstUnMixedCheckbox);
-  await wait(() => expect(firstUnMixedCheckbox.checked).toEqual(true));
-  await wait(() => expect(secondUnMixedCheckbox.checked).toEqual(false));
-  await wait(() => expect(secondMixedCheckbox.checked).toEqual(true));
+  await waitFor(() => expect(firstUnMixedCheckbox.checked).toEqual(true));
+  await waitFor(() => expect(secondUnMixedCheckbox.checked).toEqual(false));
+  await waitFor(() => expect(secondMixedCheckbox.checked).toEqual(true));
   expect(screen.queryByText(/you need to set/i)).not.toBeInTheDocument();
 
   expect(continueButton.disabled).toBe(false);
-  user.click(continueButton);
+  await user.click(continueButton);
   expect(mockRenameAccountAttempt).toHaveBeenCalledWith(
     testCoinjoinSumByAcct[1].acctIdx,
     CHANGE_ACCOUNT

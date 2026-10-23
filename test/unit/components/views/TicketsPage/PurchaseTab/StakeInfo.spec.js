@@ -1,6 +1,5 @@
 import StakeInfo from "components/views/TicketsPage/PurchaseTab/StakeInfo/StakeInfo";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 import * as sel from "selectors";
 import { DCR, UNIT_DIVISOR } from "constants";
@@ -29,8 +28,8 @@ selectors.isSPV = jest.fn(() => mockIsSPV);
 selectors.lastVotedTicket = jest.fn(() => mockLastVotedTicket);
 selectors.currencyDisplay = jest.fn(() => mockCurrencyDisplay);
 
-test("test StakeInfo (SPV enabled)", () => {
-  render(<StakeInfo />);
+test("test StakeInfo (SPV enabled)", async () => {
+  const { user } = render(<StakeInfo />);
   expect(screen.getByText(/staking overview/i)).toBeInTheDocument();
 
   const unspentTickets = screen.getByText(/unspent tickets/i);
@@ -50,7 +49,7 @@ test("test StakeInfo (SPV enabled)", () => {
     `${(mockTotalSubsidy / UNIT_DIVISOR).toFixed(2)} ${mockCurrencyDisplay}`
   );
 
-  user.click(totalRewardEarned);
+  await user.click(totalRewardEarned);
 
   expect(
     screen.getByText(/own mempool tickets/i).nextElementSibling.textContent

@@ -10,10 +10,13 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const port = process.env.PORT || 3000;
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = merge(baseConfig, {
   mode: "development",
-
+  devServer: {
+    hot: true,
+  },
   devtool: "inline-source-map",
 
   entry: [
@@ -70,13 +73,20 @@ module.exports = merge(baseConfig, {
           }
         ],
         exclude: /\.module\.css$/
-      }
+      },
+      {
+        test: /\.[jt]sx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: require.resolve('babel-loader'),
+            options: {
+              plugins: [require.resolve('react-refresh/babel')],
+            },
+          },
+        ],
+      },
     ]
-  },
-  resolve: {
-    alias: {
-      "react-dom": "@hot-loader/react-dom"
-    }
   },
 
   node: {
@@ -86,6 +96,7 @@ module.exports = merge(baseConfig, {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin(),
 
     new webpack.DefinePlugin({
       __ELECTRON_ENV: JSON.stringify("renderer")

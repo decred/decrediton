@@ -1,6 +1,5 @@
 import { AccountsSelect } from "inputs";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 import * as sel from "selectors";
 import { DCR } from "constants";
@@ -76,47 +75,47 @@ test("render empty AccountsSelect with accounts buttons", () => {
   expect(screen.getByText("Accounts")).toBeInTheDocument();
 });
 
-test("render AccountsSelect (visible accounts)", () => {
-  render(
+test("render AccountsSelect (visible accounts)", async () => {
+  const { user } = render(
     <AccountsSelect account={mockDefaultAccount} onChange={mockOnChange} />
   );
   expect(screen.queryByText(/select account/i)).not.toBeInTheDocument();
   const accountsSelect = screen.getByTestId("accountsSelect");
   expect(accountsSelect.className).not.toMatch(testClassName);
-  user.click(screen.getByText(mockDefaultAccount.name));
+  await user.click(screen.getByText(mockDefaultAccount.name));
   expect(screen.getByText(mockUnmixedAccount.name)).toBeInTheDocument();
   expect(screen.getByText(mockMixedAccount.name)).toBeInTheDocument();
   expect(screen.getByText(mockAccount2.name)).toBeInTheDocument();
 
-  user.click(screen.getByText(mockMixedAccount.name));
+  await user.click(screen.getByText(mockMixedAccount.name));
   expect(mockOnChange).toHaveBeenCalledWith(mockMixedAccount);
   expect(screen.queryByText(mockUnmixedAccount.name)).not.toBeInTheDocument();
   expect(screen.queryByText(mockMixedAccount.name)).not.toBeInTheDocument();
   expect(screen.queryByText(mockAccount2.name)).not.toBeInTheDocument();
 });
 
-test("render AccountsSelect (spendable accounts)", () => {
+test("render AccountsSelect (spendable accounts)", async () => {
   mockMixedAccountValue = null;
-  render(
+  const { user } = render(
     <AccountsSelect account={mockDefaultAccount} onChange={mockOnChange} />
   );
   expect(screen.queryByText(/select account/i)).not.toBeInTheDocument();
   const accountsSelect = screen.getByTestId("accountsSelect");
   expect(accountsSelect.className).not.toMatch(testClassName);
-  user.click(screen.getByText(mockDefaultAccount.name));
+  await user.click(screen.getByText(mockDefaultAccount.name));
   expect(screen.getByText(mockUnmixedAccount.name)).toBeInTheDocument();
   expect(screen.queryByText(mockMixedAccount.name)).not.toBeInTheDocument();
   expect(screen.getByText(mockAccount2.name)).toBeInTheDocument();
 
-  user.click(screen.getByText(mockAccount2.name));
+  await user.click(screen.getByText(mockAccount2.name));
   expect(mockOnChange).toHaveBeenCalledWith(mockAccount2);
   expect(screen.queryByText(mockUnmixedAccount.name)).not.toBeInTheDocument();
   expect(screen.queryByText(mockMixedAccount.name)).not.toBeInTheDocument();
   expect(screen.queryByText(mockAccount2.name)).not.toBeInTheDocument();
 });
 
-test("render AccountsSelect (filtered accounts)", () => {
-  render(
+test("render AccountsSelect (filtered accounts)", async () => {
+  const { user } = render(
     <AccountsSelect
       account={mockDefaultAccount}
       onChange={mockOnChange}
@@ -126,12 +125,12 @@ test("render AccountsSelect (filtered accounts)", () => {
   expect(screen.queryByText(/select account/i)).not.toBeInTheDocument();
   const accountsSelect = screen.getByTestId("accountsSelect");
   expect(accountsSelect.className).not.toMatch(testClassName);
-  user.click(screen.getByText(mockDefaultAccount.name));
+  await user.click(screen.getByText(mockDefaultAccount.name));
   expect(screen.queryByText(mockUnmixedAccount.name)).not.toBeInTheDocument();
   expect(screen.queryByText(mockMixedAccount.name)).not.toBeInTheDocument();
   expect(screen.getByText(mockAccount2.name)).toBeInTheDocument();
 
-  user.click(screen.getByText(mockAccount2.name));
+  await user.click(screen.getByText(mockAccount2.name));
   expect(mockOnChange).toHaveBeenCalledWith(mockAccount2);
   expect(screen.queryByText(mockUnmixedAccount.name)).not.toBeInTheDocument();
   expect(screen.queryByText(mockMixedAccount.name)).not.toBeInTheDocument();

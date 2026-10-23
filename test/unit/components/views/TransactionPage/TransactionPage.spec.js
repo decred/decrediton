@@ -1,7 +1,6 @@
 import TransactionPage from "components/views/TransactionPage";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { DCR, TestNetParams } from "constants";
 import * as sel from "selectors";
 import * as clia from "actions/ClientActions";
@@ -162,7 +161,7 @@ test("regular sent pending tx from default account to an external address", asyn
     "263f64a32f2f86ffda747242cfc620b0c42689f5c600ef2be22351f53bcd5b0d";
   const rawTx = mockNormalizedRegularTransactions[mockTxHash].rawTx;
 
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: mockNormalizedRegularTransactions,
@@ -172,7 +171,7 @@ test("regular sent pending tx from default account to an external address", asyn
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("out");
   expect(getTitleText()).toMatch("-8.00000 DCR");
@@ -185,10 +184,10 @@ test("regular sent pending tx from default account to an external address", asyn
   );
   expect(getTransactionFeeText()).toMatch("Transaction fee:0.0000253 DCR");
 
-  user.click(getAbandonTransactionButton());
+  await user.click(getAbandonTransactionButton());
   expect(mockAbandonTransactionAttempt).toHaveBeenCalledWith(mockTxHash);
 
-  user.click(getRebroadcastTransaction());
+  await user.click(getRebroadcastTransaction());
   expect(mockPublishUnminedTransactionsAttempt).toHaveBeenCalled();
 
   expect(getWalletInputsText()).toMatch("Wallet Inputsdefault17.9385434 DCR");
@@ -204,7 +203,7 @@ test("regular sent pending tx from default account to an external address", asyn
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(queryHeight()).not.toBeInTheDocument(); // not mined
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
@@ -214,7 +213,7 @@ test("regular received mined tx to the default account", async () => {
   const rawTx = mockNormalizedRegularTransactions[mockTxHash].rawTx;
 
   selectors.currentBlockHeight = jest.fn(() => 712214);
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: mockNormalizedRegularTransactions,
@@ -224,7 +223,7 @@ test("regular received mined tx to the default account", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("in");
   expect(getTitleText()).toMatch("100.00000 DCR");
@@ -253,7 +252,7 @@ test("regular received mined tx to the default account", async () => {
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height706945");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
@@ -263,7 +262,7 @@ test("regular self transfer tx to unmixed account", async () => {
   const rawTx = mockNormalizedRegularTransactions[mockTxHash].rawTx;
 
   selectors.currentBlockHeight = jest.fn(() => 712836);
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: mockNormalizedRegularTransactions,
@@ -273,7 +272,7 @@ test("regular self transfer tx to unmixed account", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("self");
   expect(getTitleText()).toMatch("-0.0000253 DCR");
@@ -301,7 +300,7 @@ test("regular self transfer tx to unmixed account", async () => {
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height712832");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
@@ -311,7 +310,7 @@ test("self coins from unmixed to mixed account", async () => {
   const rawTx = mockNormalizedRegularTransactions[mockTxHash].rawTx;
 
   selectors.currentBlockHeight = jest.fn(() => 712883);
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: mockNormalizedRegularTransactions,
@@ -321,7 +320,7 @@ test("self coins from unmixed to mixed account", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("mixed");
   expect(getTitleText()).toMatch("-0.0000361 DCR");
@@ -351,7 +350,7 @@ test("self coins from unmixed to mixed account", async () => {
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height712872");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
@@ -364,7 +363,7 @@ test("voted ticket", async () => {
     mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 924414);
 
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
@@ -385,7 +384,7 @@ test("voted ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("ticket");
   expect(getTitleText()).toMatch("Ticket, Voted");
@@ -415,7 +414,7 @@ test("voted ticket", async () => {
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height919842");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost-votedticket");
@@ -430,7 +429,7 @@ test("vote tx", async () => {
     mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 934699);
 
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
@@ -451,7 +450,7 @@ test("vote tx", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("vote");
   expect(getTitleText()).toMatch("Vote");
@@ -481,7 +480,7 @@ test("vote tx", async () => {
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height932737");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 
   expect(screen.getByText("Agenda Choices:").parentNode.textContent).toMatch(
@@ -529,7 +528,7 @@ test("vote tx (votes don't align with what the wallet currently has set)", async
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(screen.getByText("Agenda Choices:").parentNode.textContent).toMatch(
     "Agenda Choices:Change maximum treasury expenditure policy as defined in DCP0007reverttreasurypolicyabstainEnable explicit version upgrades as defined in DCP0008explicitverupgradesabstainEnable automatic ticket revocations as defined in DCP0009autorevocationsabstainChange block reward subsidy split to 10/80/10 as defined in DCP0010changesubsidysplitabstainThis doesn't align with what the wallet currently has set (yes)"
@@ -544,7 +543,7 @@ test("missed ticket", async () => {
   mockStakeTransactionMap[mockTxHash] =
     mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 930680);
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
@@ -562,7 +561,7 @@ test("missed ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("missed");
   expect(getTitleText()).toMatch("Missed");
@@ -593,7 +592,7 @@ test("missed ticket", async () => {
   expect(getHeightText()).toMatch("Height558424");
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost-missed");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
@@ -606,7 +605,7 @@ test("revocation", async () => {
     mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 712217);
 
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
@@ -624,7 +623,7 @@ test("revocation", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("revocation");
   expect(getTitleText()).toMatch("Revocation");
@@ -652,7 +651,7 @@ test("revocation", async () => {
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height697812");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
@@ -665,7 +664,7 @@ test("revocation", async () => {
     mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 712217);
 
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
@@ -683,7 +682,7 @@ test("revocation", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("revocation");
   expect(getTitleText()).toMatch("Revocation");
@@ -711,7 +710,7 @@ test("revocation", async () => {
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height697812");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
@@ -724,7 +723,7 @@ test("revoked ticket", async () => {
     mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 924414);
 
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
@@ -742,7 +741,7 @@ test("revoked ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("ticket");
   expect(getTitleText()).toMatch("Ticket, Revoked");
@@ -770,7 +769,7 @@ test("revoked ticket", async () => {
   expect(screen.getByText(rawTx)).toBeInTheDocument();
   expect(getHeightText()).toMatch("Height815405");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
@@ -783,7 +782,7 @@ test("immature ticket", async () => {
     mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 930691);
 
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
@@ -801,7 +800,7 @@ test("immature ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("immature");
   expect(getTitleText()).toMatch("Immature");
@@ -830,7 +829,7 @@ test("immature ticket", async () => {
   expect(getHeightText()).toMatch("Height930690");
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost-immature");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
@@ -843,7 +842,7 @@ test("live ticket", async () => {
     mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 931147);
 
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
@@ -861,7 +860,7 @@ test("live ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("ticket");
   expect(getTitleText()).toMatch("Live");
@@ -890,7 +889,7 @@ test("live ticket", async () => {
   expect(getHeightText()).toMatch("Height930696");
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost-live");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 
   // fetch VSP Ticket Status
@@ -898,18 +897,18 @@ test("live ticket", async () => {
   const fetchVSPTicketStatusBt = screen.getByRole("button", {
     name: "Fetch VSP Ticket Status"
   });
-  user.click(fetchVSPTicketStatusBt);
+  await user.click(fetchVSPTicketStatusBt);
 
   //cancel first
-  user.click(screen.getByRole("button", { name: "Cancel" }));
-  user.click(fetchVSPTicketStatusBt);
+  await user.click(screen.getByRole("button", { name: "Cancel" }));
+  await user.click(fetchVSPTicketStatusBt);
 
   const testPassphrase = "test-pass";
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  await user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
 
-  user.click(screen.getByRole("button", { name: "Continue" }));
+  await user.click(screen.getByRole("button", { name: "Continue" }));
 
-  await wait(() => screen.getByText("Fee tx hash:"));
+  await waitFor(() => screen.getByText("Fee tx hash:"));
 
   expect(screen.getByText("Fee tx hash:").parentNode.textContent).toMatch(
     `Fee tx hash:${mockVSPTicketInfoResponse.data.feetxhash}`
@@ -936,7 +935,7 @@ test("unmined ticket", async () => {
     mockNormalizedStakeTransactions[mockTxHash];
   selectors.currentBlockHeight = jest.fn(() => 712277);
 
-  render(<TransactionPage />, {
+  const { user } = render(<TransactionPage />, {
     initialState: {
       grpc: {
         regularTransactions: {},
@@ -946,7 +945,7 @@ test("unmined ticket", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 
   expect(getHeaderTitleIconClassName()).toMatch("unmined");
   expect(getTitleText()).toMatch("Unmined");
@@ -959,10 +958,10 @@ test("unmined ticket", async () => {
     "To addresses: TsRWjysgoNXTS7JAQXfsaAzts8UM3Dq3WUg  TseGZ7HkiWybyH6LnKdokifkFCn4cJYddm4  TsR28UZRprhgQQhzWns2M6cAwchrNVvbYq2 "
   );
 
-  user.click(getAbandonTransactionButton());
+  await user.click(getAbandonTransactionButton());
   expect(mockAbandonTransactionAttempt).toHaveBeenCalledWith(mockTxHash);
 
-  user.click(getRebroadcastTransaction());
+  await user.click(getRebroadcastTransaction());
   expect(mockPublishUnminedTransactionsAttempt).toHaveBeenCalled();
 
   expect(getWalletInputsText()).toMatch("Wallet Inputsdefault0.2000298 DCR");
@@ -978,7 +977,7 @@ test("unmined ticket", async () => {
   expect(queryHeight()).not.toBeInTheDocument(); // not mined
   expect(getVSPHostText()).toMatch("VSP host:mockVspHost-unmined");
 
-  user.click(screen.getByText("Back"));
+  await user.click(screen.getByText("Back"));
   expect(mockGoBackHistory).toHaveBeenCalled();
 });
 
@@ -1036,7 +1035,7 @@ test("show not yet fetched regular tx", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 });
 
 test("show not yet fetched stake tx", async () => {
@@ -1090,7 +1089,7 @@ test("show not yet fetched stake tx", async () => {
     }
   });
 
-  await wait(() => getIODetails());
+  await waitFor(() => getIODetails());
 });
 
 test("show not yet fetched stake tx (won't find it)", async () => {
@@ -1145,5 +1144,5 @@ test("show not yet fetched stake tx (won't find it)", async () => {
     }
   });
 
-  await wait(() => screen.getByText("Transaction not found"));
+  await waitFor(() => screen.getByText("Transaction not found"));
 });

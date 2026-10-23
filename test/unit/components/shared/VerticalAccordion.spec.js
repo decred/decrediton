@@ -1,7 +1,7 @@
 import { VerticalAccordion } from "shared";
 import { render } from "test-utils.js";
 import user from "@testing-library/user-event";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 
 const testHeader = "test-header";
 const testContentText = "test-content-test";
@@ -37,9 +37,9 @@ test("toggle vertical accordion", async () => {
   expect(header.firstElementChild.className).toMatch(testArrowClassName);
   expect(header.parentElement.className).toMatch(testClassName);
 
-  await wait(() => screen.getByText(testContentText));
+  await waitFor(() => screen.getByText(testContentText));
   user.click(screen.getByText(testHeader));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText(testContentText)).not.toBeInTheDocument()
   );
 });
@@ -49,7 +49,7 @@ test("try toggling disabled vertical accordion", async () => {
 
   expect(screen.queryByText(testContentText)).not.toBeInTheDocument();
   user.click(screen.getByText(testHeader));
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.queryByText(testContentText)).not.toBeInTheDocument()
   );
 });

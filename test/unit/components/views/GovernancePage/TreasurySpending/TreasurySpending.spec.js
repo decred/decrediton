@@ -1,6 +1,6 @@
 import TreasurySpendingTab from "components/views/GovernancePage/TreasurySpendingTab";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor, fireEvent } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import { within } from "@testing-library/dom";
 import * as sel from "selectors";
@@ -62,31 +62,31 @@ const expectedPiKeyResult = async (
   expectPassphraseError,
   expectedPiKey
 ) => {
-  if (!expectPassphraseError) {
-    await wait(() =>
+  await waitFor(() => {
+    if (!expectPassphraseError) {
       expect(mockSetTreasuryPolicy).toHaveBeenCalledWith(
         undefined, // votingService
         expectedPiKey,
         policy
-      )
-    );
-  } else {
-    expect(mockSetTreasuryPolicy).not.toHaveBeenCalled();
-  }
+      );
+    } else {
+      expect(mockSetTreasuryPolicy).not.toHaveBeenCalled();
+    }
+  });
 };
 
 const expectedTSpendResult = async (policy, expectPassphraseError) => {
-  if (!expectPassphraseError) {
-    await wait(() =>
+  await waitFor(() => {
+    if (!expectPassphraseError) {
       expect(mockSetTSpendPolicy).toHaveBeenCalledWith(
         undefined, // votingService
         testTSpendHash,
         policy
-      )
-    );
-  } else {
-    expect(mockSetTSpendPolicy).not.toHaveBeenCalled();
-  }
+      );
+    } else {
+      expect(mockSetTSpendPolicy).not.toHaveBeenCalled();
+    }
+  });
 };
 
 const vote = async (
@@ -97,22 +97,22 @@ const vote = async (
   expectedPiKey
 ) => {
   // vote on yes
-  const yesRadioBtn = within(container).getByText(policy).parentNode
-    .previousSibling;
+  const yesRadioBtn =
+    within(container).getByText(policy).parentNode.previousSibling;
   const updatePrefBtn = within(container).getByRole("button", {
     name: "Update Preference"
   });
-  user.click(yesRadioBtn);
+  fireEvent.click(yesRadioBtn);
   expect(yesRadioBtn).toBeTruthy();
 
-  user.click(updatePrefBtn);
+  fireEvent.click(updatePrefBtn);
 
   expect(screen.getByText("Confirm Your Vote").parentNode.textContent).toMatch(
     `Confirm Your Vote${policy}`
   );
 
   // cancel first
-  user.click(
+  fireEvent.click(
     screen.getByRole("button", {
       name: "Cancel"
     })
@@ -120,21 +120,23 @@ const vote = async (
   expect(screen.queryByText("Confirm Your Vote")).not.toBeInTheDocument();
 
   // vote again
-  user.click(updatePrefBtn);
+  fireEvent.click(updatePrefBtn);
   const continueBtn = screen.getByRole("button", {
     name: "Continue"
   });
   expect(continueBtn.disabled).toBeTruthy();
-  user.type(screen.getByLabelText("Private Passphrase"), testPassphrase);
+  fireEvent.change(screen.getByLabelText("Private Passphrase"), {
+    target: { value: testPassphrase }
+  });
   expect(continueBtn.disabled).toBeFalsy();
-  user.click(continueBtn);
+  await user.click(continueBtn);
 
-  await expectedResult(policy, expectPassphraseError, expectedPiKey);
-  await wait(() =>
+  await waitFor(() => {
     within(container).getByRole("button", {
       name: "Update Preference"
-    })
-  );
+    });
+  });
+  await expectedResult(policy, expectPassphraseError, expectedPiKey);
 };
 
 const getPiKeyContainer = () => screen.getByText("Pi key:").parentElement;
@@ -143,7 +145,18 @@ const queryTSpendLabel = () => screen.queryByText("Tx hash:");
 
 /* PiKey vote tests */
 
-test("PiKey test: treasury spending tab (not yet voted)", async () => {
+test("PiKey test: treasury spending tab (not yet voted, vote no)", async () => {
+  selectors.treasuryPolicies = jest.fn(() => []);
+  render(<TreasurySpendingTab />);
+  const container = getPiKeyContainer();
+  expect(
+    within(container).getByText("abstain").parentNode.previousSibling.checked
+  ).toBeTruthy();
+
+  await vote("no", container, expectedPiKeyResult, false, PiKey_mainnet);
+});
+
+test("PiKey test: treasury spending tab (not yet voted, vote yes)", async () => {
   selectors.treasuryPolicies = jest.fn(() => []);
   render(<TreasurySpendingTab />);
   const container = getPiKeyContainer();
@@ -152,8 +165,17 @@ test("PiKey test: treasury spending tab (not yet voted)", async () => {
   ).toBeTruthy();
 
   await vote("yes", container, expectedPiKeyResult, false, PiKey_mainnet);
+});
+
+test("PiKey test: treasury spending tab (not yet voted, vote abstain)", async () => {
+  selectors.treasuryPolicies = jest.fn(() => []);
+  render(<TreasurySpendingTab />);
+  const container = getPiKeyContainer();
+  expect(
+    within(container).getByText("abstain").parentNode.previousSibling.checked
+  ).toBeTruthy();
+
   await vote("abstain", container, expectedPiKeyResult, false, PiKey_mainnet);
-  await vote("no", container, expectedPiKeyResult, false, PiKey_mainnet);
 });
 
 test("PiKey test: treasury spending tab (already voted yes)", () => {
@@ -233,7 +255,7 @@ test("TSpend test: treasury spending tab (received invalid tspend info)", () => 
   expect(queryTSpendLabel()).not.toBeInTheDocument();
 });
 
-test("Tspend test: treasury spending tab (not yet voted)", async () => {
+test("Tspend test: treasury spending tab (not yet voted, vote yes)", async () => {
   render(<TreasurySpendingTab />);
   const container = getTSpendContainer();
   expect(
@@ -241,8 +263,26 @@ test("Tspend test: treasury spending tab (not yet voted)", async () => {
   ).toBeTruthy();
 
   await vote("yes", container, expectedTSpendResult);
-  await vote("abstain", container, expectedTSpendResult);
+});
+
+test("Tspend test: treasury spending tab (not yet voted, vote no)", async () => {
+  render(<TreasurySpendingTab />);
+  const container = getTSpendContainer();
+  expect(
+    within(container).getByText("abstain").parentNode.previousSibling.checked
+  ).toBeTruthy();
+
   await vote("no", container, expectedTSpendResult);
+});
+
+test("Tspend test: treasury spending tab (not yet voted, vote abstain)", async () => {
+  render(<TreasurySpendingTab />);
+  const container = getTSpendContainer();
+  expect(
+    within(container).getByText("abstain").parentNode.previousSibling.checked
+  ).toBeTruthy();
+
+  await vote("abstain", container, expectedTSpendResult);
 });
 
 test("TSpend test: treasury spending tab (already voted yes)", () => {

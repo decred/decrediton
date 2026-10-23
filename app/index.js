@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { Switch, Route } from "react-router-dom";
@@ -18,7 +18,6 @@ import {
 } from "constants";
 import * as cfgConstants from "constants/config";
 import { wallet } from "wallet-preload-shim";
-import { AppContainer } from "react-hot-loader";
 import {
   defaultLightTheme,
   ThemeProvider,
@@ -560,23 +559,19 @@ const defaultThemeName = currentTheme.includes("dark")
   ? DEFAULT_DARK_THEME_NAME
   : DEFAULT_LIGHT_THEME_NAME;
 
-const render = () =>
-  ReactDOM.render(
-    <AppContainer>
-      <ThemeProvider
-        themes={themes}
-        defaultThemeName={defaultThemeName}
-        fonts={fonts}>
-        <Provider store={store}>
-          <ConnectedRouter history={history}>
-            <Switch>
-              <Route path="/" component={App} />
-            </Switch>
-          </ConnectedRouter>
-        </Provider>
-      </ThemeProvider>
-    </AppContainer>,
-    document.getElementById("root")
-  );
-
-render();
+const container = document.getElementById("root");
+const root = createRoot(container);
+root.render(
+  <ThemeProvider
+    themes={themes}
+    defaultThemeName={defaultThemeName}
+    fonts={fonts}>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route path="/" component={App} />
+        </Switch>
+      </ConnectedRouter>
+    </Provider>
+  </ThemeProvider>
+);

@@ -1,6 +1,5 @@
 import { TextToggle } from "buttons";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 
 const testLeftText = "test-left-text";
@@ -9,8 +8,8 @@ const mockToggleAction = jest.fn(() => {});
 const testClassName = "test-class-name";
 const testChildClassName = "test-child-class-name";
 
-test("render TextToggle with left active button", () => {
-  render(
+test("render TextToggle with left active button", async () => {
+  const { user } = render(
     <TextToggle
       activeButton={"left"}
       leftText={testLeftText}
@@ -28,12 +27,12 @@ test("render TextToggle with left active button", () => {
   expect(leftText.className).toMatch(testChildClassName);
   expect(rightText.className).toMatch(testChildClassName);
 
-  user.click(rightText);
+  await user.click(rightText);
   expect(mockToggleAction).toHaveBeenCalledWith("right");
   expect(leftText.className).not.toMatch(/active/i);
   expect(rightText.className).toMatch(/active/i);
 
-  user.click(leftText);
+  await user.click(leftText);
   expect(mockToggleAction).toHaveBeenCalledWith("left");
   expect(leftText.className).toMatch(/active/i);
   expect(rightText.className).not.toMatch(/active/i);

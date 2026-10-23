@@ -36,19 +36,19 @@ test.each([
   [DCR, 420000001323, "4,200.00001323"]
 ])("(%s) %s display '%s'", testDisplay);
 
-test("test click on atom balance", () => {
+test("test click on atom balance", async () => {
   const mockClick = jest.fn(() => {});
   mockCurrencyDisplay = ATOMS;
   render(<Balance amount="42" onClick={mockClick} />);
-  user.click(screen.getByText("42").parentElement);
+  await user.click(screen.getByText("42").parentElement);
   expect(mockClick).toHaveBeenCalled();
 });
 
-test("test click on DCR balance", () => {
+test("test click on DCR balance", async () => {
   const mockClick = jest.fn(() => {});
   mockCurrencyDisplay = DCR;
   render(<Balance amount="420000001" onClick={mockClick} />);
-  user.click(screen.getByText("4.20").parentElement);
+  await user.click(screen.getByText("4.20").parentElement);
   expect(mockClick).toHaveBeenCalled();
 });
 

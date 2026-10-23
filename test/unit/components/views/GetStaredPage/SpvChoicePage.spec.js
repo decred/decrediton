@@ -17,7 +17,7 @@ beforeEach(() => {
   selectors.stakeTransactions = jest.fn(() => []);
 });
 
-test("render SPV choice page", () => {
+test("render SPV choice page", async () => {
   render(<SpvChoicePage />);
 
   expect(screen.getByTestId("getstarted-pagebody").className).not.toMatch(
@@ -35,7 +35,7 @@ test("render SPV choice page", () => {
   expect(enableSpvLabel.nextSibling.textContent).toMatchInlineSnapshot(
     "\"SPV will allow your wallets to be restored and used much more quickly.  This speed comes at cost, with blocks not being fully verified.  It's 'less secure' but very unlikely that there will be any problems.\""
   );
-  user.click(enableSpvLabel);
+  await user.click(enableSpvLabel);
   expect(mockToggleSpv).toHaveBeenCalledWith(true);
   mockToggleSpv.mockClear();
 
@@ -44,7 +44,7 @@ test("render SPV choice page", () => {
   expect(disableSpvLabel.nextSibling.textContent).toMatchInlineSnapshot(
     '"This will use the regular Decred daemon and fully verify blocks.  This will take longer but is fully secure.  Any block or mined transaction can be fully trusted."'
   );
-  user.click(disableSpvLabel);
+  await user.click(disableSpvLabel);
   expect(mockToggleSpv).toHaveBeenCalledWith(false);
 });
 

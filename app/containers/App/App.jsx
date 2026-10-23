@@ -8,7 +8,6 @@ import ShutdownPage from "components/views/ShutdownPage/ShutdownPage";
 import FatalErrorPage from "components/views/FatalErrorPage/FatalErrorPage";
 import Snackbar from "components/Snackbar";
 import TrezorModals from "components/modals/TrezorModals/TrezorModals";
-import { hot } from "react-hot-loader/root";
 import { CantCloseModals, AboutModal, ConfirmationDialogModal } from "modals";
 import { useApp } from "../hooks";
 import styles from "./App.module.css";
@@ -52,4 +51,4 @@ const App = () => {
   );
 };
 
-export default hot(App);
+export default App;

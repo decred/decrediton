@@ -1,7 +1,7 @@
 import * as wal from "wallet";
 import * as cla from "actions/ClientActions";
 import { createStore } from "test-utils.js";
-import { wait } from "@testing-library/react";
+import { waitFor } from "@testing-library/react";
 import {
   defaultMockAvailableMainnetVsps,
   defaultMockAvailableTestnetVsps,
@@ -42,7 +42,7 @@ test("test getTreasuryPolicies", async () => {
   const store = createStore({});
 
   await store.dispatch(clientActions.getTreasuryPolicies());
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.getTreasuryPoliciesRequestAttempt).toBeFalsy()
   );
   expect(store.getState().grpc.getTreasuryPoliciesResponse).toBe(
@@ -56,7 +56,7 @@ test("test getTreasuryPolicies (failed request)", async () => {
   const store = createStore({});
 
   await store.dispatch(clientActions.getTreasuryPolicies());
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.getTreasuryPoliciesRequestAttempt).toBeFalsy()
   );
   expect(store.getState().grpc.getTreasuryPoliciesResponse).toBe(undefined);
@@ -67,7 +67,7 @@ test("test setTreasuryPolicy", async () => {
   const store = createStore({});
 
   await store.dispatch(clientActions.setTreasuryPolicy());
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.setTreasuryPolicyRequestAttempt).toBeFalsy()
   );
   expect(store.getState().grpc.setTreasuryPolicyError).toBe(null);
@@ -85,7 +85,7 @@ test("test setTreasuryPolicy (failed request)", async () => {
   const store = createStore({});
 
   await store.dispatch(clientActions.setTreasuryPolicy());
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.setTreasuryPolicyRequestAttempt).toBeFalsy()
   );
   expect(store.getState().grpc.setTreasuryPolicyError).toBe(testErrorMsg);
@@ -100,7 +100,7 @@ test("test getTSpendPolicies", async () => {
   const store = createStore({});
 
   await store.dispatch(clientActions.getTSpendPolicies());
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.getTSpendPoliciesRequestAttempt).toBeFalsy()
   );
   expect(store.getState().grpc.getTSpendPoliciesResponse).toBe(
@@ -114,7 +114,7 @@ test("test getTSpendPolicies (failed request)", async () => {
   const store = createStore({});
 
   await store.dispatch(clientActions.getTSpendPolicies());
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.getTSpendPoliciesRequestAttempt).toBeFalsy()
   );
   expect(store.getState().grpc.getTSpendPoliciesResponse).toBe(undefined);
@@ -125,7 +125,7 @@ test("test setTSpendPolicy", async () => {
   const store = createStore({});
 
   await store.dispatch(clientActions.setTSpendPolicy());
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.setTSpendPolicyRequestAttempt).toBeFalsy()
   );
   expect(store.getState().grpc.setTSpendPolicyError).toBe(null);
@@ -143,7 +143,7 @@ test("test setTSpendPolicy (failed request)", async () => {
   const store = createStore({});
 
   await store.dispatch(clientActions.setTSpendPolicy());
-  await wait(() =>
+  await waitFor(() =>
     expect(store.getState().grpc.setTSpendPolicyRequestAttempt).toBeFalsy()
   );
   expect(store.getState().grpc.setTSpendPolicyError).toBe(testErrorMsg);

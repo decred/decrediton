@@ -1,6 +1,6 @@
 import Blockchain from "components/views/GovernancePage/Blockchain";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import * as sel from "selectors";
 import * as gov from "actions/GovernanceActions";
@@ -26,7 +26,7 @@ beforeEach(() => {
   selectors.getAvailableVSPs = jest.fn(() => defaultMockAvailableMainnetVsps);
 });
 
-const testAgendaCardElements = (
+const testAgendaCardElements = async (
   mockAgendaName,
   mockDescription,
   mockChoice,
@@ -43,11 +43,11 @@ const testAgendaCardElements = (
   expect(screen.getByText(expectedTooltipText)).toBeInTheDocument();
   expect(screen.getByText(expectedStatusText)).toBeInTheDocument();
 
-  user.click(screen.getByText(mockDescription));
+  await user.click(screen.getByText(mockDescription));
   expect(mockViewAgendaDetailsHandler).toHaveBeenCalledWith(mockAgendaName);
 };
 
-const testAgendaCard = (
+const testAgendaCard = async (
   mockChoice,
   finished,
   passed,
@@ -68,7 +68,7 @@ const testAgendaCard = (
     { agendaId: mockAgendaName, choiceId: mockChoice }
   ]);
   render(<Blockchain />);
-  testAgendaCardElements(
+  await testAgendaCardElements(
     mockAgendaName,
     mockDescription,
     mockChoice,
@@ -129,7 +129,7 @@ test("test agenda search and sort controls", async () => {
 
   const filterControl = screen.getByPlaceholderText("Filter by Name");
 
-  user.type(filterControl, "1");
+  await user.type(filterControl, "1");
   expect(
     screen
       .getAllByText(/test-desc-/i)
@@ -137,9 +137,9 @@ test("test agenda search and sort controls", async () => {
   ).toStrictEqual(["test-desc-1", "test-desc-12"]);
 
   const eyeFilterMenu = screen.getByRole("button", { name: "EyeFilterMenu" });
-  user.click(eyeFilterMenu);
-  user.click(screen.getByText("Oldest"));
-  await wait(() =>
+  await user.click(eyeFilterMenu);
+  await user.click(screen.getByText("Oldest"));
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/test-desc-/i)
@@ -147,22 +147,22 @@ test("test agenda search and sort controls", async () => {
     ).toStrictEqual(["test-desc-12", "test-desc-1"])
   );
 
-  user.clear(filterControl);
-  user.type(filterControl, "12");
+  await user.clear(filterControl);
+  await user.type(filterControl, "12");
   expect(
     screen
       .getAllByText(/test-desc-/i)
       .map((element) => element.textContent.trim())
   ).toStrictEqual(["test-desc-12"]);
 
-  user.clear(filterControl);
-  user.type(filterControl, "4");
+  await user.clear(filterControl);
+  await user.type(filterControl, "4");
   expect(screen.queryByText(/test-desc-/i)).not.toBeInTheDocument();
   expect(
     screen.getByText(/no agendas matched your search/i)
   ).toBeInTheDocument();
 
-  user.clear(filterControl);
+  await user.clear(filterControl);
   expect(
     screen
       .getAllByText(/test-desc-/i)
@@ -170,9 +170,9 @@ test("test agenda search and sort controls", async () => {
   ).toStrictEqual(["test-desc-3", "test-desc-12", "test-desc-1"]);
 
   // Newest first
-  user.click(eyeFilterMenu);
-  user.click(screen.getByText("Newest"));
-  await wait(() =>
+  await user.click(eyeFilterMenu);
+  await user.click(screen.getByText("Newest"));
+  await waitFor(() =>
     expect(
       screen
         .getAllByText(/test-desc-/i)
@@ -183,7 +183,7 @@ test("test agenda search and sort controls", async () => {
 
 test("test one outdated vsp alert", async () => {
   render(<Blockchain />);
-  await wait(() => screen.getByText(/You have unspent tickets/i));
+  await waitFor(() => screen.getByText(/You have unspent tickets/i));
 
   expect(
     screen.getByText(/You have unspent tickets/i).textContent
@@ -196,7 +196,7 @@ test("test multiple outdated vsps alert", async () => {
   defaultMockAvailableMainnetVsps[0].outdated = true;
   selectors.getAvailableVSPs = jest.fn(() => defaultMockAvailableMainnetVsps);
   render(<Blockchain />);
-  await wait(() => screen.getByText(/You have unspent tickets/i));
+  await waitFor(() => screen.getByText(/You have unspent tickets/i));
 
   expect(
     screen.getByText(/You have unspent tickets/i).textContent

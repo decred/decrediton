@@ -38,7 +38,7 @@ beforeEach(() => {
   selectors.stakeTransactions = jest.fn(() => []);
 });
 
-test("render privacy page", () => {
+test("render privacy page", async () => {
   render(<PrivacyPage />);
 
   expect(screen.getByTestId("getstarted-pagebody").className).not.toMatch(
@@ -56,7 +56,7 @@ test("render privacy page", () => {
   expect(standardLabel.nextSibling.textContent).toMatchInlineSnapshot(
     '"Enables connections to most services for a better user experience and full access to features (such as version update, VSP listing, Politeia, etc). Recommended for most users."'
   );
-  user.click(standardLabel);
+  await user.click(standardLabel);
   expect(mockSetupStandardPrivacy).toHaveBeenCalledTimes(1);
 
   const noOutboundConnectionsLabel = screen.getByText(
@@ -68,7 +68,7 @@ test("render privacy page", () => {
   ).toMatchInlineSnapshot(
     '"Disables all connections to third party (non-dcrd/non-dcrwallet) services. This may prevent you from using certain features of the app. Recommended for advanced users."'
   );
-  user.click(noOutboundConnectionsLabel);
+  await user.click(noOutboundConnectionsLabel);
   expect(mockSetupDisabledPrivacy).toHaveBeenCalledTimes(1);
 
   const customizeAllowedConnectionsLabel = screen.getByText(
@@ -84,12 +84,12 @@ test("render privacy page", () => {
   expect(mockTempSettings).toHaveBeenCalled();
 });
 
-test("test custom privacy options", () => {
+test("test custom privacy options", async () => {
   render(<PrivacyPage />);
   const customizeAllowedConnectionsLabel = screen.getByText(
     /customize allowed connections/i
   );
-  user.click(customizeAllowedConnectionsLabel);
+  await user.click(customizeAllowedConnectionsLabel);
 
   const customPrivacyOptionsLabel = screen.getByText(/custom privacy options/i);
   expect(customPrivacyOptionsLabel).toBeInTheDocument();
@@ -103,7 +103,9 @@ test("test custom privacy options", () => {
   expect(
     updateCheckLabel.parentElement.nextSibling.textContent
   ).toMatchInlineSnapshot('"Get latest released version from github.org"');
-  user.click(updateCheckLabel.parentElement.getElementsByTagName("input")[0]);
+  await user.click(
+    updateCheckLabel.parentElement.getElementsByTagName("input")[0]
+  );
 
   const networkInformationLabel = screen.getByText("Network Information");
   expect(
@@ -111,7 +113,7 @@ test("test custom privacy options", () => {
   ).toMatchInlineSnapshot(
     '"General network information (block height, etc) from decred.org"'
   );
-  user.click(
+  await user.click(
     networkInformationLabel.parentElement.getElementsByTagName("input")[0]
   );
 
@@ -121,29 +123,33 @@ test("test custom privacy options", () => {
   ).toMatchInlineSnapshot(
     '"List and vote on proposals on proposals.decred.org"'
   );
-  user.click(politeiaLabel.parentElement.getElementsByTagName("input")[0]);
+  await user.click(
+    politeiaLabel.parentElement.getElementsByTagName("input")[0]
+  );
 
   const vspListingLabel = screen.getByText(/vsp listing/i);
   expect(
     vspListingLabel.parentElement.nextSibling.textContent
   ).toMatchInlineSnapshot('"List of currently available VSPs from decred.org"');
-  user.click(vspListingLabel.parentElement.getElementsByTagName("input")[0]);
+  await user.click(
+    vspListingLabel.parentElement.getElementsByTagName("input")[0]
+  );
 
   const decredBlockExplorerLabel = screen.getByText(/decred block explorer/i);
   expect(
     decredBlockExplorerLabel.parentElement.nextSibling.textContent
   ).toMatchInlineSnapshot('"Access chain information from dcrdata.decred.org"');
-  user.click(
+  await user.click(
     decredBlockExplorerLabel.parentElement.getElementsByTagName("input")[0]
   );
 
   expect(mockUpdateStateSettingsChanged).toHaveBeenCalledTimes(5);
 
-  user.click(screen.getByText(/accept/i));
+  await user.click(screen.getByText(/accept/i));
   expect(mockSaveSettings).toHaveBeenCalledTimes(1);
   expect(mockFinishPrivacy).toHaveBeenCalledTimes(1);
 
-  user.click(screen.getByText(/cancel/i));
+  await user.click(screen.getByText(/cancel/i));
   expect(
     screen.getByText(/customize allowed connections/i)
   ).toBeInTheDocument();

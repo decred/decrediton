@@ -1,6 +1,5 @@
 import { SendTransactionButton } from "buttons";
-import { render, wait } from "test-utils.js";
-import user from "@testing-library/user-event";
+import { render, waitFor } from "test-utils.js";
 import { screen } from "@testing-library/react";
 import * as tza from "actions/TrezorActions";
 import * as ca from "actions/ControlActions";
@@ -42,23 +41,25 @@ beforeEach(() => {
   selectors.isTrezor = jest.fn(() => false);
 });
 
-test("render default SendTransactionButton ", () => {
-  render(<SendTransactionButton isTrezor={false} account={{ value: 0 }} />);
+test("render default SendTransactionButton ", async () => {
+  const { user } = render(
+    <SendTransactionButton isTrezor={false} account={{ value: 0 }} />
+  );
   expect(screen.getByText(/send/i)).toBeInTheDocument();
   const button = screen.getByRole("button");
-  user.click(button);
+  await user.click(button);
   expect(screen.getByText(/transaction confirmation/i)).toBeInTheDocument();
   // cancel modal first
-  user.click(screen.getByText(/cancel/i));
+  await user.click(screen.getByText(/cancel/i));
   expect(
     screen.queryByText(/transaction confirmation/i)
   ).not.toBeInTheDocument();
 
   // try again
-  user.click(button);
+  await user.click(button);
   const testPassPhrase = "test-pf";
-  user.type(screen.getByLabelText(/private passphrase/i), testPassPhrase);
-  user.click(screen.getByText(/continue/i));
+  await user.type(screen.getByLabelText(/private passphrase/i), testPassPhrase);
+  await user.click(screen.getByText(/continue/i));
   expect(mockSignTransactionAttempt).toHaveBeenCalledWith(
     testPassPhrase,
     testUnsignedTransaction,
@@ -75,40 +76,40 @@ test("render default SendTransactionButton ", () => {
 
 test("render SendTransactionButton when trezor is enabled", async () => {
   selectors.isTrezor = jest.fn(() => true);
-  render(<SendTransactionButton onSubmit={mockOnSubmit} />);
+  const { user } = render(<SendTransactionButton onSubmit={mockOnSubmit} />);
   expect(screen.getByText(/send/i)).toBeInTheDocument();
   const button = screen.getByRole("button");
-  user.click(button);
+  await user.click(button);
   expect(mockSignTransactionAttempt).not.toHaveBeenCalled();
   expect(mockSignTransactionAttemptTrezor).toHaveBeenCalledWith(
     testUnsignedTransaction,
     testConstructTxResponse
   );
-  await wait(() => expect(mockOnSubmit).toHaveBeenCalled());
+  await waitFor(() => expect(mockOnSubmit).toHaveBeenCalled());
 });
 
-test("render loading default SendTransactionButton ", () => {
+test("render loading default SendTransactionButton ", async () => {
   mockIsSendingTransaction = selectors.isSendingTransaction = jest.fn(
     () => true
   );
-  render(<SendTransactionButton />);
+  const { user } = render(<SendTransactionButton />);
   expect(screen.queryByText(/send/i)).not.toBeInTheDocument();
   const button = screen.getByRole("button");
-  user.click(button);
+  await user.click(button);
   expect(button.disabled).toBe(true);
   expect(mockIsSendingTransaction).toHaveBeenCalled();
   expect(mockSignTransactionAttempt).not.toHaveBeenCalled();
   expect(mockSignTransactionAttemptTrezor).not.toHaveBeenCalled();
 });
 
-test("render loading SendTransactionButton when trezor is enabled", () => {
+test("render loading SendTransactionButton when trezor is enabled", async () => {
   mockIsSendingTransaction = selectors.isSendingTransaction = jest.fn(
     () => true
   );
-  render(<SendTransactionButton />);
+  const { user } = render(<SendTransactionButton />);
   expect(screen.queryByText(/send/i)).not.toBeInTheDocument();
   const button = screen.getByRole("button");
-  user.click(button);
+  await user.click(button);
   expect(button.disabled).toBe(true);
   expect(mockIsSendingTransaction).toHaveBeenCalled();
   expect(mockSignTransactionAttempt).not.toHaveBeenCalled();

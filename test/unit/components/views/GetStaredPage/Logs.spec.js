@@ -1,7 +1,8 @@
 import Logs from "components/views/GetStartedPage/Logs/Logs";
 import { render } from "test-utils.js";
-import { screen, wait } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import user from "@testing-library/user-event";
+import { act } from "react-dom/test-utils";
 import * as wa from "wallet";
 import * as sel from "selectors";
 
@@ -47,7 +48,7 @@ const expandLogs = async (linkText, expectedLogs) => {
 
   user.click(screen.getByText(linkText));
 
-  await wait(() =>
+  await waitFor(() =>
     Promise.resolve(expect(screen.getByText(expectedLogs)).toBeInTheDocument())
   );
 };
@@ -57,7 +58,7 @@ const collapseLogs = async (linkText, expectedLogs) => {
 
   user.click(screen.getByText(linkText));
 
-  await wait(() =>
+  await waitFor(() =>
     Promise.resolve(
       expect(screen.queryByText(expectedLogs)).not.toBeInTheDocument()
     )
@@ -83,6 +84,7 @@ test("render default logs page", async () => {
 });
 
 test("render all logs and test if auto refresh is working", async () => {
+  jest.useFakeTimers();
   mockLnActive = selectors.lnActive = jest.fn(() => true);
   mockGetDaemonStarted = selectors.getDaemonStarted = jest.fn(() => true);
   mockGetWalletReady = selectors.getWalletReady = jest.fn(() => true);
@@ -120,18 +122,22 @@ test("render all logs and test if auto refresh is working", async () => {
   mockGetDcrdLogs = wallet.getDcrlndLogs = jest.fn(() =>
     Promise.resolve(Buffer.from(testDcrlnLogString + "+", "utf-8"))
   );
-  await wait(() =>
+
+  act(() => {
+    jest.advanceTimersByTime(1001);
+  });
+  await waitFor(() =>
     expect(screen.getByText(testDcrdLogString + "+")).toBeInTheDocument()
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText(testDcrwalletLogString + "+")).toBeInTheDocument()
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(
       screen.getByText(testDcrDecreditonLogString + "+")
     ).toBeInTheDocument()
   );
-  await wait(() =>
+  await waitFor(() =>
     expect(screen.getByText(testDcrlnLogString + "+")).toBeInTheDocument()
   );
 });

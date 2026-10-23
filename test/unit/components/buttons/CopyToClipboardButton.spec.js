@@ -1,6 +1,5 @@
 import { CopyToClipboardButton } from "buttons";
 import { render } from "test-utils.js";
-import user from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 import copy from "clipboard-copy";
 import { fireEvent } from "@testing-library/react";
@@ -15,8 +14,8 @@ beforeEach(() => {
   mockCopy = copy.mockImplementation(() => true);
 });
 
-test("test CopyToClipboardButton", () => {
-  render(
+test("test CopyToClipboardButton", async () => {
+  const { user } = render(
     <CopyToClipboardButton
       textToCopy={testTextToCopy}
       className={testClassName}
@@ -29,7 +28,7 @@ test("test CopyToClipboardButton", () => {
   const copyIcon = screen.getByRole("button", { name: "Copy" });
 
   // success indicator should appear after successful copy
-  user.click(copyIcon);
+  await user.click(copyIcon);
   expect(mockCopy).toHaveBeenCalledWith(testTextToCopy);
   expect(copied.className).not.toMatch("hidden");
 
