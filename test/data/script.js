@@ -193,6 +193,23 @@ export const MAINNET_scriptDataTest = [
   //   // class: MultiSigTy,
   // },
   {
+    // OP_0 has no data.
+    name: "nulldata OP_RETURN OP_0",
+    script: [0x6a, 0x00],
+    expected: { "address": null, "requiredSig": 0, "scriptClass": 0, "asm": "OP_RETURN OP_0" }
+  },
+  {
+    // OP_1 to OP_16 have no data.
+    name: "nulldata OP_RETURN OP_1",
+    script: [0x6a, 0x51],
+    expected: { "address": null, "requiredSig": 0, "scriptClass": 0, "asm": "OP_RETURN OP_1" }
+  },
+  {
+    name: "nulldata OP_RETURN OP_16",
+    script: [0x6a, 0x60],
+    expected: { "address": null, "requiredSig": 0, "scriptClass": 0, "asm": "OP_RETURN OP_16" }
+  },
+  {
     name: "empty script",
     script: [],
     expected: { "address": null, "requiredSig": 0, "scriptClass": 0, "asm": "" }

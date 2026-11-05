@@ -589,7 +589,7 @@ const isNullData = (pops) => {
     pops[0].opcode.value == OP_RETURN &&
     (isSmallInt(pops[1].opcode.value) ||
       pops[1].opcode.value <= OP_PUSHDATA4) &&
-    pops[1].data.length <= MaxDataCarrierSize
+    (pops[1].data ? pops[1].data.length : 0) <= MaxDataCarrierSize
   );
 };
 
