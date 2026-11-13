@@ -874,7 +874,7 @@ export const launchDCRLnd = (
       "--dcrwallet.certpath=" + path.join(walletPath, "rpc.cert"),
       "--dcrwallet.accountnumber=" + walletAccount,
       "--wtclient.active",
-      "--wtclient.sweep-fee-rate=10000000" // In atoms/byte, so 1e4 (default fee rate) * 1e3
+      "--wtclient.sweep-fee-rate=10000" // In atoms/KByte, 10000 is the dcrlnd default.
     ];
 
     if (testnet) {
